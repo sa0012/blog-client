@@ -1,7 +1,7 @@
 <template>
   <div class="header-top">
     <div class="top-background">
-      <img src="~/assets/image/timg.jpg" alt style="width: 90%; height: 100px;">
+      <img src="~/assets/image/timg.jpg" alt style="width: 100%; height: 100px;">
       <div class="motto-wrap">
         <div class="motto-title">陈龙的博客</div>
         <div class="motto-text">博学之，审问之，慎思之，明辨之，笃行之。——《礼记》</div>
@@ -50,14 +50,14 @@ export default {
   z-index: 888;
   width: 100%;
   text-align: center;
+  background: #fff;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.17);
 
   .header-wrap {
-    width: 90%;
+    width: 80%;
     height: 60px;
     line-height: 60px;
     text-align: left;
-    background: #fff;
     display: inline-block;
     position: relative;
   }
@@ -91,7 +91,7 @@ export default {
   .login-wrap {
     position: absolute;
     top: 50%;
-    right: 10px;
+    right: 50px;
     transform: translateY(-50%);
     color: #999;
   }

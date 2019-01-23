@@ -1,32 +1,63 @@
 <template>
   <section class="container">
     <header-nav></header-nav>
+    <div class="content">
+      <div class="content-left">
+        <el-carousel height="150px">
+          <el-carousel-item v-for="item in 4" :key="item">
+            <h3>{{ item }}</h3>
+          </el-carousel-item>
+        </el-carousel>
+      </div>
+      <div class="content-right">
+        <profile-tip></profile-tip>
+      </div>
+    </div>
   </section>
 </template>
 
 <script>
-import HeaderNav from '~/components/header/header.vue'
+import HeaderNav from "~/components/header/header.vue";
+import profileTip from "~/components/profile";
 
 export default {
   components: {
-    HeaderNav
+    HeaderNav,
+    profileTip
   }
-}
+};
 </script>
 
-<style>
+<style lang="scss" scoped>
 .container {
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
-  text-align: center;
+  /* align-items: center;
+  text-align: center; */
+}
+
+.content {
+  width: 80%;
+  padding-top: 170px;
+  position: relative;
+
+  .content-left {
+    // width: 60%;
+  }
+
+  .content-right {
+    width: 40%;
+    position: absolute;
+    right: 0;
+    top: 170px;
+  }
 }
 
 .title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   display: block;
   font-weight: 300;
   font-size: 100px;
@@ -46,3 +77,33 @@ export default {
   padding-top: 15px;
 }
 </style>
+
+<style>
+.el-carousel {
+  width: 60%;
+  height: 330px !important;
+}
+
+.el-carousel__item,
+.el-carousel__container {
+  height: 330px !important;
+}
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 150px;
+  margin: 0;
+  /* width: 80%; */
+  height: 330px;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
+}
+</style>
+
