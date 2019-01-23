@@ -1,0 +1,95 @@
+<template>
+  <div class="header-top">
+    <div class="header-wrap">
+      <div class="logo">
+        <img src="~/assets/image/logo.png" class="logo-icon" alt>
+      </div>
+      <nav class="category-nav">
+        <ul class="nav-list">
+          <li class="nav-item" v-for="(category, index) in categories" :key="index">
+            <nuxt-link :to="category.router">{{ category.title }}</nuxt-link>
+          </li>
+        </ul>
+      </nav>
+      <div class="login-wrap">
+        <div class="login">登陆</div>
+        <div class="line">/</div>
+        <div class="register">注册</div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      categories: [
+        { router: { name: "index" }, title: "首页" },
+        { router: { path: "/welcome/frontend" }, title: "文章" },
+        { router: { path: "/welcome/android" }, title: "个人日记" },
+        { router: { path: "/welcome/backend" }, title: "关于我" },
+        { router: { path: "/welcome/backend" }, title: "留言板" },
+      ]
+    };
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.header-top {
+  position: fixed;
+  top: 0;
+  z-index: 888;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  background: #fff;
+  text-align: center;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.17);
+
+  .header-wrap {
+    width: 90%;
+    height: 60px;
+    line-height: 60px;
+    text-align: left;
+    // background: green;
+    display: inline-block;
+    position: relative;
+  }
+
+  .logo {
+    display: inline-block;
+    .logo-icon {
+      width: 120px;
+    }
+  }
+
+  .category-nav,
+  .nav-list,
+  .login-wrap,
+  .login,
+  .line,
+  .register {
+    display: inline-block;
+  }
+
+  .nav-list {
+    padding-left: 120px;
+  }
+
+  .nav-item {
+    padding: 0 15px;
+    display: inline-block;
+    font-size: 16px;
+  }
+
+  .login-wrap {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: #999;
+  }
+}
+</style>
