@@ -52,6 +52,8 @@ export default {
     position: absolute;
     right: 0;
     top: 170px;
+    padding-left: 30px;
+    box-sizing: border-box;
   }
 }
 
