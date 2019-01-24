@@ -80,6 +80,7 @@ export default {
   width: 80%;
   max-width: 400px;
   min-width: 400px;
+  transition: 0.5s ease;
   &:hover {
     border-radius: 4px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
