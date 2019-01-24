@@ -12,38 +12,40 @@
       </div>
       <div class="content-right">
         <profile-tip></profile-tip>
+        <article-label></article-label>
       </div>
     </div>
+    <net-footer></net-footer>
   </section>
 </template>
 
 <script>
 import HeaderNav from "~/components/header/header.vue";
 import profileTip from "~/components/profile";
+import NetFooter from '~/components/footer';
 
 export default {
   components: {
     HeaderNav,
     profileTip,
-    NewsArticles: () => import('~/components/newsArticle')
+    NetFooter,
+    NewsArticles: () => import('~/components/newsArticle'),
+    ArticleLabel: () => import('~/components/articleLabel'),
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  /* align-items: center;
-  text-align: center; */
+  width: 100%;
+  min-height: 100%;
 }
 
 .content {
   width: 80%;
   padding-top: 170px;
   position: relative;
+  margin: 0 auto;
 
   .content-left {
     // width: 60%;
