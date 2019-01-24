@@ -5,7 +5,7 @@ export default () => {
   // or with options
   Vue.use(VueLazyload, {
     preLoad: 1.3,
-    loading: '~/assets/image/loading.gif',
+    loading: require('~/assets/image/loading.gif'),
     attempt: 1
   })
 }

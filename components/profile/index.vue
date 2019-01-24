@@ -16,7 +16,7 @@
           <div class="author-right">
             <div class="intag" title="陈龙">博 主：</div>
             <span class="names">
-              <a href="" title="查看 陈龙 发布的文章" rel="author">陈龙</a>
+              <a href title="查看 陈龙 发布的文章" rel="author">陈龙</a>
             </span>
             <span
               class="talk"
@@ -97,7 +97,7 @@ export default {
 
   .intag {
     display: inline-block;
-    background: blue;
+    background: #eda47b;
     color: #fff;
     padding: 5px 10px;
   }
