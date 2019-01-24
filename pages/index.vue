@@ -8,6 +8,7 @@
             <h3>{{ item }}</h3>
           </el-carousel-item>
         </el-carousel>
+        <news-articles></news-articles>
       </div>
       <div class="content-right">
         <profile-tip></profile-tip>
@@ -23,7 +24,8 @@ import profileTip from "~/components/profile";
 export default {
   components: {
     HeaderNav,
-    profileTip
+    profileTip,
+    NewsArticles: () => import('~/components/newsArticle')
   }
 };
 </script>
@@ -83,12 +85,12 @@ export default {
 <style>
 .el-carousel {
   width: 60%;
-  height: 330px !important;
+  height: 300px !important;
 }
 
 .el-carousel__item,
 .el-carousel__container {
-  height: 330px !important;
+  height: 300px !important;
 }
 .el-carousel__item h3 {
   color: #475669;
@@ -97,7 +99,7 @@ export default {
   line-height: 150px;
   margin: 0;
   /* width: 80%; */
-  height: 330px;
+  height: 300px;
 }
 
 .el-carousel__item:nth-child(2n) {

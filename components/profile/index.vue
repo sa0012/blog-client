@@ -16,11 +16,11 @@
           <div class="author-right">
             <div class="intag" title="陈龙">博 主：</div>
             <span class="names">
-              <a href="https://www.yangruolan.com/author-1.html" title="查看 陈龙 发布的文章" rel="author">陈龙</a>
+              <a href="" title="查看 陈龙 发布的文章" rel="author">陈龙</a>
             </span>
             <span
               class="talk"
-            >陈龙博客：专注于前端技术的研究与分享，还有自己日常生活和工作的记录，期望认识广大前端开发爱好者和同行们，共同研究web前端技术的新动向。『juckchen.cn』</span>
+            >博客简介：专注于前端技术的研究与分享，还有自己日常生活和工作的记录，期望认识广大前端开发爱好者和同行们，共同研究web前端技术的新动向。『juckchen.cn』</span>
           </div>
         </el-col>
       </el-row>
@@ -42,7 +42,7 @@
         </el-col>
         <el-col :span="6">
           <div class="icon-wrap">
-            <i class="el-icon-document share-icon"></i>
+            <i class="el-icon-edit-outline share-icon"></i>
           </div>
         </el-col>
       </el-row>
