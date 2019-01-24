@@ -28,11 +28,11 @@
             >{{ news.desc }}</p>
             <div class="item-footer">
               <div class="bd-count" style="padding-right: 15px;">
-                <i class="el-icon-setting count-icon"></i>
+                <i class="iconfont icon-count count-icon"></i>
                 <span>{{ news.browse }}次浏览</span>
               </div>
               <div class="bd-count">
-                <i class="el-icon-setting count-icon"></i>
+                <i class="iconfont icon-custom-comment count-icon"></i>
                 <span>{{ news.commentCount }}条评论</span>
               </div>
               <el-button type="primary" size="mini" class="read-btn">阅读全文</el-button>

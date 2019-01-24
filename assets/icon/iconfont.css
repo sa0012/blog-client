@@ -1,5 +1,7 @@
-@font-face {font-family: "iconfont";
-  src: url('iconfont.ttf?t=1547385625065') format('truetype');/* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+@font-face {
+  font-family: "iconfont";
+  src: url('iconfont.ttf?t=1548336247395') format('truetype');
+  /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
 }
 
 .iconfont {
@@ -14,8 +16,16 @@
   content: "\e619";
 }
 
+.icon-custom-comment:before {
+  content: "\e61d";
+}
+
 .icon-weibo:before {
   content: "\e62a";
+}
+
+.icon-count:before {
+  content: "\e630";
 }
 
 .icon-weixin1:before {
@@ -33,4 +43,3 @@
 .icon-github:before {
   content: "\e632";
 }
-
