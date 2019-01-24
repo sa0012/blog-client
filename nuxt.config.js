@@ -29,7 +29,8 @@ module.exports = {
   */
   css: [
     'element-ui/lib/theme-chalk/index.css',
-    '~/assets/style/reset.scss'
+    '~/assets/style/reset.scss',
+    '~/assets/icon/iconfont.css'
   ],
 
   /*
