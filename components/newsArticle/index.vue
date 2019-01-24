@@ -4,12 +4,12 @@
     <ul class="news-list">
       <li class="news-item" v-for="(news, index) in articles" :key="index">
         <el-row>
-          <el-col :span="6">
+          <el-col>
             <div class="news-image-wrap">
               <img :src="news.image" alt class="news-image">
             </div>
           </el-col>
-          <el-col :span="18" class="news-user-wrap">
+          <el-col class="news-user-wrap" style="padding-left: 200px;">
             <h3 class="item-title">{{ news.title }}</h3>
             <div class="item-userinfo">
               <div class="avatar-wrap">
@@ -23,7 +23,7 @@
               class="item-desc no-many-wrap"
               style="display: -webkit-box;
                     -webkit-box-orient: vertical;
-                    -webkit-line-clamp: 3;
+                    -webkit-line-clamp: 2;
                     overflow: hidden;"
             >{{ news.desc }}</p>
             <div class="item-footer">
@@ -74,7 +74,7 @@ export default {
 @import "~/assets/style/mixins.scss";
 .news-article {
   padding-top: 30px;
-  width: 60%;
+  width: 70%;
 
   h2.news-title {
     font-size: 1pc;
@@ -90,20 +90,32 @@ export default {
   .news-item {
     background: #fff;
     padding: 15px;
+    transition: 0.5s ease;
+    &:hover {
+      border-radius: 4px;
+      box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+      transform: translateY(-5px);
+      transition: 0.5s ease;
+    }
 
     .news-image {
       vertical-align: middle;
+      width: 180px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
     .item-title {
-      padding: 10px 0;
+      margin-bottom: 5px;
       color: #3d3d3d;
-      font-size: 16px6;
+      font-size: 16px;
+      font-weight: bold;
     }
 
     .item-userinfo {
-      padding: 10px 0;
       color: #666;
+      padding-bottom: 5px;
 
       .avatar-wrap {
         > .avatar-image {
@@ -136,7 +148,7 @@ export default {
     }
 
     .item-footer {
-      padding-top: 10px;
+      padding-top: 5px;
       position: relative;
 
       .bd-count {
