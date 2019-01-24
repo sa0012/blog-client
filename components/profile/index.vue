@@ -49,7 +49,8 @@
     </div>
     <el-row class="count-wrap">
       <el-col :span="12" class="count-item count-browse">
-        <span class="bignum pn">浏览
+        <span class="bignum pn">
+          浏览
           <a class="count-color">326596</a> 次
         </span>
       </el-col>
@@ -79,7 +80,12 @@ export default {
   width: 80%;
   max-width: 400px;
   min-width: 400px;
-
+  &:hover {
+    border-radius: 4px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+    transition: 0.5s ease;
+  }
   .profile-wrap {
     padding: 20px;
   }
