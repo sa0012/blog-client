@@ -50,7 +50,7 @@ export default {
   }
 
   .content-right {
-    width: 40%;
+    width: 30%;
     position: absolute;
     right: 0;
     top: 170px;
@@ -84,7 +84,7 @@ export default {
 
 <style>
 .el-carousel {
-  width: 60%;
+  width: 70%;
   height: 300px !important;
 }
 

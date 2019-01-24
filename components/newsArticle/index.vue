@@ -1,19 +1,19 @@
 <template>
   <div class="news-article">
     <h2 class="news-title">推荐文章</h2>
-    <ul class="news-list">
+    <ul class="news-list" v-for="(item, i) in 10" :key="i">
       <li class="news-item" v-for="(news, index) in articles" :key="index">
         <el-row>
           <el-col>
             <div class="news-image-wrap">
-              <img :src="news.image" alt class="news-image">
+              <img v-lazy="news.image" alt class="news-image">
             </div>
           </el-col>
           <el-col class="news-user-wrap" style="padding-left: 200px;">
             <h3 class="item-title">{{ news.title }}</h3>
             <div class="item-userinfo">
               <div class="avatar-wrap">
-                <img :src="news.user.avatar" alt class="avatar-image">
+                <img v-lazy="news.user.avatar" alt class="avatar-image">
               </div>
               <div class="item-username">{{ news.user.user_name }}</div>
               <div class="item-created-time">发布时间： {{ news.created_time }}</div>
@@ -90,6 +90,7 @@ export default {
   .news-item {
     background: #fff;
     padding: 15px;
+    margin-bottom: 15px;
     transition: 0.5s ease;
     &:hover {
       border-radius: 4px;
