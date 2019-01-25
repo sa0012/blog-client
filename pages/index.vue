@@ -13,6 +13,7 @@
       <div class="content-right">
         <profile-tip></profile-tip>
         <article-label></article-label>
+        <news-comments></news-comments>
       </div>
     </div>
     <net-footer></net-footer>
@@ -31,6 +32,7 @@ export default {
     NetFooter,
     NewsArticles: () => import('~/components/newsArticle'),
     ArticleLabel: () => import('~/components/articleLabel'),
+    NewsComments: () => import('~/components/comments'),
   }
 };
 </script>
