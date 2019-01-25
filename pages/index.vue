@@ -14,7 +14,6 @@
         <profile-tip></profile-tip>
         <article-label></article-label>
         <hot-article></hot-article>
-        <hot-article></hot-article>
         <news-comments></news-comments>
       </el-col>
     </el-row>
@@ -52,16 +51,7 @@ export default {
   position: relative;
   margin: 0 auto;
 
-  .content-left {
-    // float: left;
-  }
-
   .content-right {
-    // width: 30%;
-    // position: absolute;
-    // right: 0;
-    // top: 170px;
-    // float: right;
     padding-left: 30px;
     box-sizing: border-box;
   }
@@ -92,7 +82,7 @@ export default {
 
 <style>
 .el-carousel {
-  /* width: 70%; */
+  width: 100%;
   height: 300px !important;
 }
 
