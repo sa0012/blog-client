@@ -1,7 +1,10 @@
 <template>
   <div class="fillcontain category" ref="category" v-show="showSuggest">
     <section class="category-wrap">
-      <h3 class="category-title">文章发布</h3>
+      <h3 class="category-title">建议 / 反馈</h3>
+      <div class="suggest-content-wrap">
+
+      </div>
       <i class="el-icon-close close-icon" @click="close"></i>
     </section>
   </div>

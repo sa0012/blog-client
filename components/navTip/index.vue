@@ -106,6 +106,7 @@ export default {
   position: fixed;
   top: 60%;
   right: 5%;
+  z-index: 333;
 
   .nav-item {
     background: #fff;
