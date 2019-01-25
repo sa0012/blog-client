@@ -27,17 +27,35 @@
       <el-row class="share-icon-wrap">
         <el-col :span="6">
           <div class="icon-wrap share-icon-github">
-            <i class="iconfont icon-github share-icon"></i>
+            <a href="https://github.com/sa0012">
+              <i class="iconfont icon-github share-icon"></i>
+            </a>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="icon-wrap share-icon-weixin">
-            <i class="iconfont icon-weixin1 share-icon"></i>
+            <el-tooltip placement="top" effect="light">
+              <img
+                src="~/assets/image/qr_weixin.jpg"
+                alt
+                slot="content"
+                style="width: 150px; height: 150px;"
+              >
+              <i class="iconfont icon-weixin1 share-icon"></i>
+            </el-tooltip>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="icon-wrap share-icon-qq">
-            <i class="iconfont icon-qq share-icon"></i>
+            <el-tooltip placement="top" effect="light">
+              <img
+                src="~/assets/image/qr_qq.jpg"
+                alt
+                slot="content"
+                style="width: 150px; height: 150px;"
+              >
+              <i class="iconfont icon-qq share-icon"></i>
+            </el-tooltip>
           </div>
         </el-col>
         <el-col :span="6">
@@ -121,8 +139,8 @@ export default {
     border-radius: 3px;
 
     &.share-icon-github:hover {
-      background: #248a34;
-      border: 1px solid #248a34;
+      background: #0e2535;
+      border: 1px solid #0e2535;
       color: #fff;
     }
 
