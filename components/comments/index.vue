@@ -55,11 +55,11 @@ export default {
 @import "~/assets/style/mixins.scss";
 .news-comments {
   background: #fff;
-  min-width: 400px;
   margin-top: 30px;
   padding: 20px;
   box-sizing: border-box;
   transition: 0.5s ease;
+  box-sizing: border-box;
   &:hover {
     border-radius: 4px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);

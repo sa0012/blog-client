@@ -48,16 +48,22 @@
       </el-row>
     </div>
     <el-row class="count-wrap">
-      <el-col :span="12" class="count-item count-browse">
+      <el-col :span="8" class="count-item count-browse">
         <span class="bignum pn">
-          浏览
-          <a class="count-color">326596</a> 次
+          文章
+          <a class="count-color">32</a> 篇
         </span>
       </el-col>
-      <el-col :span="12" class="count-item count-runtime">
+      <el-col :span="8" class="count-item count-runtime">
         <span class="bignum">
-          运行
-          <a class="count-color">448</a> 天数
+          评论
+          <a class="count-color">448</a> 次
+        </span>
+      </el-col>
+      <el-col :span="8" class="count-item count-runtime" style="border-left: 1px solid #ddd;">
+        <span class="bignum">
+          浏览
+          <a class="count-color">448</a> 次
         </span>
       </el-col>
     </el-row>
@@ -77,9 +83,6 @@ export default {
   background: #fff;
   position: relative;
   box-sizing: border-box;
-  width: 80%;
-  max-width: 400px;
-  min-width: 400px;
   transition: 0.5s ease;
   &:hover {
     border-radius: 4px;

@@ -1,22 +1,23 @@
 <template>
   <section class="container">
     <header-nav></header-nav>
-    <div class="content">
-      <div class="content-left">
+    <el-row class="content">
+      <el-col :span="15" class="content-left">
         <el-carousel height="150px">
           <el-carousel-item v-for="item in 4" :key="item">
             <h3>{{ item }}</h3>
           </el-carousel-item>
         </el-carousel>
         <news-articles></news-articles>
-      </div>
-      <div class="content-right">
+      </el-col>
+      <el-col :span="9" class="content-right">
         <profile-tip></profile-tip>
         <article-label></article-label>
         <hot-article></hot-article>
+        <hot-article></hot-article>
         <news-comments></news-comments>
-      </div>
-    </div>
+      </el-col>
+    </el-row>
     <net-footer></net-footer>
   </section>
 </template>
@@ -52,14 +53,15 @@ export default {
   margin: 0 auto;
 
   .content-left {
-    // width: 60%;
+    // float: left;
   }
 
   .content-right {
-    width: 30%;
-    position: absolute;
-    right: 0;
-    top: 170px;
+    // width: 30%;
+    // position: absolute;
+    // right: 0;
+    // top: 170px;
+    // float: right;
     padding-left: 30px;
     box-sizing: border-box;
   }
@@ -90,7 +92,7 @@ export default {
 
 <style>
 .el-carousel {
-  width: 70%;
+  /* width: 70%; */
   height: 300px !important;
 }
 

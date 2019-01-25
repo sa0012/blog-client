@@ -16,5 +16,6 @@ export default {
   height: 100px;
   background: #c3c3c3;
   color: #fff;
+  margin-top: 50px;
 }
 </style>

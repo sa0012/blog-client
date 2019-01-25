@@ -37,7 +37,6 @@ export default {
 @import "~/assets/style/mixins.scss";
 .hot-article {
   background: #fff;
-  min-width: 400px;
   margin-top: 30px;
   padding: 20px;
   box-sizing: border-box;

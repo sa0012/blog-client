@@ -74,7 +74,7 @@ export default {
 @import "~/assets/style/mixins.scss";
 .news-article {
   padding-top: 30px;
-  width: 70%;
+  // width: 70%;
 
   h2.news-title {
     font-size: 1pc;
