@@ -1,22 +1,19 @@
 <template>
   <section class="container">
     <header-nav></header-nav>
-    <!-- <el-row class="content">
-      <el-col :span="15" class="content-left">
-        <el-carousel height="150px">
-          <el-carousel-item v-for="item in 4" :key="item">
-            <h3>{{ item }}</h3>
-          </el-carousel-item>
-        </el-carousel>
-        <news-articles></news-articles>
-      </el-col>
-      <el-col :span="9" class="content-right">
-        <profile-tip></profile-tip>
-        <article-label></article-label>
-        <hot-article></hot-article>
-        <news-comments></news-comments>
-      </el-col>
-    </el-row> -->
+    <el-row class="content">
+      <news-articles :isShowTitle="showTitle"></news-articles>
+      <el-col :span="24" style="padding-top: 15px;">
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :page-size="1"
+        layout="total, prev, pager, next"
+        :total="100"
+      ></el-pagination>
+    </el-col>
+    </el-row>
     <net-footer></net-footer>
   </section>
 </template>
@@ -24,17 +21,26 @@
 <script>
 import HeaderNav from "~/components/header/header.vue";
 import profileTip from "~/components/profile";
-import NetFooter from '~/components/footer';
+import NetFooter from "~/components/footer";
 
 export default {
+  data() {
+    return {
+      showTitle: false
+    };
+  },
   components: {
     HeaderNav,
     profileTip,
     NetFooter,
-    NewsArticles: () => import('~/components/newsArticle'),
-    ArticleLabel: () => import('~/components/articleLabel'),
-    NewsComments: () => import('~/components/comments'),
-    HotArticle: () => import('~/components/hotArticle'),
+    NewsArticles: () => import("~/components/newsArticle"),
+    ArticleLabel: () => import("~/components/articleLabel"),
+    NewsComments: () => import("~/components/comments"),
+    HotArticle: () => import("~/components/hotArticle")
+  },
+  methods: {
+    handleSizeChange() {},
+    handleCurrentChange() {}
   }
 };
 </script>
@@ -47,7 +53,7 @@ export default {
 
 .content {
   width: 80%;
-  padding-top: 170px;
+  padding-top: 150px;
   position: relative;
   margin: 0 auto;
 

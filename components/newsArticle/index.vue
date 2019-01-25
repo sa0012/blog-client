@@ -1,6 +1,6 @@
 <template>
   <div class="news-article">
-    <h2 class="news-title">推荐文章</h2>
+    <h2 class="news-title" v-if="isShowTitle">推荐文章</h2>
     <ul class="news-list" v-for="(item, i) in 10" :key="i">
       <li class="news-item" v-for="(news, index) in articles" :key="index">
         <el-row>
@@ -46,6 +46,12 @@
 
 <script>
 export default {
+  props: {
+    isShowTitle: {
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     return {
       articles: [
