@@ -27,6 +27,14 @@ import profileTip from "~/components/profile";
 import NetFooter from '~/components/footer';
 
 export default {
+  head () {
+    return {
+      title: '关于我',
+      meta: [
+        { hid: '关于我', name: '关于我', content: '关于我' }
+      ]
+    }
+  },
   components: {
     HeaderNav,
     profileTip,

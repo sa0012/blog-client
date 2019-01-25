@@ -3,17 +3,7 @@
     <header-nav></header-nav>
     <el-row class="content">
       <bread-nav :navArr="navArr"></bread-nav>
-      <news-articles :isShowTitle="showTitle"></news-articles>
-      <el-col :span="24" style="padding-top: 15px;">
-        <el-pagination
-          background
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :page-size="1"
-          layout="total, prev, pager, next"
-          :total="100"
-        ></el-pagination>
-      </el-col>
+      这是文章详情页
     </el-row>
     <net-footer></net-footer>
   </section>
@@ -25,28 +15,35 @@ import NetFooter from "~/components/footer";
 import BreadNav from "~/components/breadNav";
 
 export default {
-  head() {
+  head () {
     return {
-      title: "文章",
-      meta: [{ hid: "文章", name: "文章", content: "文章" }]
-    };
+      title: '文章详情',
+      meta: [
+        { hid: '文章详情', name: '文章详情', content: '文章详情' }
+      ]
+    }
   },
   data() {
     return {
-      showTitle: false,
       navArr: [
         {
           title: '文章',
           route: '/article'
+        },
+        {
+          title: '文章详情',
+          route: this.$route.path
         }
       ]
     };
   },
+  created() {
+    console.log(this.$route, 'route')
+  },
   components: {
     HeaderNav,
     NetFooter,
-    BreadNav,
-    NewsArticles: () => import("~/components/newsArticle")
+    BreadNav
   },
   methods: {
     handleSizeChange() {},
@@ -66,6 +63,7 @@ export default {
   padding-top: 170px;
   position: relative;
   margin: 0 auto;
+  text-align: center;
 
   .content-right {
     padding-left: 30px;

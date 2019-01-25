@@ -27,6 +27,14 @@ import profileTip from "~/components/profile";
 import NetFooter from '~/components/footer';
 
 export default {
+  head () {
+    return {
+      title: '留言板',
+      meta: [
+        { hid: '留言板', name: '留言板', content: '留言板' }
+      ]
+    }
+  },
   components: {
     HeaderNav,
     profileTip,

@@ -3,42 +3,44 @@
     <h2 class="news-title" v-if="isShowTitle">推荐文章</h2>
     <ul class="news-list" v-for="(item, i) in 10" :key="i">
       <li class="news-item" v-for="(news, index) in articles" :key="index">
-        <el-row>
-          <el-col>
-            <div class="news-image-wrap">
-              <img v-lazy="news.image" alt class="news-image">
-            </div>
-          </el-col>
-          <el-col class="news-user-wrap" style="padding-left: 200px;">
-            <h3 class="item-title">{{ news.title }}</h3>
-            <div class="item-userinfo">
-              <div class="avatar-wrap">
-                <img v-lazy="news.user.avatar" alt class="avatar-image">
+        <nuxt-link :to="'/article/' + news._id">
+          <el-row>
+            <el-col>
+              <div class="news-image-wrap">
+                <img v-lazy="news.image" alt class="news-image">
               </div>
-              <div class="item-username">{{ news.user.user_name }}</div>
-              <div class="item-created-time">发布时间： {{ news.created_time }}</div>
-              <div class="item-category">分类： {{ news.category }}</div>
-            </div>
-            <p
-              class="item-desc no-many-wrap"
-              style="display: -webkit-box;
+            </el-col>
+            <el-col class="news-user-wrap" style="padding-left: 200px;">
+              <h3 class="item-title">{{ news.title }}</h3>
+              <div class="item-userinfo">
+                <div class="avatar-wrap">
+                  <img v-lazy="news.user.avatar" alt class="avatar-image">
+                </div>
+                <div class="item-username">{{ news.user.user_name }}</div>
+                <div class="item-created-time">发布时间： {{ news.created_time }}</div>
+                <div class="item-category">分类： {{ news.category }}</div>
+              </div>
+              <p
+                class="item-desc no-many-wrap"
+                style="display: -webkit-box;
                     -webkit-box-orient: vertical;
                     -webkit-line-clamp: 2;
                     overflow: hidden;"
-            >{{ news.desc }}</p>
-            <div class="item-footer">
-              <div class="bd-count" style="padding-right: 15px;">
-                <i class="iconfont icon-count count-icon"></i>
-                <span>{{ news.browse }}次浏览</span>
+              >{{ news.desc }}</p>
+              <div class="item-footer">
+                <div class="bd-count" style="padding-right: 15px;">
+                  <i class="iconfont icon-count count-icon"></i>
+                  <span>{{ news.browse }}次浏览</span>
+                </div>
+                <div class="bd-count">
+                  <i class="iconfont icon-custom-comment count-icon"></i>
+                  <span>{{ news.commentCount }}条评论</span>
+                </div>
+                <el-button type="primary" size="mini" class="read-btn">阅读全文</el-button>
               </div>
-              <div class="bd-count">
-                <i class="iconfont icon-custom-comment count-icon"></i>
-                <span>{{ news.commentCount }}条评论</span>
-              </div>
-              <el-button type="primary" size="mini" class="read-btn">阅读全文</el-button>
-            </div>
-          </el-col>
-        </el-row>
+            </el-col>
+          </el-row>
+        </nuxt-link>
       </li>
     </ul>
   </div>
@@ -56,6 +58,7 @@ export default {
     return {
       articles: [
         {
+          _id: 'acekdiel992882828',
           image: require("~/assets/image/case.jpg"),
           title: "如何建立个人博客？",
           user: {
@@ -79,7 +82,7 @@ export default {
 <style lang="scss" scoped>
 @import "~/assets/style/mixins.scss";
 .news-article {
-  padding-top: 30px;
+  // padding-top: 30px;
   // width: 70%;
 
   h2.news-title {
