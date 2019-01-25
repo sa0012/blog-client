@@ -13,6 +13,7 @@
       <div class="content-right">
         <profile-tip></profile-tip>
         <article-label></article-label>
+        <hot-article></hot-article>
         <news-comments></news-comments>
       </div>
     </div>
@@ -33,6 +34,7 @@ export default {
     NewsArticles: () => import('~/components/newsArticle'),
     ArticleLabel: () => import('~/components/articleLabel'),
     NewsComments: () => import('~/components/comments'),
+    HotArticle: () => import('~/components/hotArticle'),
   }
 };
 </script>
