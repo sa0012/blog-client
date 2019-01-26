@@ -3,7 +3,26 @@
     <section class="category-wrap">
       <h3 class="category-title">建议 / 反馈</h3>
       <div class="suggest-content-wrap">
-
+        <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
+          <el-form-item label="类型">
+            <el-col :span="12">
+              <el-button plain>功能建议</el-button>
+            </el-col>
+            <el-col :span="12">
+              <el-button plain>BUG反馈</el-button>
+            </el-col>
+          </el-form-item>
+          <el-form-item label="标题">
+            <el-input v-model="formLabelAlign.region"></el-input>
+          </el-form-item>
+          <el-form-item label="内容">
+            <el-input type="textaera" v-model="formLabelAlign.type"></el-input>
+          </el-form-item>
+          <el-form-item style="text-align: right;">
+            <el-button plain>取消</el-button>
+            <el-button type="primary">确定</el-button>
+          </el-form-item>
+        </el-form>
       </div>
       <i class="el-icon-close close-icon" @click="close"></i>
     </section>
@@ -16,15 +35,20 @@ export default {
     showSuggest: {
       type: Boolean,
       default: false
-    },
+    }
   },
   data() {
     return {
+      labelPosition: "left",
+      formLabelAlign: {
+        name: "",
+        region: "",
+        type: ""
+      }
     };
   },
   watch: {
-    showSuggest(newVal, oldVal) {
-    }
+    showSuggest(newVal, oldVal) {}
   },
   created() {},
   methods: {
@@ -32,8 +56,7 @@ export default {
       this.$emit("update:showSuggest", false);
     }
   },
-  mounted() {
-  }
+  mounted() {}
 };
 </script>
 
@@ -43,7 +66,7 @@ export default {
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 1600;
+  z-index: 4444;
 
   .category-wrap {
     position: absolute;
@@ -55,7 +78,7 @@ export default {
     min-width: 520px;
     padding: 30px;
     border-radius: 5px;
-    z-index: 1601;
+    z-index: 4445;
     animation: slide 0.5s ease-out;
 
     .category-title {

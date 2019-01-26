@@ -47,7 +47,7 @@ export default {
 .header-top {
   position: fixed;
   top: 0;
-  z-index: 888;
+  z-index: 333;
   width: 100%;
   text-align: center;
   background: #fff;
