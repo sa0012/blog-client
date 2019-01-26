@@ -16,7 +16,7 @@
             <el-input v-model="formLabelAlign.region"></el-input>
           </el-form-item>
           <el-form-item label="内容">
-            <el-input type="textaera" v-model="formLabelAlign.type"></el-input>
+            <el-input class="content-area" type="textarea" v-model="formLabelAlign.type"></el-input>
           </el-form-item>
           <el-form-item style="text-align: right;">
             <el-button plain>取消</el-button>
@@ -118,6 +118,16 @@ export default {
   width: 90px;
   margin-left: 10px;
   vertical-align: bottom;
+}
+
+.content-area {
+  height: 100px;
+  box-sizing: border-box;
+  resize: none;
+}
+
+textarea {
+  resize: none;
 }
 
 @keyframes slide {
