@@ -1,14 +1,9 @@
 <template>
   <section class="container">
     <header-nav></header-nav>
-    <!-- <el-row class="content">
+    <el-row class="content">
       <el-col :span="15" class="content-left">
-        <el-carousel height="150px">
-          <el-carousel-item v-for="item in 4" :key="item">
-            <h3>{{ item }}</h3>
-          </el-carousel-item>
-        </el-carousel>
-        <news-articles></news-articles>
+        <message-box></message-box>
       </el-col>
       <el-col :span="9" class="content-right">
         <profile-tip></profile-tip>
@@ -16,7 +11,7 @@
         <hot-article></hot-article>
         <news-comments></news-comments>
       </el-col>
-    </el-row> -->
+    </el-row>
     <net-footer></net-footer>
   </section>
 </template>
@@ -25,6 +20,7 @@
 import HeaderNav from "~/components/header/header.vue";
 import profileTip from "~/components/profile";
 import NetFooter from '~/components/footer';
+import MessageBox from '~/components/messageBox';
 
 export default {
   head () {
@@ -38,6 +34,7 @@ export default {
   components: {
     HeaderNav,
     profileTip,
+    MessageBox,
     NetFooter,
     NewsArticles: () => import('~/components/newsArticle'),
     ArticleLabel: () => import('~/components/articleLabel'),
