@@ -1,7 +1,5 @@
-@font-face {
-  font-family: "iconfont";
-  src: url('iconfont.ttf?t=1548336247395') format('truetype');
-  /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+@font-face {font-family: "iconfont";
+  src: url('iconfont.ttf?t=1548600181755') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
 }
 
 .iconfont {
@@ -20,6 +18,14 @@
   content: "\e61d";
 }
 
+.icon-dianzan:before {
+  content: "\e60c";
+}
+
+.icon-huifu:before {
+  content: "\e67e";
+}
+
 .icon-weibo:before {
   content: "\e62a";
 }
@@ -36,6 +42,10 @@
   content: "\e62e";
 }
 
+.icon-smile:before {
+  content: "\e673";
+}
+
 .icon-qq:before {
   content: "\e60a";
 }
@@ -43,3 +53,4 @@
 .icon-github:before {
   content: "\e632";
 }
+

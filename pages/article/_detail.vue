@@ -8,6 +8,9 @@
       <el-col :span="24" style="text-align: left;">
         <message-box></message-box>
       </el-col>
+      <el-col :span="24" style="text-align: left;">
+        <comments-list></comments-list>
+      </el-col>
     </el-row>
     <net-footer></net-footer>
   </section>
@@ -48,7 +51,8 @@ export default {
     NetFooter,
     BreadNav,
     MessageBox,
-    ArticleDetail: () => import("~/components/articleDetail")
+    ArticleDetail: () => import("~/components/articleDetail"),
+    CommentsList: () => import("~/components/commentsList"),
   },
   methods: {
     handleSizeChange() {},

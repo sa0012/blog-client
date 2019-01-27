@@ -11,22 +11,22 @@
       </div>
       <div class="feature-wrap">
         <div class="expression">
-          <i class="el-icon-time" @click="handleEmoji"></i>
+          <i class="iconfont icon-smile" @click="handleEmoji"></i>
           <span class="leave-text">表情</span>
-          <picker v-if="showEmoji" set="emojione" @select="addEmoji"/>
+          <!-- <picker v-if="showEmoji" set="emojione" @select="addEmoji"/> -->
         </div>
         <div class="upload">
           <i class="el-icon-picture"></i>
           <span class="leave-text">图片</span>
         </div>
-        <div class="login">点击登录</div>
+        <div class="login">发表评论</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Picker } from "emoji-mart-vue";
+// import { Picker } from "emoji-mart-vue";
 export default {
   props: {},
   data() {
@@ -44,7 +44,7 @@ export default {
     }
   },
   components: {
-    Picker
+    // Picker
   }
 };
 </script>
@@ -67,7 +67,7 @@ export default {
     border-radius: 1000px;
     border: 1px solid royalblue;
     background: #e7e7e7;
-    z-index: 333;
+    z-index: 11;
 
     .user-login {
       position: absolute;
@@ -80,7 +80,7 @@ export default {
       border: 1px solid royalblue;
       border-radius: 1000px;
       bottom: 5px;
-      z-index: 444;
+      z-index: 44;
       font-size: 12px;
       color: #666;
     }
@@ -92,7 +92,7 @@ export default {
       width: 65px;
       height: 65px;
       background: #e7e7e7;
-      z-index: 334;
+      z-index: 22;
     }
   }
 
