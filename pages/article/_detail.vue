@@ -3,7 +3,11 @@
     <header-nav></header-nav>
     <el-row class="content">
       <bread-nav :navArr="navArr"></bread-nav>
-      这是文章详情页
+      <article-detail></article-detail>
+      <h3 class="comments-title first-title">发表评论</h3>
+      <el-col :span="24" style="text-align: left;">
+        <message-box></message-box>
+      </el-col>
     </el-row>
     <net-footer></net-footer>
   </section>
@@ -13,37 +17,38 @@
 import HeaderNav from "~/components/header/header.vue";
 import NetFooter from "~/components/footer";
 import BreadNav from "~/components/breadNav";
+import MessageBox from "~/components/messageBox";
 
 export default {
-  head () {
+  head() {
     return {
-      title: '文章详情',
-      meta: [
-        { hid: '文章详情', name: '文章详情', content: '文章详情' }
-      ]
-    }
+      title: "文章详情",
+      meta: [{ hid: "文章详情", name: "文章详情", content: "文章详情" }]
+    };
   },
   data() {
     return {
       navArr: [
         {
-          title: '文章',
-          route: '/article'
+          title: "文章",
+          route: "/article"
         },
         {
-          title: '文章详情',
+          title: "文章详情",
           route: this.$route.path
         }
       ]
     };
   },
   created() {
-    console.log(this.$route, 'route')
+    console.log(this.$route, "route");
   },
   components: {
     HeaderNav,
     NetFooter,
-    BreadNav
+    BreadNav,
+    MessageBox,
+    ArticleDetail: () => import("~/components/articleDetail")
   },
   methods: {
     handleSizeChange() {},
@@ -71,26 +76,10 @@ export default {
   }
 }
 
-.title {
-  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+.comments-title {
+  text-align: left;
+  background: #ccc;
+  color: #666;
 }
 </style>
 

@@ -1,15 +1,17 @@
 <template>
   <div class="message-box">
-    <img src="~/assets/image/car.jpg" alt="avatar" class="user-avatar">
+    <div class="avatar-wrap">
+      <div class="user-login">登录</div>
+      <div class="no-border"></div>
+      <!-- <img src="~/assets/image/car.jpg" alt="avatar" class="user-avatar"> -->
+    </div>
     <div class="message-input-wrap">
-      <div class="input-wrap">
-        <textarea class="message-input" v-model="content" maxlength="150"></textarea>
-      </div>
+      <textarea name id class="message-input" v-model="content" maxlength="150"></textarea>
       <div class="feature-wrap">
         <div class="expression">
           <i class="el-icon-time" @click="handleEmoji"></i>
           <span class="leave-text">表情</span>
-          <!-- <picker v-if="showEmoji" set="emojione" @select="addEmoji"/> -->
+          <picker v-if="showEmoji" set="emojione" @select="addEmoji"/>
         </div>
         <div class="upload">
           <i class="el-icon-picture"></i>
@@ -48,55 +50,85 @@ export default {
 <style lang="scss" scoped>
 .message-box {
   position: relative;
+  height: 150px;
+  border: 1px solid royalblue;
+  border-radius: 10px 10px 0 0;
+  background: #fff;
+
+  .avatar-wrap {
+    position: absolute;
+    left: 1px;
+    top: -54px;
+    width: 55px;
+    height: 60px;
+    border-radius: 1000px;
+    border: 1px solid royalblue;
+    background: #e7e7e7;
+    z-index: 333;
+
+    .user-login {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 44px;
+      height: 44px;
+      line-height: 44px;
+      text-align: center;
+      border: 1px solid royalblue;
+      border-radius: 1000px;
+      bottom: 5px;
+      z-index: 444;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .no-border {
+      position: absolute;
+      top: -13px;
+      left: -1px;
+      width: 65px;
+      height: 65px;
+      background: #e7e7e7;
+      z-index: 334;
+    }
+  }
 
   .user-avatar {
     width: 60px;
     height: 60px;
     border-radius: 4px;
-    border: 1px solid #ccc;
+    // border: 1px solid #ddd;
   }
 
   .message-input-wrap {
-    position: absolute;
-    top: 0;
-    right: 0;
+    // position: absolute;
+    // top: 0;
+    // right: 0;
     width: 100%;
-    padding-left: 70px;
+    // padding-left: 70px;
     box-sizing: border-box;
-
-    .input-wrap {
-      width: 100%;
-      height: 100px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
 
     .message-input {
       width: 100%;
-      height: 99px;
+      min-height: 100px;
+      resize: none;
+      font-size: 14px;
       border: none;
       outline: none;
-      resize: none;
       -webkit-appearance: none;
+      // border: 1px solid #ccc;
+      background: transparent;
     }
   }
 
   .feature-wrap {
-    background: #fff;
-    height: 50px;
-    line-height: 50px;
-    border: 1px solid #ccc;
-    // margin-top: -1px;
-    padding: 0 10px;
-    box-sizing: border-box;
+    // border: 1px solid #ccc;
     .expression,
     .upload,
     .login {
       display: inline-block;
       font-size: 16px;
       color: #666;
-      vertical-align: middle;
     }
 
     .expression {
@@ -105,6 +137,7 @@ export default {
 
     .login {
       float: right;
+      padding-right: 10px;
     }
   }
 }
