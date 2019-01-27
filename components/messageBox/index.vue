@@ -6,7 +6,9 @@
       <!-- <img src="~/assets/image/car.jpg" alt="avatar" class="user-avatar"> -->
     </div>
     <div class="message-input-wrap">
-      <textarea name id class="message-input" v-model="content" maxlength="150"></textarea>
+      <div class="textarea-wrap">
+        <textarea name id class="message-input" v-model="content" maxlength="150"></textarea>
+      </div>
       <div class="feature-wrap">
         <div class="expression">
           <i class="el-icon-time" @click="handleEmoji"></i>
@@ -51,9 +53,10 @@ export default {
 .message-box {
   position: relative;
   height: 150px;
-  border: 1px solid royalblue;
-  border-radius: 10px 10px 0 0;
-  background: #fff;
+  margin-top: 50px;
+  // border: 1px solid royalblue;
+  // border-radius: 10px 10px 0 0;
+  // background: #fff;
 
   .avatar-wrap {
     position: absolute;
@@ -84,7 +87,7 @@ export default {
 
     .no-border {
       position: absolute;
-      top: -13px;
+      top: -12px;
       left: -1px;
       width: 65px;
       height: 65px;
@@ -108,6 +111,12 @@ export default {
     // padding-left: 70px;
     box-sizing: border-box;
 
+    .textarea-wrap {
+      border: 1px solid royalblue;
+      border-radius: 10px;
+      background: #fff;
+    }
+
     .message-input {
       width: 100%;
       min-height: 100px;
@@ -118,10 +127,12 @@ export default {
       -webkit-appearance: none;
       // border: 1px solid #ccc;
       background: transparent;
+      padding: 10px;
     }
   }
 
   .feature-wrap {
+    padding: 10px 0;
     // border: 1px solid #ccc;
     .expression,
     .upload,
