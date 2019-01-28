@@ -7,7 +7,7 @@
       </div>
 
       <div class="comments-wrap">
-        <ul class="comments-list" v-for="(item, i) in 10" :key="i">
+        <ul class="comments-list">
           <li class="comments-item" v-for="(comment, index) in comments" :key="index">
             <div class="comments-avatar">
               <img v-lazy="comment.user.user_avatar" alt="avatar" class="user-avatar">
@@ -20,13 +20,7 @@
                   <span class="reply-text">点赞</span>
                 </div>
               </div>
-              <div
-                class="content-text"
-                style="display: -webkit-box;
-                    -webkit-box-orient: vertical;
-                    -webkit-line-clamp: 1;
-                    overflow: hidden;"
-              >{{ comment.content }}</div>
+              <div class="content-text">{{ comment.content }}</div>
               <div class="create-time" style="padding-top: 5px;">
                 <p class="time">{{ comment.create_time }}</p>
                 <div class="answer-wrap" @click="handleComments(index)">
@@ -35,34 +29,48 @@
                 </div>
               </div>
             </div>
+          </li>
+        </ul>
 
-            <!-- <ul class="second-list">
-          <li class="second-item">
+        <ul class="other-list">
+          <li class="comments-item" v-for="(reply, i) in replyComments" :key="i">
             <div class="comments-avatar">
-              <img v-lazy="comment.user.user_avatar" alt="avatar" class="user-avatar">
+              <img v-lazy="reply.user.user_avatar" alt="avatar" class="user-avatar">
             </div>
             <div class="comments-content">
-              <div class="user-name">{{ comment.user.user_name }} 回复 sa0012</div>
-              <div
-                class="content-text"
-                style="display: -webkit-box;
-                    -webkit-box-orient: vertical;
-                    -webkit-line-clamp: 1;
-                    overflow: hidden;"
-              >{{ comment.content }}</div>
-              <div class="create-time">{{ comment.create_time }}</div>
+              <div class="user-name">
+                <p class="username">{{ reply.user.user_name }}</p>
+                <div class="dianzan">
+                  <i class="iconfont icon-dianzan"></i>
+                  <span class="reply-text">点赞</span>
+                </div>
+              </div>
+              <div class="content-text">{{ reply.content }}</div>
+              <div class="create-time" style="padding-top: 5px;">
+                <p class="time">{{ reply.create_time }}</p>
+                <div class="answer-wrap" @click="handleComments(i)">
+                  <i class="iconfont icon-custom-comment"></i>
+                  <span class="reply-text">回复</span>
+                </div>
+              </div>
             </div>
-          </li>
-            </ul>-->
           </li>
         </ul>
       </div>
 
-      <div class="reply-wrap">
-        <textarea class="text" rows="5" v-model="content"></textarea>
-        <i class="iconfont icon-smile emoji-icon" @click="showEmoji = !showEmoji"></i>
-      </div>
-      <emoji-component v-show="showEmoji" @emotion="handleEmotion" :height="200" style="width: 300px; float: right; padding-right: 10px;"></emoji-component>
+      <el-row class="reply-wrap">
+        <el-col :span="20" style="position: relative;">
+          <textarea class="text" rows="5" v-model="content"></textarea>
+          <i class="iconfont icon-smile emoji-icon" @click="showEmoji = !showEmoji"></i>
+        </el-col>
+        <el-button style="margin-left: 20px;">发布</el-button>
+      </el-row>
+      <emoji-component
+        v-show="showEmoji"
+        @emotion="handleEmotion"
+        :height="200"
+        style="width: 300px; float: right; padding-right: 10px;"
+      ></emoji-component>
     </section>
   </div>
 </template>
@@ -80,6 +88,60 @@ export default {
     return {
       labelPosition: "left",
       comments: [
+        {
+          _id: "5c4a6870f6aa8dba3095dafb",
+          article_id: "5c3d8268ca6b105455e60b16",
+          content:
+            "明明是个缺心眼的娃，怎么想法就多呢，五花八门层出不穷，有点佩服自己了。开个淘宝店做业务考学力短期旅行义工旅行穷游咖啡馆。。。。大致的例了这段时间的想法，额，真的不少；但是真正去执行的是哪个",
+          user: {
+            user_id: "5c3c20482975bdf2f027c822",
+            user_name: "sa0012",
+            user_avatar: "https://avatars3.githubusercontent.com/u/24355136?v=4"
+          },
+          create_time: "1548380272142",
+          edit_time: "1548380272142"
+        }
+      ],
+      replyComments: [
+        {
+          _id: "5c4a6870f6aa8dba3095dafb",
+          article_id: "5c3d8268ca6b105455e60b16",
+          content:
+            "明明是个缺心眼的娃，怎么想法就多呢，五花八门层出不穷，有点佩服自己了。开个淘宝店做业务考学力短期旅行义工旅行穷游咖啡馆。。。。大致的例了这段时间的想法，额，真的不少；但是真正去执行的是哪个",
+          user: {
+            user_id: "5c3c20482975bdf2f027c822",
+            user_name: "sa0012",
+            user_avatar: "https://avatars3.githubusercontent.com/u/24355136?v=4"
+          },
+          create_time: "1548380272142",
+          edit_time: "1548380272142"
+        },
+        {
+          _id: "5c4a6870f6aa8dba3095dafb",
+          article_id: "5c3d8268ca6b105455e60b16",
+          content:
+            "明明是个缺心眼的娃，怎么想法就多呢，五花八门层出不穷，有点佩服自己了。开个淘宝店做业务考学力短期旅行义工旅行穷游咖啡馆。。。。大致的例了这段时间的想法，额，真的不少；但是真正去执行的是哪个",
+          user: {
+            user_id: "5c3c20482975bdf2f027c822",
+            user_name: "sa0012",
+            user_avatar: "https://avatars3.githubusercontent.com/u/24355136?v=4"
+          },
+          create_time: "1548380272142",
+          edit_time: "1548380272142"
+        },
+        {
+          _id: "5c4a6870f6aa8dba3095dafb",
+          article_id: "5c3d8268ca6b105455e60b16",
+          content:
+            "明明是个缺心眼的娃，怎么想法就多呢，五花八门层出不穷，有点佩服自己了。开个淘宝店做业务考学力短期旅行义工旅行穷游咖啡馆。。。。大致的例了这段时间的想法，额，真的不少；但是真正去执行的是哪个",
+          user: {
+            user_id: "5c3c20482975bdf2f027c822",
+            user_name: "sa0012",
+            user_avatar: "https://avatars3.githubusercontent.com/u/24355136?v=4"
+          },
+          create_time: "1548380272142",
+          edit_time: "1548380272142"
+        },
         {
           _id: "5c4a6870f6aa8dba3095dafb",
           article_id: "5c3d8268ca6b105455e60b16",
@@ -112,6 +174,7 @@ export default {
     close() {
       this.$emit("update:showComments", false);
     },
+    handleComments(index) {},
     handleEmotion(i) {
       this.content += i;
     },
@@ -279,6 +342,7 @@ export default {
       right: 15px;
       transform: translateY(-50%);
       transition: all 0.5s ease;
+      font-size: 24px;
 
       &:hover {
         // transform: rotateZ(-180deg);
@@ -289,32 +353,36 @@ export default {
 }
 .comments-wrap {
   max-height: calc(100vh * 0.9 - 400px);
+  padding: 10px;
+  box-sizing: border-box;
   overflow: auto;
 }
 .comments-item {
   border-top: 1px solid #ddd;
-  // border-bottom: 1px solid #ddd;
-  padding: 15px 0;
+  padding: 10px 0;
   position: relative;
 
   .comments-avatar {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
     display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
 
     .user-avatar {
       display: inline-block;
       height: auto;
       vertical-align: top;
-      width: 48px;
+      width: 50px;
       border-radius: 4px;
-      border: 1px solid #ddd;
     }
   }
 
   .comments-content {
-    position: absolute;
-    top: 50%;
-    left: 70px;
-    transform: translateY(-50%);
+    padding-left: 85px;
     color: #666;
     box-sizing: border-box;
 
@@ -322,7 +390,7 @@ export default {
       font-weight: bold;
       font-size: 14px;
       color: #d32;
-      padding-bottom: 5px;
+      // padding-bottom: 5px;
       position: relative;
 
       .dianzan {
@@ -352,9 +420,8 @@ export default {
 
 .reply-wrap {
   height: 40px;
-  position: relative;
   box-sizing: border-box;
-  margin: 15px 10px 0 10px;
+  margin: 15px 10px 0 70px;
 }
 
 textarea {
@@ -375,7 +442,11 @@ textarea {
   right: 10px;
   font-size: 26px;
   vertical-align: middle;
-  color: #FF5722;
+  color: #ff5722;
+}
+
+.other-list {
+  padding-left: 60px;
 }
 
 @keyframes slide {
