@@ -2,7 +2,12 @@
   <div class="login fillcontain" v-if="showLogin">
     <transition name="form-fade" mode="in-out">
       <section class="form_contianer" v-show="showLogin">
-        <sq-tabs :active="loginType === 'register' ? 'name2' : 'name1'" line-scale="0.7" font-size="16" title-height="40">
+        <sq-tabs
+          :active="loginType === 'register' ? 'name2' : 'name1'"
+          line-scale="0.7"
+          font-size="16"
+          title-height="40"
+        >
           <sq-tabpane label="登陆" name="name1">
             <el-form :model="loginForm" :rules="rules" ref="loginForm" style="padding-top: 40px;">
               <el-form-item prop="user_id">
@@ -136,6 +141,12 @@ export default Controller;
       color: #ccc;
       border-radius: 1000px;
       border: 1px solid #ccc;
+      transition: all 0.5s;
+
+      &:hover {
+        transform: rotateZ(180deg);
+        transition: all 0.5s;
+      }
     }
   }
   .tip {
