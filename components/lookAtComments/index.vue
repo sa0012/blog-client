@@ -39,7 +39,11 @@
             </div>
             <div class="comments-content">
               <div class="user-name">
-                <p class="username">{{ reply.user.user_name }}</p>
+                <p class="username">
+                  {{ reply.user.user_name }}
+                  <span style="color: #000;">回复</span>
+                  {{ reply.user.user_name }}
+                </p>
                 <div class="dianzan">
                   <i class="iconfont icon-dianzan"></i>
                   <span class="reply-text">点赞</span>
