@@ -8,7 +8,7 @@
 
       <div class="comments-wrap">
         <ul class="comments-list">
-          <li class="comments-item" v-for="(comment, index) in comments" :key="index">
+          <li class="comments-item" v-for="(comment, index) in comments" :key="index" style="border-style: none;">
             <div class="comments-avatar">
               <img v-lazy="comment.user.user_avatar" alt="avatar" class="user-avatar">
             </div>

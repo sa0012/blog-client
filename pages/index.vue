@@ -20,6 +20,7 @@
     <net-footer></net-footer>
     <nav-tip></nav-tip>
     <!-- <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: green; z-index: 3333;"></div> -->
+    <!-- <login-component ></login-component> -->
   </section>
 </template>
 
@@ -28,6 +29,7 @@ import HeaderNav from "~/components/header/header.vue";
 import profileTip from "~/components/profile";
 import NetFooter from '~/components/footer';
 import NavTip from '~/components/navTip';
+// import LoginComponent from '~/components/login';
 
 export default {
   head () {
@@ -43,6 +45,7 @@ export default {
     profileTip,
     NetFooter,
     NavTip,
+    // LoginComponent,
     NewsArticles: () => import('~/components/newsArticle'),
     ArticleLabel: () => import('~/components/articleLabel'),
     NewsComments: () => import('~/components/comments'),
