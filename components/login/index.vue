@@ -1,11 +1,8 @@
 <template>
-  <div class="login fillcontain">
+  <div class="login fillcontain" v-if="showLogin">
     <transition name="form-fade" mode="in-out">
       <section class="form_contianer" v-show="showLogin">
-        <div class="manage_tip">
-          <p>BLOG后台管理系统</p>
-        </div>
-        <sq-tabs active="name1" line-scale="0.7" font-size="16" title-height="40">
+        <sq-tabs :active="loginType === 'register' ? 'name2' : 'name1'" line-scale="0.7" font-size="16" title-height="40">
           <sq-tabpane label="登陆" name="name1">
             <el-form :model="loginForm" :rules="rules" ref="loginForm" style="padding-top: 40px;">
               <el-form-item prop="user_id">
@@ -83,6 +80,7 @@
             <i class="iconfont icon-weibo login-icon"></i>
           </el-col>
         </el-row>
+        <i class="el-icon-close close-icon" @click="close"></i>
       </section>
     </transition>
   </div>
@@ -102,6 +100,7 @@ export default Controller;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
+  z-index: 555;
 
   .manage_tip {
     position: absolute;
@@ -123,9 +122,20 @@ export default Controller;
     border-radius: 5px;
     text-align: center;
     background-color: #fff;
+    animation: slide 0.5s ease-out;
     .submit_btn {
       width: 100%;
       font-size: 16px;
+    }
+
+    .close-icon {
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      font-size: 30px;
+      color: #ccc;
+      border-radius: 1000px;
+      border: 1px solid #ccc;
     }
   }
   .tip {
@@ -157,6 +167,17 @@ export default Controller;
     &:hover {
       color: green;
     }
+  }
+}
+
+@keyframes slide {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
   }
 }
 </style>

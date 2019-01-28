@@ -19,18 +19,23 @@
         </ul>
       </nav>
       <div class="login-wrap">
-        <div class="login">登陆</div>
+        <div class="login" @click="handleLogin('login')">登陆</div>
         <div class="line">/</div>
-        <div class="register">注册</div>
+        <div class="register" @click="handleLogin('register')">注册</div>
       </div>
     </div>
+    <login-component :showLogin.sync="showLogin" :loginType="loginType"></login-component>
   </div>
 </template>
 
 <script>
+import LoginComponent from "~/components/login";
+
 export default {
   data() {
     return {
+      showLogin: false,
+      loginType: "login",
       categories: [
         { router: { name: "index" }, title: "首页" },
         { router: { path: "/article" }, title: "文章" },
@@ -39,6 +44,15 @@ export default {
         { router: { path: "/board" }, title: "留言板" }
       ]
     };
+  },
+  methods: {
+    handleLogin(type) {
+      this.showLogin = true;
+      this.loginType = type;
+    }
+  },
+  components: {
+    LoginComponent
   }
 };
 </script>
@@ -52,6 +66,7 @@ export default {
   text-align: center;
   background: #fff;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.17);
+  z-index: 444;
 
   .header-wrap {
     width: 80%;

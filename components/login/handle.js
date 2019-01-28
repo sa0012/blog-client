@@ -1,15 +1,25 @@
-import $ from '~/utils';
-import {
-  setSession,
-  removeSession
-} from '~/common/mutils';
+// import $ from '~/utils';
+// import {
+//   setSession,
+//   removeSession
+// } from '~/common/mutils';
 import SqTabs from "~/components/tabs/src";
 import SqTabpane from "~/components/tabpane/src";
 
 export default {
+  props: {
+    showLogin: {
+      type: Boolean,
+      default: false
+    },
+    loginType: {
+      type: String,
+      default: 'login'
+    }
+  },
   data() {
     return {
-      showLogin: false,
+      // showLogin: false,
       loginForm: {
         user_id: '',
         user_pwd: '',
@@ -66,23 +76,26 @@ export default {
     }
   },
   methods: {
+    close() {
+      this.$emit("update:showLogin", false);
+    },
     githubLogin() {
-      $.get('/github/login').then(res => {
-        window.location.href = res.data
-        window.localStorage.setItem('GITHUB_LOGIN_REDIRECT_URL', `${this.$route.path}?comment=new`);
+      // $.get('/github/login').then(res => {
+      //   window.location.href = res.data
+      //   window.localStorage.setItem('GITHUB_LOGIN_REDIRECT_URL', `${this.$route.path}?comment=new`);
 
-      })
+      // })
       // window.location.href = 'https://github.com/login/oauth/authorize?client_id=1f08860dca3e7b4499a5&redirect_uri=http://192.168.31.230:8080/login&scope=User';
 
     },
     async submitForm() {
-      if (!this.loginForm.user_id) {
-        return false;
-      } else if (!this.loginForm.user_pwd) {
-        return false;
-      } else if (!this.loginForm.code) {
-        return false;
-      }
+      // if (!this.loginForm.user_id) {
+      //   return false;
+      // } else if (!this.loginForm.user_pwd) {
+      //   return false;
+      // } else if (!this.loginForm.code) {
+      //   return false;
+      // }
       // $.post('/user/login', this.loginForm).then(res => {
       //   if (res.code == 200) {
       //     setSession('code_token', res.data.token)
@@ -97,19 +110,19 @@ export default {
       // })
     },
     async register() {
-      if (this.registerForm.user_id == "" || this.registerForm.user_pwd == "") {
-        alert('注册失败，请填写完整表单');
-        return;
-      }
-      if (this.registerForm.user_pwd.length < 5) {
-        alert("注册失败，密码最少为5位");
-        return;
-      }
+      // if (this.registerForm.user_id == "" || this.registerForm.user_pwd == "") {
+      //   alert('注册失败，请填写完整表单');
+      //   return;
+      // }
+      // if (this.registerForm.user_pwd.length < 5) {
+      //   alert("注册失败，密码最少为5位");
+      //   return;
+      // }
 
-      if (this.registerForm.user_pwd != this.registerForm.re_user_pwd) {
-        alert('注册失败，2次密码输入不一致!');
-        return;
-      }
+      // if (this.registerForm.user_pwd != this.registerForm.re_user_pwd) {
+      //   alert('注册失败，2次密码输入不一致!');
+      //   return;
+      // }
 
       // $.post('/user', this.registerForm).then(res => {
       //   if (res.code == 200) {
@@ -133,8 +146,8 @@ export default {
     }
   },
   mounted() {
-    this.get_check_code()
-    this.showLogin = true;
+    // this.get_check_code()
+    // this.showLogin = true;
   },
   components: {
     SqTabs,
