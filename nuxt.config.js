@@ -50,21 +50,36 @@ module.exports = {
    */
   plugins: [
     '@/plugins/element-ui',
-    '@/plugins/lazyload'
+    '@/plugins/lazyload',
+    '@/plugins/axios',
   ],
 
   /*
    ** Nuxt.js modules
    */
-  modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
-  ],
-  /*
-   ** Axios module configuration
-   */
+  //处理跨域问题
+  modules: ["@nuxtjs/axios", "@nuxtjs/proxy"],
   axios: {
-    // See https://github.com/nuxt-community/axios-module#options
+    retry: {
+      retries: 3
+    },
+    //开发模式下开启debug
+    debug: process.env._ENV == "production" ? false : true,
+    //设置不同环境的请求地址
+    baseURL: process.env._ENV == "production" ?
+      "http://localhost:7778/api" :
+      "http://localhost:7778/api",
+    withCredentials: true,
+  },
+  proxy: {
+    //开启代理
+    "/api": {
+      target: "localhost:7778",
+      changeOrigin: true,
+      pathRewrite: {
+        "^/api": "/api"
+      }
+    }
   },
 
   /*

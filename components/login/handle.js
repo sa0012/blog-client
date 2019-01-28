@@ -5,8 +5,11 @@
 // } from '~/common/mutils';
 import SqTabs from "~/components/tabs/src";
 import SqTabpane from "~/components/tabpane/src";
-
+import axios from '~/plugins/axios';
 export default {
+  asyncData ({}) {
+    return;
+  },
   props: {
     showLogin: {
       type: Boolean,
@@ -138,15 +141,16 @@ export default {
       // })
     },
     async get_check_code() {
-      // $.get('/other/checkcode').then(res => {
-      //   this.img_base64 = res.data.img
-      //   this.loginForm.code_token = res.data.token
-      //   this.registerForm.code_token = res.data.token
-      // })
+      axios.check_code().then(res => {
+        this.img_base64 = res.data.img
+        this.loginForm.code_token = res.data.token
+        this.registerForm.code_token = res.data.token
+      })
     }
   },
   mounted() {
-    // this.get_check_code()
+    console.log(this.axios, 'axios')
+    this.get_check_code()
     // this.showLogin = true;
   },
   components: {
