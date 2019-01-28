@@ -29,7 +29,7 @@
               >{{ comment.content }}</div>
               <div class="create-time" style="padding-top: 5px;">
                 <p class="time">{{ comment.create_time }}</p>
-                <div class="reply-wrap" @click="handleComments(index)">
+                <div class="answer-wrap" @click="handleComments(index)">
                   <i class="iconfont icon-custom-comment"></i>
                   <span class="reply-text">回复</span>
                 </div>
@@ -59,13 +59,16 @@
       </div>
 
       <div class="reply-wrap">
-        底部区域
+        <textarea class="text" rows="5" v-model="content"></textarea>
+        <i class="iconfont icon-smile emoji-icon" @click="showEmoji = !showEmoji"></i>
       </div>
+      <emoji-component v-show="showEmoji" @emotion="handleEmotion" :height="200" style="width: 300px; float: right; padding-right: 10px;"></emoji-component>
     </section>
   </div>
 </template>
 
 <script>
+import EmojiComponent from "~/components/emoji";
 export default {
   props: {
     showComments: {
@@ -95,7 +98,10 @@ export default {
         name: "",
         region: "",
         type: ""
-      }
+      },
+      content: "",
+      comment: "",
+      showEmoji: false
     };
   },
   watch: {
@@ -105,10 +111,127 @@ export default {
   methods: {
     close() {
       this.$emit("update:showComments", false);
+    },
+    handleEmotion(i) {
+      this.content += i;
+    },
+    // 将匹配结果替换表情图片
+    emotion(res) {
+      let word = res.replace(/\#|\;/gi, "");
+      const list = [
+        "微笑",
+        "撇嘴",
+        "色",
+        "发呆",
+        "得意",
+        "流泪",
+        "害羞",
+        "闭嘴",
+        "睡",
+        "大哭",
+        "尴尬",
+        "发怒",
+        "调皮",
+        "呲牙",
+        "惊讶",
+        "难过",
+        "酷",
+        "冷汗",
+        "抓狂",
+        "吐",
+        "偷笑",
+        "可爱",
+        "白眼",
+        "傲慢",
+        "饥饿",
+        "困",
+        "惊恐",
+        "流汗",
+        "憨笑",
+        "大兵",
+        "奋斗",
+        "咒骂",
+        "疑问",
+        "嘘",
+        "晕",
+        "折磨",
+        "衰",
+        "骷髅",
+        "敲打",
+        "再见",
+        "擦汗",
+        "抠鼻",
+        "鼓掌",
+        "糗大了",
+        "坏笑",
+        "左哼哼",
+        "右哼哼",
+        "哈欠",
+        "鄙视",
+        "委屈",
+        "快哭了",
+        "阴险",
+        "亲亲",
+        "吓",
+        "可怜",
+        "菜刀",
+        "西瓜",
+        "啤酒",
+        "篮球",
+        "乒乓",
+        "咖啡",
+        "饭",
+        "猪头",
+        "玫瑰",
+        "凋谢",
+        "示爱",
+        "爱心",
+        "心碎",
+        "蛋糕",
+        "闪电",
+        "炸弹",
+        "刀",
+        "足球",
+        "瓢虫",
+        "便便",
+        "月亮",
+        "太阳",
+        "礼物",
+        "拥抱",
+        "强",
+        "弱",
+        "握手",
+        "胜利",
+        "抱拳",
+        "勾引",
+        "拳头",
+        "差劲",
+        "爱你",
+        "NO",
+        "OK",
+        "爱情",
+        "飞吻",
+        "跳跳",
+        "发抖",
+        "怄火",
+        "转圈",
+        "磕头",
+        "回头",
+        "跳绳",
+        "挥手",
+        "激动",
+        "街舞",
+        "献吻",
+        "左太极",
+        "右太极"
+      ];
+      let index = list.indexOf(word);
+      return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
     }
   },
   mounted() {},
   components: {
+    EmojiComponent
   }
 };
 </script>
@@ -165,7 +288,7 @@ export default {
   }
 }
 .comments-wrap {
-  max-height: calc(100vh * 0.9 - 60px * 2);
+  max-height: calc(100vh * 0.9 - 400px);
   overflow: auto;
 }
 .comments-item {
@@ -217,17 +340,42 @@ export default {
   }
 
   .time,
-  .reply-wrap {
+  .answer-wrap {
     display: inline-block;
   }
 
-  .reply-wrap {
+  .answer-wrap {
     padding-left: 20px;
+    position: relative;
   }
+}
+
+.reply-wrap {
+  height: 40px;
+  position: relative;
+  box-sizing: border-box;
+  margin: 15px 10px 0 10px;
 }
 
 textarea {
   resize: none;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 4px;
+  width: 100%;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.emoji-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  font-size: 26px;
+  vertical-align: middle;
+  color: #FF5722;
 }
 
 @keyframes slide {
