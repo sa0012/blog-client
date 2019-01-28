@@ -68,13 +68,14 @@
           <i class="iconfont icon-smile emoji-icon" @click="showEmoji = !showEmoji"></i>
         </el-col>
         <el-button style="margin-left: 20px;">发布</el-button>
+        <emoji-component
+          v-show="showEmoji"
+          @emotion="handleEmotion"
+          :height="200"
+          style="width: 300px;"
+          class="emoji-cop"
+        ></emoji-component>
       </el-row>
-      <emoji-component
-        v-show="showEmoji"
-        @emotion="handleEmotion"
-        :height="200"
-        style="width: 300px; float: right; padding-right: 10px;"
-      ></emoji-component>
     </section>
   </div>
 </template>
@@ -356,7 +357,7 @@ export default {
   }
 }
 .comments-wrap {
-  max-height: calc(100vh * 0.9 - 400px);
+  max-height: calc(100vh * 0.9 - 120px);
   padding: 10px;
   box-sizing: border-box;
   overflow: auto;
@@ -426,6 +427,14 @@ export default {
   height: 40px;
   box-sizing: border-box;
   margin: 15px 10px 0 70px;
+  position: relative;
+
+  .emoji-cop {
+    position: absolute;
+    top: -200px;
+    right: 108px;
+    background: #fff;
+  }
 }
 
 textarea {
