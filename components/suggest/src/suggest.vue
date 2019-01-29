@@ -1,5 +1,5 @@
 <template>
-  <div class="fillcontain category" ref="category" v-show="showSuggest">
+  <div class="fillcontain category" ref="category" v-show="visible">
     <section class="category-wrap">
       <h3 class="category-title">建议 / 反馈</h3>
       <div class="suggest-content-wrap">
@@ -19,8 +19,8 @@
             <el-input class="content-area" type="textarea" v-model="formLabelAlign.type"></el-input>
           </el-form-item>
           <el-form-item style="text-align: right;">
-            <el-button plain>取消</el-button>
-            <el-button type="primary">确定</el-button>
+            <el-button plain @click="close">取消</el-button>
+            <el-button type="primary" @click="confirm">确定</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -35,11 +35,20 @@ export default {
     showSuggest: {
       type: Boolean,
       default: false
+    },
+    handleClose: {
+      type: Function,
+      default: () => {}
+    },
+    handleConfirm: {
+      type: Function,
+      default: () => {}
     }
   },
   data() {
     return {
       labelPosition: "left",
+      visible: false,
       formLabelAlign: {
         name: "",
         region: "",
@@ -53,7 +62,12 @@ export default {
   created() {},
   methods: {
     close() {
-      this.$emit("update:showSuggest", false);
+      // this.$emit("update:showSuggest", false);
+      this.visible = false;
+      this.handleClose && this.handleClose()
+    },
+    confirm() {
+      this.handleConfirm && this.handleConfirm()
     }
   },
   mounted() {}
