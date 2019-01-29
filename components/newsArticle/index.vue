@@ -76,7 +76,7 @@ export default {
         }
       ],
       config: {
-        size: 1,
+        size: 10,
         page: 1
       }
     };
