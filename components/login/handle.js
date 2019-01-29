@@ -1,15 +1,13 @@
 // import $ from '~/utils';
-// import {
-//   setSession,
-//   removeSession
-// } from '~/common/mutils';
+import {
+  setSession,
+  removeSession
+} from '~/common/mutils';
 import SqTabs from "~/components/tabs/src";
 import SqTabpane from "~/components/tabpane/src";
-import axios from '~/plugins/axios';
+import $http from '~/plugins/axios';
 export default {
-  asyncData ({}) {
-    return;
-  },
+  async asyncData() {},
   props: {
     showLogin: {
       type: Boolean,
@@ -78,79 +76,86 @@ export default {
       }
     }
   },
+  watch: {
+    showLogin(newVal, oldVal) {
+      if (newVal) {
+        this.get_check_code();
+      }
+    }
+  },
   methods: {
     close() {
       this.$emit("update:showLogin", false);
     },
     githubLogin() {
-      // $.get('/github/login').then(res => {
-      //   window.location.href = res.data
-      //   window.localStorage.setItem('GITHUB_LOGIN_REDIRECT_URL', `${this.$route.path}?comment=new`);
+      $http.get('/github/login').then(res => {
+        window.location.href = res.data
+        window.localStorage.setItem('GITHUB_LOGIN_REDIRECT_URL', `${this.$route.path}?comment=new`);
 
-      // })
+      })
       // window.location.href = 'https://github.com/login/oauth/authorize?client_id=1f08860dca3e7b4499a5&redirect_uri=http://192.168.31.230:8080/login&scope=User';
 
     },
     async submitForm() {
-      // if (!this.loginForm.user_id) {
-      //   return false;
-      // } else if (!this.loginForm.user_pwd) {
-      //   return false;
-      // } else if (!this.loginForm.code) {
-      //   return false;
-      // }
-      // $.post('/user/login', this.loginForm).then(res => {
-      //   if (res.code == 200) {
-      //     setSession('code_token', res.data.token)
-      //     setSession('userId', res.data.user_id)
-      //     setSession('user_name', res.data.user_name)
-      //     setSession('avatar', res.data.avatar)
-      //     this.$message.success('登陆成功')
-      //     this.$router.push(`/manage`)
-      //   } else {
-      //     this.get_check_code()
-      //   }
-      // })
+      if (!this.loginForm.user_id) {
+        return false;
+      } else if (!this.loginForm.user_pwd) {
+        return false;
+      } else if (!this.loginForm.code) {
+        return false;
+      }
+      $http.post('/user/login', this.loginForm).then(res => {
+        if (res.code == 200) {
+          setSession('code_token', res.data.token)
+          setSession('userId', res.data.user_id)
+          setSession('user_name', res.data.user_name)
+          setSession('avatar', res.data.avatar)
+          // this.$message.success('登陆成功')
+          console.log(1122233333)
+          this.$emit("update:showLogin", false);
+        } else {
+          this.get_check_code()
+        }
+      })
     },
     async register() {
-      // if (this.registerForm.user_id == "" || this.registerForm.user_pwd == "") {
-      //   alert('注册失败，请填写完整表单');
-      //   return;
-      // }
-      // if (this.registerForm.user_pwd.length < 5) {
-      //   alert("注册失败，密码最少为5位");
-      //   return;
-      // }
+      if (this.registerForm.user_id == "" || this.registerForm.user_pwd == "") {
+        alert('注册失败，请填写完整表单');
+        return;
+      }
+      if (this.registerForm.user_pwd.length < 5) {
+        alert("注册失败，密码最少为5位");
+        return;
+      }
 
-      // if (this.registerForm.user_pwd != this.registerForm.re_user_pwd) {
-      //   alert('注册失败，2次密码输入不一致!');
-      //   return;
-      // }
+      if (this.registerForm.user_pwd != this.registerForm.re_user_pwd) {
+        alert('注册失败，2次密码输入不一致!');
+        return;
+      }
 
-      // $.post('/user', this.registerForm).then(res => {
-      //   if (res.code == 200) {
-      //     setSession('code_token', res.data.token)
-      //     setSession('userId', res.data.user_id)
-      //     setSession('user_name', res.data.user_id)
-      //     setSession('avatar', res.data.github_avator)
-      //     this.$message.success('注册成功')
-      //     this.$router.push(`/manage`)
-      //   } else {
-      //     this.get_check_code();
-      //   }
-      // })
+      $http.post('/user', this.registerForm).then(res => {
+        if (res.code == 200) {
+          setSession('code_token', res.data.token)
+          setSession('userId', res.data.user_id)
+          setSession('user_name', res.data.user_id)
+          setSession('avatar', res.data.github_avator)
+          this.$message.success('注册成功')
+          this.$emit("update:showLogin", false);
+        } else {
+          this.get_check_code();
+        }
+      })
     },
     async get_check_code() {
-      axios.check_code().then(res => {
-        this.img_base64 = res.data.img
-        this.loginForm.code_token = res.data.token
-        this.registerForm.code_token = res.data.token
+      $http.get('/other/checkcode').then(res => {
+        console.log(res, 'res')
+        this.img_base64 = res.img
+        this.loginForm.code_token = res.token
+        this.registerForm.code_token = res.token
       })
     }
   },
   mounted() {
-    console.log(this.axios, 'axios')
-    this.get_check_code()
     // this.showLogin = true;
   },
   components: {

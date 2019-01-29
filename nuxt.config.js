@@ -58,23 +58,18 @@ module.exports = {
    ** Nuxt.js modules
    */
   //处理跨域问题
-  modules: ["@nuxtjs/axios", "@nuxtjs/proxy"],
+  modules: [
+    '@nuxtjs/axios'
+  ],
   axios: {
-    retry: {
-      retries: 3
-    },
-    //开发模式下开启debug
-    debug: process.env._ENV == "production" ? false : true,
-    //设置不同环境的请求地址
-    baseURL: process.env._ENV == "production" ?
-      "http://localhost:7778/api" :
-      "http://localhost:7778/api",
-    withCredentials: true,
+    proxy: true,
+    prefix: '/api',
+    // See https://github.com/nuxt-community/axios-module#options
   },
   proxy: {
     //开启代理
     "/api": {
-      target: "localhost:7778",
+      target: "http://localhost:7778",
       changeOrigin: true,
       pathRewrite: {
         "^/api": "/api"
