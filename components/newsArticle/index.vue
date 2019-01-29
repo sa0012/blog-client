@@ -1,52 +1,53 @@
 <template>
   <div class="news-article">
     <h2 class="news-title" v-if="isShowTitle">推荐文章</h2>
-    <ul class="news-list" v-for="(item, i) in 10" :key="i">
+    <ul class="news-list">
       <li class="news-item" v-for="(news, index) in articles" :key="index">
-        <nuxt-link :to="'/article/' + news._id">
-          <el-row>
-            <el-col>
-              <div class="news-image-wrap">
-                <img v-lazy="news.image" alt class="news-image">
+        <el-row>
+          <el-col>
+            <div class="news-image-wrap">
+              <img v-lazy="image" alt class="news-image">
+            </div>
+          </el-col>
+          <el-col class="news-user-wrap" style="padding-left: 200px;">
+            <h3 class="item-title">{{ news.title }}</h3>
+            <div class="item-userinfo">
+              <div class="avatar-wrap">
+                <img v-lazy="news.user.user_avatar" alt class="avatar-image">
               </div>
-            </el-col>
-            <el-col class="news-user-wrap" style="padding-left: 200px;">
-              <h3 class="item-title">{{ news.title }}</h3>
-              <div class="item-userinfo">
-                <div class="avatar-wrap">
-                  <img v-lazy="news.user.avatar" alt class="avatar-image">
-                </div>
-                <div class="item-username">{{ news.user.user_name }}</div>
-                <div class="item-created-time">发布时间： {{ news.created_time }}</div>
-                <div class="item-category">分类： {{ news.category }}</div>
-              </div>
-              <p
-                class="item-desc no-many-wrap"
-                style="display: -webkit-box;
+              <div class="item-username">{{ news.user.user_name }}</div>
+              <div class="item-created-time">发布时间： {{ news.created_time }}</div>
+              <div class="item-category">分类： {{ news.category }}</div>
+            </div>
+            <p
+              class="item-desc no-many-wrap"
+              style="display: -webkit-box;
                     -webkit-box-orient: vertical;
                     -webkit-line-clamp: 2;
                     overflow: hidden;"
-              >{{ news.desc }}</p>
-              <div class="item-footer">
-                <div class="bd-count" style="padding-right: 15px;">
-                  <i class="iconfont icon-count count-icon"></i>
-                  <span>{{ news.browse }}次浏览</span>
-                </div>
-                <div class="bd-count">
-                  <i class="iconfont icon-custom-comment count-icon"></i>
-                  <span>{{ news.commentCount }}条评论</span>
-                </div>
-                <el-button type="primary" size="mini" class="read-btn">阅读全文</el-button>
+            >{{ news.desc }}</p>
+            <div class="item-footer">
+              <div class="bd-count" style="padding-right: 15px;">
+                <i class="iconfont icon-count count-icon"></i>
+                <span>{{ news.browse }}次浏览</span>
               </div>
-            </el-col>
-          </el-row>
-        </nuxt-link>
+              <div class="bd-count">
+                <i class="iconfont icon-custom-comment count-icon"></i>
+                <span>{{ news.commentCount }}条评论</span>
+              </div>
+              <nuxt-link :to="'/article/' + news._id">
+                <el-button type="primary" size="mini" class="read-btn">阅读全文</el-button>
+              </nuxt-link>
+            </div>
+          </el-col>
+        </el-row>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import $http from "~/plugins/axios";
 export default {
   props: {
     isShowTitle: {
@@ -56,9 +57,10 @@ export default {
   },
   data() {
     return {
+      image: require("~/assets/image/case.jpg"),
       articles: [
         {
-          _id: 'acekdiel992882828',
+          _id: "acekdiel992882828",
           image: require("~/assets/image/case.jpg"),
           title: "如何建立个人博客？",
           user: {
@@ -72,8 +74,17 @@ export default {
           desc:
             "明明是个缺心眼的娃，怎么想法就多呢，五花八门层出不穷，有点佩服自己了。开个淘宝店做业务考学力短期旅行义工旅行穷游咖啡馆。。。。大致的例了这段时间的想法，额，真的不少；但是真正去执行的是哪个，第一个没有，第二个没，第三个没有，第四个没...............试问自己：如果没有去执行了，如何可以成."
         }
-      ]
+      ],
+      config: {
+        size: 1,
+        page: 1
+      }
     };
+  },
+  mounted() {
+    $http.post("/article/getArticle", this.config).then(res => {
+      this.articles = res.data.list;
+    });
   }
 };
 </script>
@@ -129,7 +140,7 @@ export default {
 
       .avatar-wrap {
         > .avatar-image {
-          width: 35px;
+          width: 30px;
           vertical-align: middle;
         }
       }
