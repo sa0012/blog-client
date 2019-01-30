@@ -32,12 +32,12 @@
         <i class="el-icon-edit-outline icon"></i>
       </li>
     </ul>
-    <suggest-modal :showSuggest.sync="showSuggest"></suggest-modal>
+    <!-- <suggest-modal :showSuggest.sync="showSuggest"></suggest-modal> -->
   </div>
 </template>
 
 <script>
-import SuggestModal from '~/components/suggest';
+// import $suggest from '~/plugins/suggest';
 export default {
   data() {
     return {
@@ -47,7 +47,7 @@ export default {
     };
   },
   components: {
-    SuggestModal
+    // SuggestModal
   },
   methods: {
     backTop() {
@@ -84,7 +84,11 @@ export default {
       }
     },
     handleSuggest() {
-      this.showSuggest = true;
+      this.$suggest.alert({
+        handleConfirm: () => {
+          this.$suggest.hide()
+        }
+      });
     }
   },
   mounted() {
