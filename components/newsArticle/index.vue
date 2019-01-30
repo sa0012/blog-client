@@ -43,16 +43,31 @@
         </el-row>
       </li>
     </ul>
+    <el-col :span="24" style="padding-top: 15px;" v-if="showPag">
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :page-size="1"
+        layout="total, prev, pager, next"
+        :total="pagination.total"
+      ></el-pagination>
+    </el-col>
   </div>
 </template>
 
 <script>
 import $http from "~/plugins/axios";
+import $ from "~/utils";
 export default {
   props: {
     isShowTitle: {
       type: Boolean,
       default: true
+    },
+    showPag: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -78,13 +93,39 @@ export default {
       config: {
         size: 10,
         page: 1
+      },
+      pagination: {
+        page: 0,
+        size: 0,
+        total: 0
       }
     };
   },
-  mounted() {
-    $http.post("/article/getArticle", this.config).then(res => {
-      this.articles = res.data.list;
-    });
+  created() {
+    this.getArticleList();
+  },
+  methods: {
+    getArticleList() {
+      $http.post("/article/getArticle", this.config).then(res => {
+        try {
+          let list = res.data.list && res.data.list.length ? res.data.list : [];
+          list.forEach((article, index) => {
+            list[index].create_time = $.timeFormat(article.create_time - 0);
+            list[index].edit_time = $.timeFormat(article.edit_time - 0);
+          });
+          this.articles = res.data.list;
+        } catch (e) {}
+        this.pagination = res.data.pagination;
+      });
+    },
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      this.config.page = val;
+      this.getArticleList();
+      console.log(`当前页: ${val}`);
+    }
   }
 };
 </script>

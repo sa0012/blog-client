@@ -16,6 +16,7 @@
     "css-loader": "^2.1.0",
     "element-ui": "^2.4.11",
     "koa": "^2.6.2",
+    "mavon-editor": "^2.6.17",
     "node-sass": "^4.11.0",
     "nuxt": "^2.3.4",
     "postcss-loader": "^3.0.0",

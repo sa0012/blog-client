@@ -21,7 +21,7 @@ import HeaderNav from "~/components/header/header.vue";
 import NetFooter from "~/components/footer";
 import BreadNav from "~/components/breadNav";
 import MessageBox from "~/components/messageBox";
-
+import $http from "~/plugins/axios";
 export default {
   head() {
     return {
@@ -40,10 +40,12 @@ export default {
           title: "文章详情",
           route: this.$route.path
         }
-      ]
+      ],
+      articleId: this.$route.params.detail
     };
   },
   created() {
+    this.articleDetail()
     console.log(this.$route, "route");
   },
   components: {
@@ -52,10 +54,14 @@ export default {
     BreadNav,
     MessageBox,
     ArticleDetail: () => import("~/components/articleDetail"),
-    CommentsList: () => import("~/components/commentsList"),
+    CommentsList: () => import("~/components/commentsList")
   },
   methods: {
-    handleSizeChange() {},
+    articleDetail() {
+      $http.post("/article/findOneArticle", { _id: this.articleId }).then(res => {
+        // console.log(res);
+      });
+    },
     handleCurrentChange() {}
   }
 };

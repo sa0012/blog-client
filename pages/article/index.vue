@@ -3,17 +3,7 @@
     <header-nav></header-nav>
     <el-row class="content">
       <bread-nav :navArr="navArr"></bread-nav>
-      <news-articles :isShowTitle="showTitle"></news-articles>
-      <el-col :span="24" style="padding-top: 15px;">
-        <el-pagination
-          background
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :page-size="1"
-          layout="total, prev, pager, next"
-          :total="100"
-        ></el-pagination>
-      </el-col>
+      <news-articles :isShowTitle="showTitle" :showPag="showPag"></news-articles>
     </el-row>
     <net-footer></net-footer>
   </section>
@@ -23,7 +13,7 @@
 import HeaderNav from "~/components/header/header.vue";
 import NetFooter from "~/components/footer";
 import BreadNav from "~/components/breadNav";
-
+// import $http from '~/plugin/axios';
 export default {
   head() {
     return {
@@ -31,9 +21,13 @@ export default {
       meta: [{ hid: "文章", name: "文章", content: "文章" }]
     };
   },
+  asyncData(context) {
+    // return $http.post('/article/findOneArticle').then
+  },
   data() {
     return {
       showTitle: false,
+      showPag: true,
       navArr: [
         {
           title: '文章',
