@@ -27,7 +27,7 @@
           <i class="el-icon-picture"></i>
           <span class="leave-text">图片</span>
         </div>
-        <div class="login">发表评论</div>
+        <div class="login" @click="startComment">发表评论</div>
       </div>
     </div>
   </div>
@@ -35,12 +35,22 @@
 
 <script>
 import EmojiComponent from "~/components/emoji";
+import $http from "~/plugins/axios";
 export default {
   props: {},
   data() {
     return {
       content: "",
-      showEmoji: false
+      showEmoji: false,
+      commentList: {
+        article_id: this.$route.params.detail,
+        content: "",
+        user: {
+          user_id: "",
+          user_name: "",
+          user_avatar: ""
+        }
+      }
     };
   },
   computed: {
@@ -52,6 +62,29 @@ export default {
     }
   },
   methods: {
+    queryCommentList(articleId) {
+      this.queryFatherComment.article_id = articleId;
+      $http
+        .post("/comment/queryCommentList", this.queryFatherComment)
+        .then(res => {
+          console.log(res.data.list, "lsit");
+          // this.fatherCommentList = res.data.list;
+        });
+    },
+    startComment() {
+      const config = {
+        article_id: this.$route.params.detail,
+        content: this.content,
+        "user": {
+          "user_id": this.userMsg._id,
+          "user_name": this.userMsg.user_id,
+          "user_avatar": this.userMsg.avatar
+        }
+      };
+      $http.post("/comment/saveComment", config).then(res => {
+        console.log(res)
+      });
+    },
     handleLogin() {
       this.loginMsg.showLogin = true;
       this.loginMsg.loginType = "login";
@@ -189,6 +222,10 @@ export default {
   height: 150px;
   margin-top: 50px;
   z-index: 555;
+
+  .emoji-cop {
+    background: #fff;
+  }
 
   .avatar-wrap {
     position: absolute;

@@ -1,7 +1,8 @@
 import axios from 'axios'
-// import { Message } from 'element-ui'
 import qs from 'qs'
 import config from './config'
+import { getSession } from '~/common/mutils';
+import Vue from 'vue';
 
 if (process.server) {
   config.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 7778}`
@@ -12,10 +13,12 @@ const service = axios.create(config)
 // POST 传参序列化
 service.interceptors.request.use(
   config => {
-    let token = window.sessionStorage.getItem('code_token')
+    let token = JSON.parse(getSession('user')).token
+    console.log(token, 'token')
     if (token) {
       config.headers.Authorization = token;
     }
+    console.log(config, 'config')
     if (config.method === 'post') config.data = qs.stringify(config.data)
     return config
   },
@@ -38,14 +41,6 @@ service.interceptors.response.use(
         let msg = response.data || '请重新登录!';
         new Vue().$message.error(msg)
         window.sessionStorage.clear() // token过期,清除
-        redirect('/')
-        // router.replace({ //跳转到登录页面
-        //   path: '/',
-        //   // 添加一个重定向后缀，等登录以后再到这里来
-        //   query: {
-        //     redirect: router.currentRoute.fullPath
-        //   }
-        // });
         return Promise.reject(error.response);
       }
     } else {
@@ -79,12 +74,12 @@ export default {
     } : params
     url = '/api' + url;
     headers = headers && headers.headers ? headers.headers : {
-      "Content-Type": "application/json; charset=utf-8"
+      "Content-Type": "application/json; charset=utf-8",
     }
     console.log(headers, 'headers')
     service[method](url, req, headers).then(res => {
       if (res.data.code != 200) {
-        // new Vue().$message.error(res.data.msg)
+        new Vue().$message.error(res.data.msg)
       }
       resolve && res && typeof res.data !== 'undefined' && resolve(res)
     }, error => {
