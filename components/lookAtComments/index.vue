@@ -8,10 +8,7 @@
 
       <div class="comments-wrap">
         <ul class="comments-list">
-          <li
-            class="comments-item"
-            style="border-style: none;"
-          >
+          <li class="comments-item" style="border-style: none;">
             <div class="comments-avatar">
               <img v-lazy="singleComment.user.user_avatar" alt="avatar" class="user-avatar">
             </div>
@@ -55,7 +52,7 @@
               <div class="content-text">{{ reply.content }}</div>
               <div class="create-time" style="padding-top: 5px;">
                 <p class="time">{{ reply.create_time }}</p>
-                <div class="answer-wrap" @click="handleComments(i)">
+                <div class="answer-wrap" @click="handleComments(reply._id)">
                   <i class="iconfont icon-custom-comment"></i>
                   <span class="reply-text">回复</span>
                 </div>
@@ -67,10 +64,10 @@
 
       <el-row class="reply-wrap">
         <el-col :span="20" style="position: relative;">
-          <textarea class="text" rows="5" v-model="content"></textarea>
+          <textarea class="text" rows="5" v-model="content" :autofocus="isFocus"></textarea>
           <i class="iconfont icon-smile emoji-icon" @click="showEmoji = !showEmoji"></i>
         </el-col>
-        <el-button style="margin-left: 20px;">发布</el-button>
+        <el-button style="margin-left: 20px;" @click="publish(commentId)">发布</el-button>
         <emoji-component
           v-show="showEmoji"
           @emotion="handleEmotion"
@@ -85,6 +82,7 @@
 
 <script>
 import EmojiComponent from "~/components/emoji";
+import $http from "~/plugins/axios";
 export default {
   props: {
     showComments: {
@@ -111,39 +109,105 @@ export default {
     return {
       labelPosition: "left",
       replyComments: [
-        // {
-        //   _id: "5c4a6870f6aa8dba3095dafb",
-        //   article_id: "5c3d8268ca6b105455e60b16",
-        //   content:
-        //     "明明是个缺心眼的娃，怎么想法就多呢，五花八门层出不穷，有点佩服自己了。开个淘宝店做业务考学力短期旅行义工旅行穷游咖啡馆。。。。大致的例了这段时间的想法，额，真的不少；但是真正去执行的是哪个",
-        //   user: {
-        //     user_id: "5c3c20482975bdf2f027c822",
-        //     user_name: "sa0012",
-        //     user_avatar: "https://avatars3.githubusercontent.com/u/24355136?v=4"
-        //   },
-        //   create_time: "1548380272142",
-        //   edit_time: "1548380272142"
-        // },
+        {
+          _id: "",
+          article_id: "",
+          content: "",
+          user: {
+            user_id: "",
+            user_name: "",
+            user_avatar: ""
+          },
+          create_time: "",
+          edit_time: ""
+        }
       ],
+      childComment: {
+        comment_id: "",
+        user: {
+          user_id: "",
+          user_name: "",
+          user_avatar: ""
+        },
+
+        // 被评论人信息
+        reply_to_user: {
+          user_name: "",
+          user_id: "",
+          user_avatar: ""
+        },
+        //评论内容
+        content: ""
+      },
       formLabelAlign: {
         name: "",
         region: "",
         type: ""
       },
+      queryReplyComment: {
+        page: 1,
+        size: 10,
+        comment_id: ""
+      },
       content: "",
       comment: "",
-      showEmoji: false
+      showEmoji: false,
+      isFocus: false,
+      commentId: ''
     };
   },
+  computed: {
+    userMsg() {
+      return this.$store.state.user;
+    }
+  },
   watch: {
-    showComments(newVal, oldVal) {}
+    showComments(newVal, oldVal) {
+      if (newVal) {
+        this.queryReplyCommentsList(this.singleComment._id);
+        this.commentId = this.singleComment._id;
+      }
+    }
   },
   created() {},
   methods: {
+    publish() {
+      const config = {
+        comment_id: this.singleComment._id,
+        user: {
+          user_id: this.userMsg._id,
+          user_name: this.userMsg.user_id,
+          user_avatar: this.userMsg.avatar
+        },
+
+        // 被评论人信息
+        reply_to_user: this.singleComment.user,
+        //评论内容
+        content: this.content
+      };
+
+      $http.post("/comment/replySave", config).then(res => {
+        if (res.data === "SUCCESS") {
+          this.queryReplyCommentsList(this.commentId);
+        }
+      });
+    },
+    queryReplyCommentsList(id) {
+      this.queryReplyComment.comment_id = id;
+      $http
+        .post("/comment/queryReleyCommentsList", this.queryReplyComment)
+        .then(res => {
+          this.replyComments = res.data.list;
+        });
+    },
     close() {
       this.$emit("update:showComments", false);
     },
-    handleComments(index) {},
+    handleComments(id) {
+      console.log(id, 'commentId')
+      this.isFocus = true;
+      this.commentId = id
+    },
     handleEmotion(i) {
       this.content += i;
     },

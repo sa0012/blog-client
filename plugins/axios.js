@@ -17,11 +17,9 @@ service.interceptors.request.use(
     try {
       token = JSON.parse(getSession('user')).token;
     } catch(e) {}
-    console.log(token, 'token')
     if (token) {
       config.headers.Authorization = token;
     }
-    console.log(config, 'config')
     if (config.method === 'post') config.data = qs.stringify(config.data)
     return config
   },
@@ -32,7 +30,6 @@ service.interceptors.request.use(
 // 返回状态判断
 service.interceptors.response.use(
   res => {
-    console.log(res, 'response')
     return res.data
   },
   error => {
@@ -48,7 +45,7 @@ service.interceptors.response.use(
         return Promise.reject(error.response);
       }
     } else {
-      // new Vue().$message.error('网络中断，请稍后重试！')
+      new Vue().$message.error('网络中断，请稍后重试！')
     }
   }
 )
@@ -62,13 +59,12 @@ export default {
     headers = headers && headers.headers ? headers.headers : {
       "Content-Type": "application/json; charset=utf-8"
     }
-    console.log(headers, 'headers')
     service[method](url, req, headers).then(res => {
-      console.log(res, 'get')
-      if (res.data.code != 200) {
-        new Vue().$message.error(res.data.msg)
+      console.log(res, 'getREsponse')
+      if (res.code != 200) {
+        new Vue().$message.error(res.msg)
       }
-      resolve && res && typeof res.data !== 'undefined' && resolve(res.data)
+      resolve && res && typeof res !== 'undefined' && resolve(res.data)
     }, error => {
       reject && reject(error)
     })

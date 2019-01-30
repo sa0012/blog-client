@@ -73,6 +73,7 @@ export default {
   watch: {
     loginMsg: {
       handler(newVal, oldVal) {
+        console.log(newVal, 'loginMsg')
         if (newVal && newVal.showLogin) {
           this.get_check_code();
         }
@@ -146,14 +147,15 @@ export default {
     },
     async get_check_code() {
       $http.get('/other/checkcode').then(res => {
-        console.log(res, 'res')
+        console.log(res, 'get_check_code')
         this.img_base64 = res.img
         this.loginForm.code_token = res.token
         this.registerForm.code_token = res.token
       })
     }
   },
-  mounted() {
+  created() {
+    this.get_check_code();
     // this.showLogin = true;
   },
   components: {
