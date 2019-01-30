@@ -9,7 +9,7 @@
     </div>
     <div class="message-input-wrap">
       <div class="textarea-wrap">
-        <textarea name id class="message-input" v-model="content" maxlength="150"></textarea>
+        <textarea name id class="message-input" v-model="content" maxlength="150" ref="message"></textarea>
       </div>
       <div class="feature-wrap">
         <div class="expression">
@@ -235,6 +235,11 @@ export default {
   },
   created() {
     this.queryCommentList();
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.$refs['message'].focus();
+    })
   },
   components: {
     EmojiComponent

@@ -1,39 +1,42 @@
 <template>
-  <div class="news-comments">
-    <h3 class="comments-title">最新评论</h3>
-    <ul class="comments-list">
-      <li class="comments-item" v-for="(comment, index) in comments" :key="index">
-        <div class="comments-avatar">
-          <img v-lazy="comment.user.user_avatar" alt="avatar" class="user-avatar">
-        </div>
-        <div class="comments-content">
-          <div class="user-name">
-            <p class="username">{{ comment.user.user_name }}</p>
-            <div class="dianzan">
-              <i class="iconfont icon-dianzan"></i>
-              <span class="reply-text">点赞</span>
-            </div>
+  <div class="comment-root">
+    <div class="news-comments" v-if="comments.length > 0">
+      <h3 class="comments-title">最新评论</h3>
+      <ul class="comments-list">
+        <li class="comments-item" v-for="(comment, index) in comments" :key="index">
+          <div class="comments-avatar">
+            <img v-lazy="comment.user.user_avatar" alt="avatar" class="user-avatar">
           </div>
-          <div
-            class="content-text"
-            style="display: -webkit-box;
+          <div class="comments-content">
+            <div class="user-name">
+              <p class="username">{{ comment.user.user_name }}</p>
+              <div class="dianzan">
+                <i class="iconfont icon-dianzan"></i>
+                <span class="reply-text">点赞</span>
+              </div>
+            </div>
+            <div
+              class="content-text"
+              style="display: -webkit-box;
                     -webkit-box-orient: vertical;
                     -webkit-line-clamp: 1;
                     overflow: hidden;"
-                    v-html="comment.content.replace(/\#[\u4E00-\u9FA5]{1,3}\;/gi, emotion)"
-          ></div>
-          <div class="create-time" style="padding-top: 5px;">
-            <p class="time">{{ comment.create_time }}</p>
-            <div class="reply-wrap" @click="handleComments(index)">
-              <i class="iconfont icon-custom-comment"></i>
-              <span class="reply-text">回复</span>
+              v-html="comment.content.replace(/\#[\u4E00-\u9FA5]{1,3}\;/gi, emotion)"
+            ></div>
+            <div class="create-time" style="padding-top: 5px;">
+              <p class="time">{{ comment.create_time }}</p>
+              <div class="reply-wrap" @click="handleComments(index)">
+                <i class="iconfont icon-custom-comment"></i>
+                <span class="reply-text">回复</span>
+              </div>
             </div>
           </div>
-        </div>
-      </li>
-    </ul>
+        </li>
+      </ul>
 
-    <look-comments :showComments.sync="showComments" :singleComment="singleComment"></look-comments>
+      <look-comments :showComments.sync="showComments" :singleComment="singleComment"></look-comments>
+    </div>
+    <div class="no-comment">暂无评论， 快去抢沙发吧</div>
   </div>
 </template>
 
@@ -226,7 +229,9 @@ export default {
 
     .comments-avatar {
       display: inline-block;
-
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
       .user-avatar {
         display: inline-block;
         height: auto;
@@ -238,10 +243,8 @@ export default {
     }
 
     .comments-content {
-      position: absolute;
-      top: 50%;
-      left: 70px;
-      transform: translateY(-50%);
+      padding-left: 70px;
+      box-sizing: border-box;
       color: #666;
       box-sizing: border-box;
 
@@ -275,6 +278,12 @@ export default {
       padding-left: 20px;
     }
   }
+}
+
+.no-comment {
+  text-align: center;
+  color: #666;
+  padding: 10px 0;
 }
 
 .second-list,

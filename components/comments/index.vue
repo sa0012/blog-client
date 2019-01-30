@@ -1,5 +1,5 @@
 <template>
-  <div class="news-comments">
+  <div class="news-comments" v-if="comments.length > 0">
     <h3 class="comments-title">最新评论</h3>
     <ul class="comments-list" v-for="(item, i) in 10" :key="i">
       <li class="comments-item" v-for="(comment, index) in comments" :key="index">

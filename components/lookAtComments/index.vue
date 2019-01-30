@@ -20,7 +20,10 @@
                   <span class="reply-text">点赞</span>
                 </div>
               </div>
-              <div class="content-text" v-html="singleComment.content.replace(/\#[\u4E00-\u9FA5]{1,3}\;/gi, emotion)"></div>
+              <div
+                class="content-text"
+                v-html="singleComment.content.replace(/\#[\u4E00-\u9FA5]{1,3}\;/gi, emotion)"
+              ></div>
               <div class="create-time" style="padding-top: 5px;">
                 <p class="time">{{ singleComment.create_time }}</p>
                 <div class="answer-wrap">
@@ -49,7 +52,10 @@
                   <span class="reply-text">点赞</span>
                 </div>
               </div>
-              <div class="content-text" v-html="reply.content.replace(/\#[\u4E00-\u9FA5]{1,3}\;/gi, emotion)"></div>
+              <div
+                class="content-text"
+                v-html="reply.content.replace(/\#[\u4E00-\u9FA5]{1,3}\;/gi, emotion)"
+              ></div>
               <div class="create-time" style="padding-top: 5px;">
                 <p class="time">{{ reply.create_time }}</p>
                 <div class="answer-wrap" @click="handleComments(reply._id)">
@@ -211,7 +217,7 @@ export default {
     handleComments(id) {
       console.log(id, "commentId");
       this.isFocus = true;
-      this.$refs['input'].focus()
+      this.$refs["input"].focus();
       this.commentId = id;
     },
     handleEmotion(i) {
@@ -331,7 +337,11 @@ export default {
       return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
     }
   },
-  mounted() {},
+  mounted() {
+    this.$nextTick(() => {
+      this.$refs["input"].focus();
+    });
+  },
   components: {
     EmojiComponent
   }
@@ -371,6 +381,7 @@ export default {
     }
 
     .category-title {
+      padding-left: 20px;
       display: inline-block;
       font-size: 18px;
     }
