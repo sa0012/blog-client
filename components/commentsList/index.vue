@@ -221,7 +221,7 @@ export default {
   .comments-item {
     border-top: 1px solid #ddd;
     // border-bottom: 1px solid #ddd;
-    padding: 15px 0;
+    padding: 20px 0;
     position: relative;
 
     .comments-avatar {
