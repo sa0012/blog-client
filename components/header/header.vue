@@ -19,9 +19,14 @@
         </ul>
       </nav>
       <div class="login-wrap">
-        <div class="login" @click="handleLogin('login')">登陆</div>
-        <div class="line">/</div>
-        <div class="register" @click="handleLogin('register')">注册</div>
+        <div class="login-start" v-if="!userMsg.isLogin">
+          <div class="login" @click="handleLogin('login')">登陆</div>
+          <div class="line">/</div>
+          <div class="register" @click="handleLogin('register')">注册</div>
+        </div>
+        <div class="login-end" v-else>
+          <drop-login></drop-login>
+        </div>
       </div>
     </div>
     <login-component :showLogin.sync="showLogin" :loginType="loginType"></login-component>
@@ -30,7 +35,6 @@
 
 <script>
 import LoginComponent from "~/components/login";
-
 export default {
   data() {
     return {
@@ -45,6 +49,11 @@ export default {
       ]
     };
   },
+  computed: {
+    userMsg() {
+      return this.$store.state.user
+    }
+  },
   methods: {
     handleLogin(type) {
       this.showLogin = true;
@@ -52,7 +61,8 @@ export default {
     }
   },
   components: {
-    LoginComponent
+    LoginComponent,
+    DropLogin: () => import('~/components/dropdown')
   }
 };
 </script>

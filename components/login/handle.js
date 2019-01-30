@@ -106,12 +106,14 @@ export default {
       }
       $http.post('/user/login', this.loginForm).then(res => {
         if (res.code == 200) {
-          setSession('code_token', res.data.token)
-          setSession('userId', res.data.user_id)
-          setSession('user_name', res.data.user_name)
-          setSession('avatar', res.data.avatar)
-          // this.$message.success('登陆成功')
-          console.log(1122233333)
+          // setSession('code_token', res.data.token)
+          // setSession('userId', res.data.user_id)
+          // setSession('user_name', res.data.user_name)
+          // setSession('avatar', res.data.avatar)
+          res.data.isLogin = true;
+          console.log(res.data, 'data')
+          this.$store.dispatch('USER_MSG', res.data);
+          this.$message.success('登陆成功')
           this.$emit("update:showLogin", false);
         } else {
           this.get_check_code()
@@ -135,10 +137,12 @@ export default {
 
       $http.post('/user', this.registerForm).then(res => {
         if (res.code == 200) {
-          setSession('code_token', res.data.token)
-          setSession('userId', res.data.user_id)
-          setSession('user_name', res.data.user_id)
-          setSession('avatar', res.data.github_avator)
+          // setSession('code_token', res.data.token)
+          // setSession('userId', res.data.user_id)
+          // setSession('user_name', res.data.user_id)
+          // setSession('avatar', res.data.github_avator)
+          res.data.isLogin = true;
+          this.$store.dispatch('USER_MSG', res.data);
           this.$message.success('注册成功')
           this.$emit("update:showLogin", false);
         } else {
