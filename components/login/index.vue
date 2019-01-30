@@ -1,9 +1,9 @@
 <template>
-  <div class="login fillcontain" v-if="showLogin">
+  <div class="login fillcontain" v-if="loginMsg.showLogin">
     <transition name="form-fade" mode="in-out">
-      <section class="form_contianer" v-show="showLogin">
+      <section class="form_contianer" v-show="loginMsg.showLogin">
         <sq-tabs
-          :active="loginType === 'register' ? 'name2' : 'name1'"
+          :active="loginMsg.loginType === 'register' ? 'name2' : 'name1'"
           line-scale="0.7"
           font-size="16"
           title-height="40"

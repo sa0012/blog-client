@@ -1,4 +1,3 @@
-// import $ from '~/utils';
 import {
   setSession,
   removeSession
@@ -8,19 +7,14 @@ import SqTabpane from "~/components/tabpane/src";
 import $http from '~/plugins/axios';
 export default {
   async asyncData() {},
-  props: {
-    showLogin: {
-      type: Boolean,
-      default: false
-    },
-    loginType: {
-      type: String,
-      default: 'login'
+  computed: {
+    loginMsg() {
+      return this.$store.state.login
     }
   },
   data() {
     return {
-      // showLogin: false,
+      showLogin: false,
       loginForm: {
         user_id: '',
         user_pwd: '',
@@ -77,15 +71,20 @@ export default {
     }
   },
   watch: {
-    showLogin(newVal, oldVal) {
-      if (newVal) {
-        this.get_check_code();
-      }
+    loginMsg: {
+      handler(newVal, oldVal) {
+        if (newVal && newVal.showLogin) {
+          this.get_check_code();
+        }
+      },
+      deep: true
     }
   },
   methods: {
     close() {
-      this.$emit("update:showLogin", false);
+      // this.$emit("update:showLogin", false);
+      this.loginMsg.showLogin = false;
+      this.$store.dispatch('LOGIN_MSG', this.loginMsg);
     },
     githubLogin() {
       $http.get('/github/login').then(res => {
@@ -106,15 +105,12 @@ export default {
       }
       $http.post('/user/login', this.loginForm).then(res => {
         if (res.code == 200) {
-          // setSession('code_token', res.data.token)
-          // setSession('userId', res.data.user_id)
-          // setSession('user_name', res.data.user_name)
-          // setSession('avatar', res.data.avatar)
           res.data.isLogin = true;
           console.log(res.data, 'data')
           this.$store.dispatch('USER_MSG', res.data);
           this.$message.success('登陆成功')
-          this.$emit("update:showLogin", false);
+          this.loginMsg.showLogin = false;
+          this.$store.dispatch('LOGIN_MSG', this.loginMsg)
         } else {
           this.get_check_code()
         }
@@ -137,14 +133,12 @@ export default {
 
       $http.post('/user', this.registerForm).then(res => {
         if (res.code == 200) {
-          // setSession('code_token', res.data.token)
-          // setSession('userId', res.data.user_id)
-          // setSession('user_name', res.data.user_id)
-          // setSession('avatar', res.data.github_avator)
           res.data.isLogin = true;
           this.$store.dispatch('USER_MSG', res.data);
           this.$message.success('注册成功')
-          this.$emit("update:showLogin", false);
+          // this.$emit("update:showLogin", false);
+          this.loginMsg.showLogin = false;
+          this.$store.dispatch('LOGIN_MSG', this.loginMsg)
         } else {
           this.get_check_code();
         }

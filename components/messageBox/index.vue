@@ -1,9 +1,11 @@
 <template>
   <div class="message-box">
     <div class="avatar-wrap">
-      <div class="user-login">登录</div>
+      <div class="user-login">
+        <div v-if="!userMsg.isLogin" @click="handleLogin">登陆</div>
+        <img v-else :src="userMsg.avatar" alt="avatar" class="login-avatar">
+      </div>
       <div class="no-border"></div>
-      <!-- <img src="~/assets/image/car.jpg" alt="avatar" class="user-avatar"> -->
     </div>
     <div class="message-input-wrap">
       <div class="textarea-wrap">
@@ -11,9 +13,15 @@
       </div>
       <div class="feature-wrap">
         <div class="expression">
-          <i class="iconfont icon-smile" @click="handleEmoji"></i>
+          <i class="iconfont icon-smile emoji-icon" @click="showEmoji = !showEmoji"></i>
           <span class="leave-text">表情</span>
-          <!-- <picker v-if="showEmoji" set="emojione" @select="addEmoji"/> -->
+          <emoji-component
+            v-show="showEmoji"
+            @emotion="handleEmotion"
+            :height="200"
+            style="width: 300px;"
+            class="emoji-cop"
+          ></emoji-component>
         </div>
         <div class="upload">
           <i class="el-icon-picture"></i>
@@ -26,7 +34,7 @@
 </template>
 
 <script>
-// import { Picker } from "emoji-mart-vue";
+import EmojiComponent from "~/components/emoji";
 export default {
   props: {},
   data() {
@@ -35,16 +43,142 @@ export default {
       showEmoji: false
     };
   },
-  methods: {
-    addEmoji(value) {
-      console.log(value, "value");
+  computed: {
+    userMsg() {
+      return this.$store.state.user;
     },
-    handleEmoji() {
-      this.showEmoji = !this.showEmoji;
+    loginMsg() {
+      return this.$store.state.login;
+    }
+  },
+  methods: {
+    handleLogin() {
+      this.loginMsg.showLogin = true;
+      this.loginMsg.loginType = "login";
+      this.$store.dispatch("LOGIN_MSG", this.loginMsg);
+    },
+    handleEmotion(i) {
+      this.content += i;
+    },
+    handleEmotion(i) {
+      this.content += i;
+    },
+    // 将匹配结果替换表情图片
+    emotion(res) {
+      let word = res.replace(/\#|\;/gi, "");
+      const list = [
+        "微笑",
+        "撇嘴",
+        "色",
+        "发呆",
+        "得意",
+        "流泪",
+        "害羞",
+        "闭嘴",
+        "睡",
+        "大哭",
+        "尴尬",
+        "发怒",
+        "调皮",
+        "呲牙",
+        "惊讶",
+        "难过",
+        "酷",
+        "冷汗",
+        "抓狂",
+        "吐",
+        "偷笑",
+        "可爱",
+        "白眼",
+        "傲慢",
+        "饥饿",
+        "困",
+        "惊恐",
+        "流汗",
+        "憨笑",
+        "大兵",
+        "奋斗",
+        "咒骂",
+        "疑问",
+        "嘘",
+        "晕",
+        "折磨",
+        "衰",
+        "骷髅",
+        "敲打",
+        "再见",
+        "擦汗",
+        "抠鼻",
+        "鼓掌",
+        "糗大了",
+        "坏笑",
+        "左哼哼",
+        "右哼哼",
+        "哈欠",
+        "鄙视",
+        "委屈",
+        "快哭了",
+        "阴险",
+        "亲亲",
+        "吓",
+        "可怜",
+        "菜刀",
+        "西瓜",
+        "啤酒",
+        "篮球",
+        "乒乓",
+        "咖啡",
+        "饭",
+        "猪头",
+        "玫瑰",
+        "凋谢",
+        "示爱",
+        "爱心",
+        "心碎",
+        "蛋糕",
+        "闪电",
+        "炸弹",
+        "刀",
+        "足球",
+        "瓢虫",
+        "便便",
+        "月亮",
+        "太阳",
+        "礼物",
+        "拥抱",
+        "强",
+        "弱",
+        "握手",
+        "胜利",
+        "抱拳",
+        "勾引",
+        "拳头",
+        "差劲",
+        "爱你",
+        "NO",
+        "OK",
+        "爱情",
+        "飞吻",
+        "跳跳",
+        "发抖",
+        "怄火",
+        "转圈",
+        "磕头",
+        "回头",
+        "跳绳",
+        "挥手",
+        "激动",
+        "街舞",
+        "献吻",
+        "左太极",
+        "右太极"
+      ];
+      let index = list.indexOf(word);
+      return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
     }
   },
   components: {
-    // Picker
+    EmojiComponent
   }
 };
 </script>
@@ -54,9 +188,7 @@ export default {
   position: relative;
   height: 150px;
   margin-top: 50px;
-  // border: 1px solid royalblue;
-  // border-radius: 10px 10px 0 0;
-  // background: #fff;
+  z-index: 555;
 
   .avatar-wrap {
     position: absolute;
@@ -83,6 +215,18 @@ export default {
       z-index: 44;
       font-size: 12px;
       color: #666;
+      background: #fff;
+    }
+
+    .login-avatar {
+      width: 35px;
+      height: 35px;
+      border-radius: 1000px;
+      vertical-align: middle;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
 
     .no-border {

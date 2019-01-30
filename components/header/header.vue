@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    <login-component :showLogin.sync="showLogin" :loginType="loginType"></login-component>
+    <login-component></login-component>
   </div>
 </template>
 
@@ -52,12 +52,16 @@ export default {
   computed: {
     userMsg() {
       return this.$store.state.user
+    },
+    loginMsg() {
+      return this.$store.state.login
     }
   },
   methods: {
     handleLogin(type) {
-      this.showLogin = true;
-      this.loginType = type;
+      this.loginMsg.showLogin = true;
+      this.loginMsg.loginType = type;
+      this.$store.dispatch('LOGIN_MSG', this.loginMsg)
     }
   },
   components: {

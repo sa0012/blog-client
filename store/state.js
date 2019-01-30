@@ -1,4 +1,6 @@
-import { getSession } from '~/common/mutils';
+import {
+  getSession
+} from '~/common/mutils';
 const user = JSON.parse(getSession('user')) || {
   user_id: '',
   avatar: '',
@@ -8,6 +10,11 @@ const user = JSON.parse(getSession('user')) || {
   isLogin: false
 }
 
+const login = JSON.parse(getSession('login')) || {
+  showLogin: false,
+  loginType: "login",
+}
 export default {
-  user
+  user,
+  login
 }

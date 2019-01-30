@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import { getSession } from "@/common/mutils";
 export default {
   data() {
     return {
