@@ -1,7 +1,7 @@
 <template>
   <div class="news-comments" v-if="comments.length > 0">
     <h3 class="comments-title">最新评论</h3>
-    <ul class="comments-list" v-for="(item, i) in 10" :key="i">
+    <ul class="comments-list">
       <li class="comments-item" v-for="(comment, index) in comments" :key="index">
         <div class="comments-avatar">
           <img v-lazy="comment.user.user_avatar" alt="avatar" class="user-avatar">
@@ -14,7 +14,8 @@
                     -webkit-box-orient: vertical;
                     -webkit-line-clamp: 1;
                     overflow: hidden;"
-          >{{ comment.content }}</div>
+                    v-html="comment.content.replace(/\#[\u4E00-\u9FA5]{1,3}\;/gi, emotion)"
+          ></div>
           <div class="create-time">{{ comment.create_time }}</div>
         </div>
       </li>
@@ -24,34 +25,155 @@
 
 <script>
 import Colors from "~/plugins/color.js";
+import $http from "~/plugins/axios";
 export default {
   data() {
     return {
-      // comments: [
-      //   {
-      //     _id: "5c4a6870f6aa8dba3095dafb",
-      //     article_id: "5c3d8268ca6b105455e60b16",
-      //     content:
-      //       "明明是个缺心眼的娃，怎么想法就多呢，五花八门层出不穷，有点佩服自己了。开个淘宝店做业务考学力短期旅行义工旅行穷游咖啡馆。。。。大致的例了这段时间的想法，额，真的不少；但是真正去执行的是哪个",
-      //     user: {
-      //       user_id: "5c3c20482975bdf2f027c822",
-      //       user_name: "sa0012",
-      //       user_avatar: "https://avatars3.githubusercontent.com/u/24355136?v=4"
-      //     },
-      //     create_time: "1548380272142",
-      //     edit_time: "1548380272142"
-      //   }
-      // ],
-      colorsArr: Colors.colorName
+      comments: [
+        {
+          _id: "",
+          article_id: "",
+          content: "",
+          user: {
+            user_id: "",
+            user_name: "",
+            user_avatar: ""
+          },
+          create_time: "",
+          edit_time: ""
+        }
+      ],
+      colorsArr: Colors.colorName,
+      queryFatherComment: {
+        page: 1,
+        size: 10
+      }
     };
   },
-  computed: {
-    comments() {
-      return this.$store.state.fatherComments;
+  methods: {
+    queryCommentList() {
+      $http
+        .post("/comment/queryNewsCommentList", this.queryFatherComment)
+        .then(res => {
+          this.comments = res.data.list;
+        });
+    },
+    // 将匹配结果替换表情图片
+    emotion(res) {
+      let word = res.replace(/\#|\;/gi, "");
+      const list = [
+        "微笑",
+        "撇嘴",
+        "色",
+        "发呆",
+        "得意",
+        "流泪",
+        "害羞",
+        "闭嘴",
+        "睡",
+        "大哭",
+        "尴尬",
+        "发怒",
+        "调皮",
+        "呲牙",
+        "惊讶",
+        "难过",
+        "酷",
+        "冷汗",
+        "抓狂",
+        "吐",
+        "偷笑",
+        "可爱",
+        "白眼",
+        "傲慢",
+        "饥饿",
+        "困",
+        "惊恐",
+        "流汗",
+        "憨笑",
+        "大兵",
+        "奋斗",
+        "咒骂",
+        "疑问",
+        "嘘",
+        "晕",
+        "折磨",
+        "衰",
+        "骷髅",
+        "敲打",
+        "再见",
+        "擦汗",
+        "抠鼻",
+        "鼓掌",
+        "糗大了",
+        "坏笑",
+        "左哼哼",
+        "右哼哼",
+        "哈欠",
+        "鄙视",
+        "委屈",
+        "快哭了",
+        "阴险",
+        "亲亲",
+        "吓",
+        "可怜",
+        "菜刀",
+        "西瓜",
+        "啤酒",
+        "篮球",
+        "乒乓",
+        "咖啡",
+        "饭",
+        "猪头",
+        "玫瑰",
+        "凋谢",
+        "示爱",
+        "爱心",
+        "心碎",
+        "蛋糕",
+        "闪电",
+        "炸弹",
+        "刀",
+        "足球",
+        "瓢虫",
+        "便便",
+        "月亮",
+        "太阳",
+        "礼物",
+        "拥抱",
+        "强",
+        "弱",
+        "握手",
+        "胜利",
+        "抱拳",
+        "勾引",
+        "拳头",
+        "差劲",
+        "爱你",
+        "NO",
+        "OK",
+        "爱情",
+        "飞吻",
+        "跳跳",
+        "发抖",
+        "怄火",
+        "转圈",
+        "磕头",
+        "回头",
+        "跳绳",
+        "挥手",
+        "激动",
+        "街舞",
+        "献吻",
+        "左太极",
+        "右太极"
+      ];
+      let index = list.indexOf(word);
+      return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
     }
   },
-  methods: {
-    showBackgroundColor() {}
+  created() {
+    this.queryCommentList()
   }
 };
 </script>
