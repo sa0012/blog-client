@@ -33,7 +33,7 @@
         </ul>
 
         <ul class="other-list" v-if="replyComments.length > 0">
-          <li class="comments-item" v-for="(reply, i) in replyComments" :key="i">
+          <li class="comments-item" v-for="(reply, index) in replyComments" :key="index">
             <div class="comments-avatar">
               <img v-lazy="reply.user.user_avatar" alt="avatar" class="user-avatar">
             </div>
@@ -42,7 +42,7 @@
                 <p class="username">
                   {{ reply.user.user_name }}
                   <span style="color: #000;">回复</span>
-                  {{ reply.user.user_name }}
+                  {{ reply.reply_to_user.user_name }}
                 </p>
                 <div class="dianzan">
                   <i class="iconfont icon-dianzan"></i>
@@ -64,7 +64,7 @@
 
       <el-row class="reply-wrap">
         <el-col :span="20" style="position: relative;">
-          <textarea class="text" rows="5" v-model="content" :autofocus="isFocus"></textarea>
+          <textarea class="text" rows="5" v-model="content" ref="input"></textarea>
           <i class="iconfont icon-smile emoji-icon" @click="showEmoji = !showEmoji"></i>
         </el-col>
         <el-button style="margin-left: 20px;" @click="publish(commentId)">发布</el-button>
@@ -118,6 +118,11 @@ export default {
             user_name: "",
             user_avatar: ""
           },
+          reply_to_user: {
+            user_id: "",
+            user_name: "",
+            user_avatar: ""
+          },
           create_time: "",
           edit_time: ""
         }
@@ -152,8 +157,8 @@ export default {
       content: "",
       comment: "",
       showEmoji: false,
-      isFocus: false,
-      commentId: ''
+      isFocus: true,
+      commentId: ""
     };
   },
   computed: {
@@ -204,9 +209,10 @@ export default {
       this.$emit("update:showComments", false);
     },
     handleComments(id) {
-      console.log(id, 'commentId')
+      console.log(id, "commentId");
       this.isFocus = true;
-      this.commentId = id
+      this.$refs['input'].focus()
+      this.commentId = id;
     },
     handleEmotion(i) {
       this.content += i;

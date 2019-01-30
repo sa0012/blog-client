@@ -55,7 +55,11 @@ module.exports = {
     {
       src: '@/plugins/suggest',
       ssr: false
-    }
+    },
+    // {
+    //   src: '@/plugins/directive',
+    //   ssr: false
+    // }
   ],
 
   /*
