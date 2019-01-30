@@ -13,7 +13,10 @@ const service = axios.create(config)
 // POST 传参序列化
 service.interceptors.request.use(
   config => {
-    let token = JSON.parse(getSession('user')).token
+    let token = '';
+    try {
+      token = JSON.parse(getSession('user')).token;
+    } catch(e) {}
     console.log(token, 'token')
     if (token) {
       config.headers.Authorization = token;
@@ -29,6 +32,7 @@ service.interceptors.request.use(
 // 返回状态判断
 service.interceptors.response.use(
   res => {
+    console.log(res, 'response')
     return res.data
   },
   error => {
@@ -60,8 +64,9 @@ export default {
     }
     console.log(headers, 'headers')
     service[method](url, req, headers).then(res => {
+      console.log(res, 'get')
       if (res.data.code != 200) {
-        // new Vue().$message.error(res.data.msg)
+        new Vue().$message.error(res.data.msg)
       }
       resolve && res && typeof res.data !== 'undefined' && resolve(res.data)
     }, error => {
@@ -78,10 +83,11 @@ export default {
     }
     console.log(headers, 'headers')
     service[method](url, req, headers).then(res => {
-      if (res.data.code != 200) {
-        new Vue().$message.error(res.data.msg)
+      if (res.code != 200) {
+        new Vue().$message.error(res.msg)
       }
-      resolve && res && typeof res.data !== 'undefined' && resolve(res)
+      console.log(res, 'post')
+      resolve && res && typeof res !== 'undefined' && resolve(res)
     }, error => {
       reject && reject(error)
     })

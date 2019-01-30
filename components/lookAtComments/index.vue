@@ -8,22 +8,25 @@
 
       <div class="comments-wrap">
         <ul class="comments-list">
-          <li class="comments-item" v-for="(comment, index) in comments" :key="index" style="border-style: none;">
+          <li
+            class="comments-item"
+            style="border-style: none;"
+          >
             <div class="comments-avatar">
-              <img v-lazy="comment.user.user_avatar" alt="avatar" class="user-avatar">
+              <img v-lazy="singleComment.user.user_avatar" alt="avatar" class="user-avatar">
             </div>
             <div class="comments-content">
               <div class="user-name">
-                <p class="username">{{ comment.user.user_name }}</p>
+                <p class="username">{{ singleComment.user.user_name }}</p>
                 <div class="dianzan">
                   <i class="iconfont icon-dianzan"></i>
                   <span class="reply-text">点赞</span>
                 </div>
               </div>
-              <div class="content-text">{{ comment.content }}</div>
+              <div class="content-text">{{ singleComment.content }}</div>
               <div class="create-time" style="padding-top: 5px;">
-                <p class="time">{{ comment.create_time }}</p>
-                <div class="answer-wrap" @click="handleComments(index)">
+                <p class="time">{{ singleComment.create_time }}</p>
+                <div class="answer-wrap">
                   <i class="iconfont icon-custom-comment"></i>
                   <span class="reply-text">回复</span>
                 </div>
@@ -32,7 +35,7 @@
           </li>
         </ul>
 
-        <ul class="other-list">
+        <ul class="other-list" v-if="replyComments.length > 0">
           <li class="comments-item" v-for="(reply, i) in replyComments" :key="i">
             <div class="comments-avatar">
               <img v-lazy="reply.user.user_avatar" alt="avatar" class="user-avatar">
@@ -87,79 +90,40 @@ export default {
     showComments: {
       type: Boolean,
       default: false
+    },
+    singleComment: {
+      type: Object,
+      default: {
+        _id: "",
+        article_id: "",
+        content: "",
+        user: {
+          user_id: "",
+          user_name: "",
+          user_avatar: ""
+        },
+        create_time: "",
+        edit_time: ""
+      }
     }
   },
   data() {
     return {
       labelPosition: "left",
-      comments: [
-        {
-          _id: "5c4a6870f6aa8dba3095dafb",
-          article_id: "5c3d8268ca6b105455e60b16",
-          content:
-            "明明是个缺心眼的娃，怎么想法就多呢，五花八门层出不穷，有点佩服自己了。开个淘宝店做业务考学力短期旅行义工旅行穷游咖啡馆。。。。大致的例了这段时间的想法，额，真的不少；但是真正去执行的是哪个",
-          user: {
-            user_id: "5c3c20482975bdf2f027c822",
-            user_name: "sa0012",
-            user_avatar: "https://avatars3.githubusercontent.com/u/24355136?v=4"
-          },
-          create_time: "1548380272142",
-          edit_time: "1548380272142"
-        }
-      ],
       replyComments: [
-        {
-          _id: "5c4a6870f6aa8dba3095dafb",
-          article_id: "5c3d8268ca6b105455e60b16",
-          content:
-            "明明是个缺心眼的娃，怎么想法就多呢，五花八门层出不穷，有点佩服自己了。开个淘宝店做业务考学力短期旅行义工旅行穷游咖啡馆。。。。大致的例了这段时间的想法，额，真的不少；但是真正去执行的是哪个",
-          user: {
-            user_id: "5c3c20482975bdf2f027c822",
-            user_name: "sa0012",
-            user_avatar: "https://avatars3.githubusercontent.com/u/24355136?v=4"
-          },
-          create_time: "1548380272142",
-          edit_time: "1548380272142"
-        },
-        {
-          _id: "5c4a6870f6aa8dba3095dafb",
-          article_id: "5c3d8268ca6b105455e60b16",
-          content:
-            "明明是个缺心眼的娃，怎么想法就多呢，五花八门层出不穷，有点佩服自己了。开个淘宝店做业务考学力短期旅行义工旅行穷游咖啡馆。。。。大致的例了这段时间的想法，额，真的不少；但是真正去执行的是哪个",
-          user: {
-            user_id: "5c3c20482975bdf2f027c822",
-            user_name: "sa0012",
-            user_avatar: "https://avatars3.githubusercontent.com/u/24355136?v=4"
-          },
-          create_time: "1548380272142",
-          edit_time: "1548380272142"
-        },
-        {
-          _id: "5c4a6870f6aa8dba3095dafb",
-          article_id: "5c3d8268ca6b105455e60b16",
-          content:
-            "明明是个缺心眼的娃，怎么想法就多呢，五花八门层出不穷，有点佩服自己了。开个淘宝店做业务考学力短期旅行义工旅行穷游咖啡馆。。。。大致的例了这段时间的想法，额，真的不少；但是真正去执行的是哪个",
-          user: {
-            user_id: "5c3c20482975bdf2f027c822",
-            user_name: "sa0012",
-            user_avatar: "https://avatars3.githubusercontent.com/u/24355136?v=4"
-          },
-          create_time: "1548380272142",
-          edit_time: "1548380272142"
-        },
-        {
-          _id: "5c4a6870f6aa8dba3095dafb",
-          article_id: "5c3d8268ca6b105455e60b16",
-          content:
-            "明明是个缺心眼的娃，怎么想法就多呢，五花八门层出不穷，有点佩服自己了。开个淘宝店做业务考学力短期旅行义工旅行穷游咖啡馆。。。。大致的例了这段时间的想法，额，真的不少；但是真正去执行的是哪个",
-          user: {
-            user_id: "5c3c20482975bdf2f027c822",
-            user_name: "sa0012",
-            user_avatar: "https://avatars3.githubusercontent.com/u/24355136?v=4"
-          },
-          create_time: "1548380272142",
-          edit_time: "1548380272142"
-        }
+        // {
+        //   _id: "5c4a6870f6aa8dba3095dafb",
+        //   article_id: "5c3d8268ca6b105455e60b16",
+        //   content:
+        //     "明明是个缺心眼的娃，怎么想法就多呢，五花八门层出不穷，有点佩服自己了。开个淘宝店做业务考学力短期旅行义工旅行穷游咖啡馆。。。。大致的例了这段时间的想法，额，真的不少；但是真正去执行的是哪个",
+        //   user: {
+        //     user_id: "5c3c20482975bdf2f027c822",
+        //     user_name: "sa0012",
+        //     user_avatar: "https://avatars3.githubusercontent.com/u/24355136?v=4"
+        //   },
+        //   create_time: "1548380272142",
+        //   edit_time: "1548380272142"
+        // },
       ],
       formLabelAlign: {
         name: "",

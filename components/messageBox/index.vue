@@ -50,7 +50,24 @@ export default {
           user_name: "",
           user_avatar: ""
         }
-      }
+      },
+      queryFatherComment: {
+        page: 1,
+        size: 10,
+        article_id: ""
+      },
+      comments: [{
+        _id: '',
+        article_id: '',
+        content: "",
+        user: {
+          user_id: "",
+          user_name: "",
+          user_avatar: ""
+        },
+        create_time: "",
+        edit_time: "",
+      }]
     };
   },
   computed: {
@@ -59,30 +76,36 @@ export default {
     },
     loginMsg() {
       return this.$store.state.login;
-    }
+    },
+    fatherComments() {}
   },
   methods: {
-    queryCommentList(articleId) {
-      this.queryFatherComment.article_id = articleId;
+    queryCommentList() {
+      this.queryFatherComment.article_id = this.$route.params.detail;
       $http
         .post("/comment/queryCommentList", this.queryFatherComment)
         .then(res => {
-          console.log(res.data.list, "lsit");
-          // this.fatherCommentList = res.data.list;
+          this.comments = res.data.list;
+          this.$emit('throwComments', this.comments)
+          console.log(this.comments, 'comments')
+          this.$store.dispatch('FATHER_COMMENTS', this.comments)
         });
     },
     startComment() {
       const config = {
         article_id: this.$route.params.detail,
         content: this.content,
-        "user": {
-          "user_id": this.userMsg._id,
-          "user_name": this.userMsg.user_id,
-          "user_avatar": this.userMsg.avatar
+        user: {
+          user_id: this.userMsg._id,
+          user_name: this.userMsg.user_id,
+          user_avatar: this.userMsg.avatar
         }
       };
       $http.post("/comment/saveComment", config).then(res => {
-        console.log(res)
+        console.log(res);
+        if (res.data === "SUCCESS") {
+          this.queryCommentList();
+        }
       });
     },
     handleLogin() {
@@ -210,6 +233,9 @@ export default {
       return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
     }
   },
+  created() {
+    this.queryCommentList();
+  },
   components: {
     EmojiComponent
   }
@@ -221,7 +247,7 @@ export default {
   position: relative;
   height: 150px;
   margin-top: 50px;
-  z-index: 555;
+  z-index: 333;
 
   .emoji-cop {
     background: #fff;

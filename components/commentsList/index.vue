@@ -1,7 +1,7 @@
 <template>
   <div class="news-comments">
     <h3 class="comments-title">最新评论</h3>
-    <ul class="comments-list" v-for="(item, i) in 10" :key="i">
+    <ul class="comments-list">
       <li class="comments-item" v-for="(comment, index) in comments" :key="index">
         <div class="comments-avatar">
           <img v-lazy="comment.user.user_avatar" alt="avatar" class="user-avatar">
@@ -29,29 +29,10 @@
             </div>
           </div>
         </div>
-
-        <!-- <ul class="second-list">
-          <li class="second-item">
-            <div class="comments-avatar">
-              <img v-lazy="comment.user.user_avatar" alt="avatar" class="user-avatar">
-            </div>
-            <div class="comments-content">
-              <div class="user-name">{{ comment.user.user_name }} 回复 sa0012</div>
-              <div
-                class="content-text"
-                style="display: -webkit-box;
-                    -webkit-box-orient: vertical;
-                    -webkit-line-clamp: 1;
-                    overflow: hidden;"
-              >{{ comment.content }}</div>
-              <div class="create-time">{{ comment.create_time }}</div>
-            </div>
-          </li>
-        </ul>-->
       </li>
     </ul>
 
-    <look-comments :showComments.sync="showComments"></look-comments>
+    <look-comments :showComments.sync="showComments" :singleComment="singleComment"></look-comments>
   </div>
 </template>
 
@@ -61,30 +42,35 @@ import LookComments from "~/components/lookAtComments";
 export default {
   data() {
     return {
-      comments: [
-        {
-          _id: "5c4a6870f6aa8dba3095dafb",
-          article_id: "5c3d8268ca6b105455e60b16",
-          content:
-            "明明是个缺心眼的娃，怎么想法就多呢，五花八门层出不穷，有点佩服自己了。开个淘宝店做业务考学力短期旅行义工旅行穷游咖啡馆。。。。大致的例了这段时间的想法，额，真的不少；但是真正去执行的是哪个",
-          user: {
-            user_id: "5c3c20482975bdf2f027c822",
-            user_name: "sa0012",
-            user_avatar: "https://avatars3.githubusercontent.com/u/24355136?v=4"
-          },
-          create_time: "1548380272142",
-          edit_time: "1548380272142"
-        }
-      ],
       colorsArr: Colors.colorName,
-      showComments: false
+      showComments: false,
+      singleComment: {
+        _id: "",
+        article_id: "",
+        content: "",
+        user: {
+          user_id: "",
+          user_name: "",
+          user_avatar: ""
+        },
+        create_time: "",
+        edit_time: ""
+      }
     };
+  },
+  computed: {
+    comments() {
+      console.log(this.$store.state.fatherComments, "father");
+      return this.$store.state.fatherComments;
+    }
   },
   methods: {
     handleComments(index) {
+      this.singleComment = Object.assign({}, this.comments[index])
       this.showComments = true;
     }
   },
+  mounted() {},
   components: {
     LookComments
   }

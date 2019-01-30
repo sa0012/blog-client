@@ -4,5 +4,8 @@ export default {
   },
   login_msg: (state, data) => {
     state.login = Object.assign({}, data)
+  },
+  father_comments: (state, data) => {
+    state.fatherComments = JSON.parse(JSON.stringify(data));
   }
 }

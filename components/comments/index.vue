@@ -27,23 +27,28 @@ import Colors from "~/plugins/color.js";
 export default {
   data() {
     return {
-      comments: [
-        {
-          _id: "5c4a6870f6aa8dba3095dafb",
-          article_id: "5c3d8268ca6b105455e60b16",
-          content:
-            "明明是个缺心眼的娃，怎么想法就多呢，五花八门层出不穷，有点佩服自己了。开个淘宝店做业务考学力短期旅行义工旅行穷游咖啡馆。。。。大致的例了这段时间的想法，额，真的不少；但是真正去执行的是哪个",
-          user: {
-            user_id: "5c3c20482975bdf2f027c822",
-            user_name: "sa0012",
-            user_avatar: "https://avatars3.githubusercontent.com/u/24355136?v=4"
-          },
-          create_time: "1548380272142",
-          edit_time: "1548380272142"
-        }
-      ],
+      // comments: [
+      //   {
+      //     _id: "5c4a6870f6aa8dba3095dafb",
+      //     article_id: "5c3d8268ca6b105455e60b16",
+      //     content:
+      //       "明明是个缺心眼的娃，怎么想法就多呢，五花八门层出不穷，有点佩服自己了。开个淘宝店做业务考学力短期旅行义工旅行穷游咖啡馆。。。。大致的例了这段时间的想法，额，真的不少；但是真正去执行的是哪个",
+      //     user: {
+      //       user_id: "5c3c20482975bdf2f027c822",
+      //       user_name: "sa0012",
+      //       user_avatar: "https://avatars3.githubusercontent.com/u/24355136?v=4"
+      //     },
+      //     create_time: "1548380272142",
+      //     edit_time: "1548380272142"
+      //   }
+      // ],
       colorsArr: Colors.colorName
     };
+  },
+  computed: {
+    comments() {
+      return this.$store.state.fatherComments;
+    }
   },
   methods: {
     showBackgroundColor() {}
