@@ -1,5 +1,10 @@
 <template>
-  <div class="github-callback">github正在授权登录</div>
+  <div class="github-callback">
+    <div class="content">
+      <img src="~/assets/image/loading.gif" alt class="loading-img">
+      <div class="loading-text">github正在授权登录</div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -43,3 +48,29 @@ export default {
   }
 };
 </script>
+
+
+<style lang="scss" scoped>
+.github-callback {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+
+  .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    .loading-img {
+      width: 320px;
+    }
+
+    .loading-text {
+      text-align: center;
+      padding: 10px 0;
+      color: #666;
+    }
+  }
+}
+</style>
