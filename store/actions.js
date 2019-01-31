@@ -14,5 +14,8 @@ export default {
   FATHER_COMMENTS: ({ commit }, data) => {
     setSession('fatherComments');
     commit('father_comments', data);
+  },
+  SINGLE_COMMENT: ({ commit }, data) => {
+    commit('single_comment', data);
   }
 }

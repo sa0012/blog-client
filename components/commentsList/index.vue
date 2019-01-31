@@ -1,5 +1,8 @@
 <template>
   <div class="comment-root">
+    <div style="text-align: left;">
+      <message-box :publish="startComment"></message-box>
+    </div>
     <div class="news-comments" v-if="comments.length > 0">
       <h3 class="comments-title">最新评论</h3>
       <ul class="comments-list">
@@ -11,8 +14,12 @@
             <div class="user-name">
               <p class="username">{{ comment.user.user_name }}</p>
               <div class="dianzan">
-                <i class="iconfont icon-dianzan"></i>
-                <span class="reply-text">点赞</span>
+                <i
+                  class="iconfont icon-dianzan"
+                  @click="handleLikes(index)"
+                  :style="{ 'color': comment.isLike ? 'red' : '#666' }"
+                ></i>
+                <span class="reply-text">{{ comment.likes }}</span>
               </div>
             </div>
             <div
@@ -34,15 +41,17 @@
         </li>
       </ul>
 
-      <look-comments :showComments.sync="showComments" :singleComment="singleComment"></look-comments>
+      <look-comments :showComments.sync="showComments" v-if="showComments" @updateComment="handleUpdate"></look-comments>
     </div>
-    <div class="no-comment">暂无评论， 快去抢沙发吧</div>
+    <div class="no-comment" v-else>暂无评论， 快去抢沙发吧</div>
   </div>
 </template>
 
 <script>
 import Colors from "~/plugins/color.js";
 import LookComments from "~/components/lookAtComments";
+import MessageBox from "~/components/messageBox";
+import $http from "~/plugins/axios";
 export default {
   data() {
     return {
@@ -59,19 +68,99 @@ export default {
         },
         create_time: "",
         edit_time: ""
-      }
+      },
+      commentList: {
+        article_id: this.$route.params.detail,
+        content: "",
+        user: {
+          user_id: "",
+          user_name: "",
+          user_avatar: ""
+        }
+      },
+      queryFatherComment: {
+        page: 1,
+        size: 10,
+        article_id: ""
+      },
+      comments: [
+        {
+          _id: "",
+          article_id: "",
+          content: "",
+          user: {
+            user_id: "",
+            user_name: "",
+            user_avatar: ""
+          },
+          create_time: "",
+          edit_time: "",
+          likes: 0,
+          isLike: false
+        }
+      ],
+      cIndex: 0
     };
   },
   computed: {
-    comments() {
-      console.log(this.$store.state.fatherComments, "father");
-      return this.$store.state.fatherComments;
+    userMsg() {
+      return this.$store.state.user;
+    },
+    loginMsg() {
+      return this.$store.state.login;
     }
   },
   methods: {
+    handleUpdate() {
+      this.queryCommentList();
+    },
+    startComment(content) {
+      const config = {
+        article_id: this.$route.params.detail,
+        content: content,
+        user: {
+          user_id: this.userMsg._id,
+          user_name: this.userMsg.user_id,
+          user_avatar: this.userMsg.avatar
+        }
+      };
+      $http.post("/comment/saveComment", config).then(res => {
+        console.log(res);
+        if (res.data === "SUCCESS") {
+          this.queryCommentList();
+        }
+      });
+    },
+    queryCommentList() {
+      this.queryFatherComment.article_id = this.$route.params.detail;
+      $http
+        .post("/comment/queryCommentList", this.queryFatherComment)
+        .then(res => {
+          this.comments = res.data.list;
+          this.$emit("throwComments", this.comments);
+          console.log(this.comments, "comments");
+          this.$store.dispatch("FATHER_COMMENTS", this.comments);
+        });
+    },
+    handleLikes(index) {
+      this.comments[index].isLike = !this.comments[index].isLike;
+      let config = {
+        article_id: this.comments[index].article_id,
+        _id: this.comments[index]._id,
+        isLike: this.comments[index].isLike
+      };
+
+      $http.post("/comment/confirmLikes", config).then(res => {
+        console.log(res, "likes");
+        this.queryCommentList();
+      });
+    },
     handleComments(index) {
       this.singleComment = Object.assign({}, this.comments[index]);
-      this.showComments = true;
+      this.$store.dispatch("SINGLE_COMMENT", this.singleComment).then(res => {
+        console.log(res, "slsllsllslslsll");
+        this.showComments = true;
+      });
     },
     // 将匹配结果替换表情图片
     emotion(res) {
@@ -187,9 +276,12 @@ export default {
       return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
     }
   },
-  mounted() {},
+  mounted() {
+    this.queryCommentList();
+  },
   components: {
-    LookComments
+    LookComments,
+    MessageBox
   }
 };
 </script>

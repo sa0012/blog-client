@@ -3,11 +3,11 @@
     <header-nav></header-nav>
     <el-row class="content">
       <bread-nav :navArr="navArr"></bread-nav>
-      <article-detail></article-detail>
+      <article-detail :articleId="articleId"></article-detail>
       <h3 class="comments-title first-title">发表评论</h3>
-      <el-col :span="24" style="text-align: left;">
+      <!-- <el-col :span="24" style="text-align: left;">
         <message-box></message-box>
-      </el-col>
+      </el-col> -->
       <el-col :span="24" style="text-align: left;">
         <comments-list></comments-list>
       </el-col>
@@ -20,8 +20,8 @@
 import HeaderNav from "~/components/header/header.vue";
 import NetFooter from "~/components/footer";
 import BreadNav from "~/components/breadNav";
-import MessageBox from "~/components/messageBox";
-import $http from "~/plugins/axios";
+// import MessageBox from "~/components/messageBox";
+
 export default {
   head() {
     return {
@@ -45,23 +45,19 @@ export default {
     };
   },
   created() {
-    this.articleDetail()
+    // this.articleDetail()
     console.log(this.$route, "route");
   },
   components: {
     HeaderNav,
     NetFooter,
     BreadNav,
-    MessageBox,
+    // MessageBox,
     ArticleDetail: () => import("~/components/articleDetail"),
     CommentsList: () => import("~/components/commentsList")
   },
   methods: {
-    articleDetail() {
-      $http.post("/article/findOneArticle", { _id: this.articleId }).then(res => {
-        // console.log(res);
-      });
-    },
+    
     handleCurrentChange() {}
   }
 };

@@ -31,8 +31,27 @@ const login = JSON.parse(getSession('login')) || {
   showLogin: false,
   loginType: "login",
 }
+
+const singleComment = {
+  type: Object,
+  default: {
+    _id: "",
+    article_id: "",
+    content: "",
+    user: {
+      user_id: "",
+      user_name: "",
+      user_avatar: ""
+    },
+    create_time: "",
+    edit_time: "",
+    likes: 0,
+    isLike: false
+  }
+}
 export default {
   user,
   login,
-  fatherComments
+  fatherComments,
+  everyOne: singleComment
 }

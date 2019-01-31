@@ -1,8 +1,8 @@
 <template>
-  <div class="fillcontain category" ref="category" v-show="showComments">
+  <div class="fillcontain category" ref="category" v-if="showComments">
     <section class="category-wrap">
       <div class="top-title">
-        <h3 class="category-title">23条回复</h3>
+        <h3 class="category-title">{{ replyComments.length }}条回复</h3>
         <i class="el-icon-close close-icon" @click="close"></i>
       </div>
 
@@ -16,8 +16,12 @@
               <div class="user-name">
                 <p class="username">{{ singleComment.user.user_name }}</p>
                 <div class="dianzan">
-                  <i class="iconfont icon-dianzan"></i>
-                  <span class="reply-text">点赞</span>
+                  <i
+                    class="iconfont icon-dianzan"
+                    @click="handleLikes"
+                    :style="{ 'color': singleComment.isLike ? 'red' : '#666' }"
+                  ></i>
+                  <span class="reply-text">{{ singleComment.likes }}</span>
                 </div>
               </div>
               <div
@@ -94,21 +98,6 @@ export default {
     showComments: {
       type: Boolean,
       default: false
-    },
-    singleComment: {
-      type: Object,
-      default: {
-        _id: "",
-        article_id: "",
-        content: "",
-        user: {
-          user_id: "",
-          user_name: "",
-          user_avatar: ""
-        },
-        create_time: "",
-        edit_time: ""
-      }
     }
   },
   data() {
@@ -170,17 +159,21 @@ export default {
   computed: {
     userMsg() {
       return this.$store.state.user;
+    },
+    singleComment() {
+      return this.$store.state.everyOne;
     }
   },
   watch: {
     showComments(newVal, oldVal) {
       if (newVal) {
-        this.queryReplyCommentsList(this.singleComment._id);
-        this.commentId = this.singleComment._id;
       }
     }
   },
-  created() {},
+  created() {
+    this.queryReplyCommentsList(this.singleComment._id);
+    this.commentId = this.singleComment._id;
+  },
   methods: {
     publish() {
       const config = {
@@ -194,13 +187,26 @@ export default {
         // 被评论人信息
         reply_to_user: this.singleComment.user,
         //评论内容
-        content: this.content
+        content: this.content,
+        article_id: this.singleComment.article_id
       };
 
       $http.post("/comment/replySave", config).then(res => {
         if (res.data === "SUCCESS") {
           this.queryReplyCommentsList(this.commentId);
         }
+      });
+    },
+    handleLikes() {
+      this.singleComment.isLike = !this.singleComment.isLike;
+      let config = {
+        article_id: this.singleComment.article_id,
+        _id: this.singleComment._id,
+        isLike: this.singleComment.isLike
+      };
+
+      $http.post("/comment/confirmLikes", config).then(res => {
+        this.$store.dispatch("SINGLE_COMMENT", res.data);
       });
     },
     queryReplyCommentsList(id) {
@@ -213,6 +219,7 @@ export default {
     },
     close() {
       this.$emit("update:showComments", false);
+      this.$emit('updateComment')
     },
     handleComments(id) {
       console.log(id, "commentId");
@@ -354,7 +361,7 @@ export default {
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 4444;
+  z-index: 444;
 
   .category-wrap {
     position: absolute;

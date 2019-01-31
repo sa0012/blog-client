@@ -7,5 +7,8 @@ export default {
   },
   father_comments: (state, data) => {
     state.fatherComments = JSON.parse(JSON.stringify(data));
+  },
+  single_comment: (state, data) => {
+    state.everyOne = Object.assign({}, data);
   }
 }
