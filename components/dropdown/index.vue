@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { removeSession } from '~/common/mutils';
 export default {
   data() {
     return {
@@ -32,7 +33,8 @@ export default {
     quitLogin() {
       this.userMsg.isLogin = false;
       this.$store.dispatch("USER_MSG", this.userMsg)
-      this.$router.push(`/`);
+      this.$router.push(this.$route.path);
+      removeSession('user');
     }
   },
   created() {
