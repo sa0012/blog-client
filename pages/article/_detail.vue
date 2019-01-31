@@ -13,6 +13,7 @@
       </el-col>
     </el-row>
     <net-footer></net-footer>
+    <nav-tip></nav-tip>
   </section>
 </template>
 
@@ -20,6 +21,7 @@
 import HeaderNav from "~/components/header/header.vue";
 import NetFooter from "~/components/footer";
 import BreadNav from "~/components/breadNav";
+import NavTip from '~/components/navTip';
 // import MessageBox from "~/components/messageBox";
 
 export default {
@@ -52,6 +54,7 @@ export default {
     HeaderNav,
     NetFooter,
     BreadNav,
+    NavTip,
     // MessageBox,
     ArticleDetail: () => import("~/components/articleDetail"),
     CommentsList: () => import("~/components/commentsList")
