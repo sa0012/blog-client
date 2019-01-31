@@ -12,10 +12,14 @@ export default {
     commit('login_msg', data);
   },
   FATHER_COMMENTS: ({ commit }, data) => {
-    setSession('fatherComments');
+    setSession('fatherComments', data);
     commit('father_comments', data);
   },
   SINGLE_COMMENT: ({ commit }, data) => {
     commit('single_comment', data);
+  },
+  CURRENT_ROUTE: ({ commit }, data) => {
+    setSession('currentRoute', data);
+    commit('current_route', data)
   }
 }

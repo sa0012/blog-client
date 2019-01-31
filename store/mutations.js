@@ -10,5 +10,8 @@ export default {
   },
   single_comment: (state, data) => {
     state.everyOne = Object.assign({}, data);
+  },
+  current_route: (state, data) => {
+    state.current_route = data;
   }
 }

@@ -138,8 +138,7 @@ export default {
         .then(res => {
           this.comments = res.data.list;
           this.$emit("throwComments", this.comments);
-          console.log(this.comments, "comments");
-          this.$store.dispatch("FATHER_COMMENTS", this.comments);
+          // this.$store.dispatch("FATHER_COMMENTS", this.comments);
         });
     },
     handleLikes(index) {

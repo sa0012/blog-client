@@ -86,12 +86,15 @@ export default {
       // this.$emit("update:showLogin", false);
       this.loginMsg.showLogin = false;
       this.$store.dispatch('LOGIN_MSG', this.loginMsg);
+      removeSession('user');
     },
     githubLogin() {
-      $http.get('/github/login').then(res => {
-        window.location.href = res.data
+      console.log(this.$route)
+      $http.get('/github/client').then(res => {
+        this.$store.dispatch('CURRENT_ROUTE', this.$route.path)
+        console.log(res, 'github')
+        window.location.href = res
         window.localStorage.setItem('GITHUB_LOGIN_REDIRECT_URL', `${this.$route.path}?comment=new`);
-
       })
       // window.location.href = 'https://github.com/login/oauth/authorize?client_id=1f08860dca3e7b4499a5&redirect_uri=http://192.168.31.230:8080/login&scope=User';
 
@@ -107,7 +110,6 @@ export default {
       $http.post('/user/login', this.loginForm).then(res => {
         if (res.code == 200) {
           res.data.isLogin = true;
-          console.log(res.data, 'data')
           this.$store.dispatch('USER_MSG', res.data);
           this.$message.success('登陆成功')
           this.loginMsg.showLogin = false;

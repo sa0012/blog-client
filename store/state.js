@@ -1,7 +1,7 @@
 import {
   getSession
 } from '~/common/mutils';
-const user = JSON.parse(getSession('user')) || {
+let user =  {
   user_id: '',
   avatar: '',
   _id: '',
@@ -22,8 +22,12 @@ let fatherComments = [{
   create_time: "",
   edit_time: "",
 }]
+
+let route = '/'
 try {
+  user = JSON.parse(getSession('user')) || user;
   fatherComments = JSON.parse(getSession('fatherComments')) || fatherComments
+  route = getSession('currentRoute') || route
 } catch (e) {}
 
 
@@ -53,5 +57,6 @@ export default {
   user,
   login,
   fatherComments,
-  everyOne: singleComment
+  everyOne: singleComment,
+  currentRoute: route
 }

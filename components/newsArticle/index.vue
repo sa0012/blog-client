@@ -29,11 +29,11 @@
             <div class="item-footer">
               <div class="bd-count" style="padding-right: 15px;">
                 <i class="iconfont icon-count count-icon"></i>
-                <span>{{ news.browse }}次浏览</span>
+                <span>{{ news.browser_count }}次浏览</span>
               </div>
               <div class="bd-count">
                 <i class="iconfont icon-custom-comment count-icon"></i>
-                <span>{{ news.commentCount }}条评论</span>
+                <span>{{ news.comments_count }}条评论</span>
               </div>
               <nuxt-link :to="'/article/' + news._id">
                 <el-button type="primary" size="mini" class="read-btn">阅读全文</el-button>
