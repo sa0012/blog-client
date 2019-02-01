@@ -19,7 +19,7 @@
                   <i
                     class="iconfont icon-dianzan"
                     @click="handleLikes"
-                    :style="{ 'color': singleComment.user.isLike ? 'red' : '#666' }"
+                    :style="{ 'color': userMsg._id && ((singleComment.user.user_id === userMsg._id && singleComment.user.isLike) || (singleComment.user.user_id !== userMsg._id && singleComment.reply_like)) ? 'red' : '#666' }"
                   ></i>
                   <span class="reply-text">{{ singleComment.likes }}</span>
                 </div>
@@ -49,13 +49,15 @@
                 <p class="username">
                   <span @click="handleComments(reply, 'author', 'me')">{{ reply.user.user_name }}</span>
                   <span style="color: #000;">回复</span>
-                  <span @click="handleComments(reply, 'reply', 'you')">{{ reply.reply_to_user.user_name }}</span>
+                  <span
+                    @click="handleComments(reply, 'reply', 'you')"
+                  >{{ reply.reply_to_user.user_name }}</span>
                 </p>
                 <div class="dianzan">
                   <i
                     class="iconfont icon-dianzan"
                     @click="handleReplyLikes(reply)"
-                    :style="{ 'color': reply.user.isLike ? 'red' : '#666' }"
+                    :style="{ 'color': userMsg._id && ((reply.user.user_id === userMsg._id && reply.user.isLike) || (reply.user.user_id !== userMsg._id && reply.reply_like)) ? 'red' : '#666' }"
                   ></i>
                   <span class="reply-text">{{ reply.likes }}</span>
                 </div>
@@ -119,13 +121,17 @@ export default {
           user: {
             user_id: "",
             user_name: "",
-            user_avatar: ""
+            user_avatar: "",
+            isLike: false
           },
           reply_to_user: {
             user_id: "",
             user_name: "",
-            user_avatar: ""
+            user_avatar: "",
+            isLike: false
           },
+          isWhoLike: "ME",
+          reply_like: false,
           create_time: "",
           edit_time: ""
         }
@@ -135,15 +141,19 @@ export default {
         user: {
           user_id: "",
           user_name: "",
-          user_avatar: ""
+          user_avatar: "",
+          isLike: false
         },
 
         // 被评论人信息
         reply_to_user: {
           user_name: "",
           user_id: "",
-          user_avatar: ""
+          user_avatar: "",
+          isLike: false
         },
+        isWhoLike: "ME",
+        reply_like: false,
         //评论内容
         content: ""
       },
@@ -166,10 +176,19 @@ export default {
       reply_user: {
         user_avatar: "",
         user_id: "",
-        user_name: ""
+        user_name: "",
+        isLike: false
       },
       reply_content: "",
-      isMain: 'main'
+      isMain: "main",
+
+      isLike: false,
+      isWho: "ME",
+      replyLike: false,
+
+      isReplyLike: false,
+      isReplyWho: "ME",
+      replyLikeReply: false
     };
   },
   computed: {
@@ -206,7 +225,7 @@ export default {
         reply_to_user: this.reply_user,
         //评论内容
         content:
-          (this.commentType === "author" && this.isMain === 'main')
+          this.commentType === "author" && this.isMain === "main"
             ? this.content
             : this.content +
               ` // ` +
@@ -228,38 +247,83 @@ export default {
       });
     },
     handleLikes() {
-      let like = this.singleComment.user.isLike;
-      like = !like;
+      // 自己为自己点赞
+      if (this.userMsg._id === this.singleComment.user.user_id) {
+        this.isWho = "ME";
+        this.isLike = this.singleComment.user.isLike;
+        this.isLike = !this.isLike;
+        this.replyLike = false;
+      } else {
+        // 自己对别人的评论点赞
+        console.log(this.replyLike, "自己对别人");
+        this.replyLike = this.singleComment.reply_like;
+        this.replyLike = !this.replyLike;
+        this.isWho = "YOU";
+        this.isLike = false;
+      }
+
       let config = {
         article_id: this.singleComment.article_id,
         _id: this.singleComment._id,
+        isWhoLike: this.isWho,
+        reply_like: this.replyLike,
         user: {
           user_id: this.singleComment.user.user_id,
           user_name: this.singleComment.user.user_name,
           user_avatar: this.singleComment.user.user_avatar,
-          isLike: like
+          isLike: this.isLike
         }
       };
+
+      console.log(config, "config_reply");
 
       $http.post("/comment/confirmLikes", config).then(res => {
         this.$store.dispatch("SINGLE_COMMENT", res.data);
       });
     },
     handleReplyLikes(reply) {
-      let like = reply.user.isLike;
-      like = !like;
-      const config = {
+      // let like = reply.user.isLike;
+      // like = !like;
+      // const config = {
+      //   comment_id: reply.comment_id,
+      //   _id: reply._id,
+      //   user: {
+      //     user_id: reply.user.user_id,
+      //     user_name: reply.user.user_name,
+      //     user_avatar: reply.user.user_avatar,
+      //     isLike: like
+      //   }
+      // };
+
+      // 自己为自己点赞
+      if (this.userMsg._id === reply.user.user_id) {
+        this.isReplyWho = "ME";
+        this.isReplyLike = reply.user.isLike;
+        this.isReplyLike = !this.isReplyLike;
+        this.replyLike = false;
+      } else {
+        // 自己对别人的评论点赞
+        console.log(this.replyLike, "自己对别人");
+        this.replyLikeReply = reply.reply_like;
+        this.replyLikeReply = !this.replyLikeReply;
+        this.isReplyWho = "YOU";
+        this.isReplyLike = false;
+      }
+
+      let config = {
         comment_id: reply.comment_id,
         _id: reply._id,
+        isWhoLike: this.isReplyWho,
+        reply_like: this.replyLikeReply,
         user: {
           user_id: reply.user.user_id,
           user_name: reply.user.user_name,
           user_avatar: reply.user.user_avatar,
-          isLike: like
+          isLike: this.isReplyLike
         }
       };
 
-      console.log(config, 'config')
+      console.log(config, "config_reply_config");
 
       $http.post("/comment/ReplyLikes", config).then(res => {
         this.queryReplyCommentsList(config.comment_id);
@@ -278,7 +342,7 @@ export default {
       this.$emit("updateComment");
     },
     handleComments(info, type, mainType) {
-      console.log(info, 'info')
+      console.log(info, "info");
       this.$refs["input"].focus();
       this.commentType = type;
       this.reply_content = info.content;

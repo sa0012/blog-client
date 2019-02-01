@@ -60,7 +60,6 @@ export default {
       "Content-Type": "application/json; charset=utf-8"
     }
     service[method](url, req, headers).then(res => {
-      console.log(res, 'getREsponse')
       if (res.code != 200) {
         new Vue().$message.error(res.msg)
       }
@@ -77,12 +76,10 @@ export default {
     headers = headers && headers.headers ? headers.headers : {
       "Content-Type": "application/json; charset=utf-8",
     }
-    console.log(headers, 'headers')
     service[method](url, req, headers).then(res => {
       if (res.code != 200) {
         new Vue().$message.error(res.msg)
       }
-      console.log(res, 'post')
       resolve && res && typeof res !== 'undefined' && resolve(res)
     }, error => {
       reject && reject(error)
