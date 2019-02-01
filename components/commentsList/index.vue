@@ -41,7 +41,11 @@
         </li>
       </ul>
 
-      <look-comments :showComments.sync="showComments" v-if="showComments" @updateComment="handleUpdate"></look-comments>
+      <look-comments
+        :showComments.sync="showComments"
+        v-if="showComments"
+        @updateComment="handleUpdate"
+      ></look-comments>
     </div>
     <div class="no-comment" v-else>暂无评论， 快去抢沙发吧</div>
   </div>
@@ -142,11 +146,16 @@ export default {
         });
     },
     handleLikes(index) {
-      this.comments[index].isLike = !this.comments[index].isLike;
+      let like = this.comments[index].isLike;
+      if (like) {
+        like = !like;
+      } else {
+        like = true;
+      }
       let config = {
         article_id: this.comments[index].article_id,
         _id: this.comments[index]._id,
-        isLike: this.comments[index].isLike
+        isLike: like
       };
 
       $http.post("/comment/confirmLikes", config).then(res => {

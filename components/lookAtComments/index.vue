@@ -30,7 +30,7 @@
               ></div>
               <div class="create-time" style="padding-top: 5px;">
                 <p class="time">{{ singleComment.create_time }}</p>
-                <div class="answer-wrap">
+                <div class="answer-wrap" @click="handleComments(singleComment, 'author')">
                   <i class="iconfont icon-custom-comment"></i>
                   <span class="reply-text">回复</span>
                 </div>
@@ -47,13 +47,17 @@
             <div class="comments-content">
               <div class="user-name">
                 <p class="username">
-                  {{ reply.user.user_name }}
+                  <span @click="handleComments(reply, 'author')">{{ reply.user.user_name }}</span>
                   <span style="color: #000;">回复</span>
-                  {{ reply.reply_to_user.user_name }}
+                  <span @click="handleComments(reply, 'reply')">{{ reply.reply_to_user.user_name }}</span>
                 </p>
                 <div class="dianzan">
-                  <i class="iconfont icon-dianzan"></i>
-                  <span class="reply-text">点赞</span>
+                  <i
+                    class="iconfont icon-dianzan"
+                    @click="handleReplyLikes(reply)"
+                    :style="{ 'color': reply.isLike ? 'red' : '#666' }"
+                  ></i>
+                  <span class="reply-text">{{ reply.likes }}</span>
                 </div>
               </div>
               <div
@@ -62,9 +66,13 @@
               ></div>
               <div class="create-time" style="padding-top: 5px;">
                 <p class="time">{{ reply.create_time }}</p>
-                <div class="answer-wrap" @click="handleComments(reply._id)">
+                <div class="answer-wrap" @click="handleComments(reply, 'reply')">
                   <i class="iconfont icon-custom-comment"></i>
                   <span class="reply-text">回复</span>
+                </div>
+                <div class="reply-delete answer-wrap" v-if="userMsg._id === reply.user.user_id">
+                  <i class="el-icon-delete"></i>
+                  <span>删除</span>
                 </div>
               </div>
             </div>
@@ -77,7 +85,7 @@
           <textarea class="text" rows="5" v-model="content" ref="input"></textarea>
           <i class="iconfont icon-smile emoji-icon" @click="showEmoji = !showEmoji"></i>
         </el-col>
-        <el-button style="margin-left: 20px;" @click="publish(commentId)">发布</el-button>
+        <el-button style="margin-left: 20px;" @click="publish()">发布</el-button>
         <emoji-component
           v-show="showEmoji"
           @emotion="handleEmotion"
@@ -153,7 +161,13 @@ export default {
       comment: "",
       showEmoji: false,
       isFocus: true,
-      commentId: ""
+      commentId: "",
+      commentType: "author",
+      reply_user: {
+        user_avatar: "",
+        user_id: "",
+        user_name: ""
+      }
     };
   },
   computed: {
@@ -161,6 +175,7 @@ export default {
       return this.$store.state.user;
     },
     singleComment() {
+      this.reply_user = Object.assign({}, this.$store.state.everyOne.user);
       return this.$store.state.everyOne;
     }
   },
@@ -173,6 +188,7 @@ export default {
   created() {
     this.queryReplyCommentsList(this.singleComment._id);
     this.commentId = this.singleComment._id;
+    console.log(this.singleComment, "single");
   },
   methods: {
     publish() {
@@ -185,28 +201,47 @@ export default {
         },
 
         // 被评论人信息
-        reply_to_user: this.singleComment.user,
+        reply_to_user: this.reply_user,
         //评论内容
-        content: this.content,
+        content:
+          this.commentType === "author"
+            ? this.content
+            : this.content + `// @${this.reply_user.user_name}`,
         article_id: this.singleComment.article_id
       };
 
       $http.post("/comment/replySave", config).then(res => {
         if (res.data === "SUCCESS") {
-          this.queryReplyCommentsList(this.commentId);
+          this.$refs["input"].blur();
+          this.commentType = "author";
+          this.queryReplyCommentsList(config.comment_id);
         }
       });
     },
     handleLikes() {
-      this.singleComment.isLike = !this.singleComment.isLike;
+      let like = this.singleComment.isLike;
+      like = !like;
       let config = {
         article_id: this.singleComment.article_id,
         _id: this.singleComment._id,
-        isLike: this.singleComment.isLike
+        isLike: like
       };
 
       $http.post("/comment/confirmLikes", config).then(res => {
         this.$store.dispatch("SINGLE_COMMENT", res.data);
+      });
+    },
+    handleReplyLikes(reply) {
+      let like = reply.isLike;
+      like = !like;
+      const config = {
+        comment_id: reply.comment_id,
+        _id: reply._id,
+        isLike: like
+      };
+
+      $http.post("/comment/ReplyLikes", config).then(res => {
+        this.queryReplyCommentsList(config.comment_id);
       });
     },
     queryReplyCommentsList(id) {
@@ -219,13 +254,17 @@ export default {
     },
     close() {
       this.$emit("update:showComments", false);
-      this.$emit('updateComment')
+      this.$emit("updateComment");
     },
-    handleComments(id) {
-      console.log(id, "commentId");
-      this.isFocus = true;
+    handleComments(info, type) {
+      console.log(info, "info");
       this.$refs["input"].focus();
-      this.commentId = id;
+      this.commentType = type;
+      if (type === "author") {
+        this.reply_user = Object.assign({}, info.user);
+      } else {
+        this.reply_user = Object.assign({}, info.reply_to_user);
+      }
     },
     handleEmotion(i) {
       this.content += i;
