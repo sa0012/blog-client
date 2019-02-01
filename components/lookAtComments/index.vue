@@ -167,7 +167,8 @@ export default {
         user_avatar: "",
         user_id: "",
         user_name: ""
-      }
+      },
+      reply_content: ""
     };
   },
   computed: {
@@ -206,7 +207,14 @@ export default {
         content:
           this.commentType === "author"
             ? this.content
-            : this.content + `// @${this.reply_user.user_name}`,
+            : this.content +
+              ` // ` +
+              "<span>" +
+              "@" +
+              this.reply_user.user_name +
+              ":" +
+              "</span>" +
+              ` ${this.reply_content}`,
         article_id: this.singleComment.article_id
       };
 
@@ -260,6 +268,7 @@ export default {
       console.log(info, "info");
       this.$refs["input"].focus();
       this.commentType = type;
+      this.reply_content = info.content;
       if (type === "author") {
         this.reply_user = Object.assign({}, info.user);
       } else {
@@ -497,10 +506,6 @@ export default {
         color: #666;
       }
     }
-
-    .content-text {
-      // @include no-wrap(2);
-    }
   }
 
   .time,
@@ -564,5 +569,13 @@ textarea {
   }
 }
 </style>
+
+<style>
+.content-text span {
+  color: blue;
+  font-weight: bold;
+}
+</style>
+
 
 

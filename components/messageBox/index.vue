@@ -15,19 +15,19 @@
         <div class="expression">
           <i class="iconfont icon-smile emoji-icon" @click="showEmoji = !showEmoji"></i>
           <span class="leave-text">表情</span>
-          <emoji-component
-            v-show="showEmoji"
-            @emotion="handleEmotion"
-            :height="200"
-            style="width: 300px;"
-            class="emoji-cop"
-          ></emoji-component>
         </div>
         <div class="upload">
           <i class="el-icon-picture"></i>
           <span class="leave-text">图片</span>
         </div>
         <div class="login" @click="startComment">发表评论</div>
+        <emoji-component
+            v-show="showEmoji"
+            @emotion="handleEmotion"
+            :height="200"
+            style="width: 300px;"
+            class="emoji-cop"
+          ></emoji-component>
       </div>
     </div>
   </div>
