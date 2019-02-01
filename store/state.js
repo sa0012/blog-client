@@ -17,10 +17,14 @@ let fatherComments = [{
   user: {
     user_id: "",
     user_name: "",
-    user_avatar: ""
+    user_avatar: "",
+    isLike: false
   },
+  isWhoLike: 'ME',
+  reply_like: false,
   create_time: "",
   edit_time: "",
+  likes: 0
 }]
 
 let route = '/'
@@ -45,12 +49,12 @@ const singleComment = {
     user: {
       user_id: "",
       user_name: "",
-      user_avatar: ""
+      user_avatar: "",
+      isLike: false
     },
     create_time: "",
     edit_time: "",
     likes: 0,
-    isLike: false
   }
 }
 export default {

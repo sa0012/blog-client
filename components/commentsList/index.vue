@@ -17,7 +17,7 @@
                 <i
                   class="iconfont icon-dianzan"
                   @click="handleLikes(index)"
-                  :style="{ 'color': comment.isLike ? 'red' : '#666' }"
+                  :style="{ 'color': userMsg._id && ((comment.user.user_id === userMsg._id && comment.user.isLike) || (comment.user.user_id !== userMsg._id && comment.reply_like)) ? 'red' : '#666' }"
                 ></i>
                 <span class="reply-text">{{ comment.likes }}</span>
               </div>
@@ -68,8 +68,12 @@ export default {
         user: {
           user_id: "",
           user_name: "",
-          user_avatar: ""
+          user_avatar: "",
+          isLike: false
         },
+        reply_like: false,
+        isWhoLike: 'ME',
+        likes: 0,
         create_time: "",
         edit_time: ""
       },
@@ -79,7 +83,8 @@ export default {
         user: {
           user_id: "",
           user_name: "",
-          user_avatar: ""
+          user_avatar: "",
+          isLike: false
         }
       },
       queryFatherComment: {
@@ -95,15 +100,20 @@ export default {
           user: {
             user_id: "",
             user_name: "",
-            user_avatar: ""
+            user_avatar: "",
+            isLike: false
           },
           create_time: "",
           edit_time: "",
           likes: 0,
-          isLike: false
+          reply_like: false,
+          isWhoLike: 'ME'
         }
       ],
-      cIndex: 0
+      cIndex: 0,
+      isLike: false,
+      isWho: 'ME',
+      replyLike: false
     };
   },
   computed: {
@@ -126,7 +136,9 @@ export default {
           user_id: this.userMsg._id,
           user_name: this.userMsg.user_id,
           user_avatar: this.userMsg.avatar
-        }
+        },
+        reply_like: false,
+        isWhoLike: 'ME'
       };
       $http.post("/comment/saveComment", config).then(res => {
         console.log(res);
@@ -146,27 +158,42 @@ export default {
         });
     },
     handleLikes(index) {
-      let like = this.comments[index].isLike;
-      if (like) {
-        like = !like;
+      // 自己为自己点赞
+      if (this.userMsg._id === this.comments[index].user.user_id) {
+        this.isWho = 'ME';
+        this.isLike = this.comments[index].user.isLike;
+        this.isLike = !this.isLike;
+        this.replyLike = false;
       } else {
-        like = true;
+        // 自己对别人的评论点赞
+        console.log(this.replyLike, '自己对别人')
+        this.replyLike = !this.replyLike;
+        this.isWho = 'YOU';
+        this.isLike = false;
       }
+
       let config = {
         article_id: this.comments[index].article_id,
         _id: this.comments[index]._id,
-        isLike: like
+        isWhoLike: this.isWho,
+        reply_like: this.replyLike,
+        user: {
+          user_id: this.comments[index].user.user_id,
+          user_name: this.comments[index].user.user_name,
+          user_avatar: this.comments[index].user.user_avatar,
+          isLike: this.isLike
+        }
       };
 
+      console.log(config, 'config')
+
       $http.post("/comment/confirmLikes", config).then(res => {
-        console.log(res, "likes");
         this.queryCommentList();
       });
     },
     handleComments(index) {
       this.singleComment = Object.assign({}, this.comments[index]);
       this.$store.dispatch("SINGLE_COMMENT", this.singleComment).then(res => {
-        console.log(res, "slsllsllslslsll");
         this.showComments = true;
       });
     },

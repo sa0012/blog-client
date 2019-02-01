@@ -19,7 +19,7 @@
                   <i
                     class="iconfont icon-dianzan"
                     @click="handleLikes"
-                    :style="{ 'color': singleComment.isLike ? 'red' : '#666' }"
+                    :style="{ 'color': singleComment.user.isLike ? 'red' : '#666' }"
                   ></i>
                   <span class="reply-text">{{ singleComment.likes }}</span>
                 </div>
@@ -30,7 +30,7 @@
               ></div>
               <div class="create-time" style="padding-top: 5px;">
                 <p class="time">{{ singleComment.create_time }}</p>
-                <div class="answer-wrap" @click="handleComments(singleComment, 'author')">
+                <div class="answer-wrap" @click="handleComments(singleComment, 'author', 'main')">
                   <i class="iconfont icon-custom-comment"></i>
                   <span class="reply-text">回复</span>
                 </div>
@@ -47,15 +47,15 @@
             <div class="comments-content">
               <div class="user-name">
                 <p class="username">
-                  <span @click="handleComments(reply, 'author')">{{ reply.user.user_name }}</span>
+                  <span @click="handleComments(reply, 'author', 'me')">{{ reply.user.user_name }}</span>
                   <span style="color: #000;">回复</span>
-                  <span @click="handleComments(reply, 'reply')">{{ reply.reply_to_user.user_name }}</span>
+                  <span @click="handleComments(reply, 'reply', 'you')">{{ reply.reply_to_user.user_name }}</span>
                 </p>
                 <div class="dianzan">
                   <i
                     class="iconfont icon-dianzan"
                     @click="handleReplyLikes(reply)"
-                    :style="{ 'color': reply.isLike ? 'red' : '#666' }"
+                    :style="{ 'color': reply.user.isLike ? 'red' : '#666' }"
                   ></i>
                   <span class="reply-text">{{ reply.likes }}</span>
                 </div>
@@ -168,7 +168,8 @@ export default {
         user_id: "",
         user_name: ""
       },
-      reply_content: ""
+      reply_content: "",
+      isMain: 'main'
     };
   },
   computed: {
@@ -205,7 +206,7 @@ export default {
         reply_to_user: this.reply_user,
         //评论内容
         content:
-          this.commentType === "author"
+          (this.commentType === "author" && this.isMain === 'main')
             ? this.content
             : this.content +
               ` // ` +
@@ -227,12 +228,17 @@ export default {
       });
     },
     handleLikes() {
-      let like = this.singleComment.isLike;
+      let like = this.singleComment.user.isLike;
       like = !like;
       let config = {
         article_id: this.singleComment.article_id,
         _id: this.singleComment._id,
-        isLike: like
+        user: {
+          user_id: this.singleComment.user.user_id,
+          user_name: this.singleComment.user.user_name,
+          user_avatar: this.singleComment.user.user_avatar,
+          isLike: like
+        }
       };
 
       $http.post("/comment/confirmLikes", config).then(res => {
@@ -240,13 +246,20 @@ export default {
       });
     },
     handleReplyLikes(reply) {
-      let like = reply.isLike;
+      let like = reply.user.isLike;
       like = !like;
       const config = {
         comment_id: reply.comment_id,
         _id: reply._id,
-        isLike: like
+        user: {
+          user_id: reply.user.user_id,
+          user_name: reply.user.user_name,
+          user_avatar: reply.user.user_avatar,
+          isLike: like
+        }
       };
+
+      console.log(config, 'config')
 
       $http.post("/comment/ReplyLikes", config).then(res => {
         this.queryReplyCommentsList(config.comment_id);
@@ -264,11 +277,12 @@ export default {
       this.$emit("update:showComments", false);
       this.$emit("updateComment");
     },
-    handleComments(info, type) {
-      console.log(info, "info");
+    handleComments(info, type, mainType) {
+      console.log(info, 'info')
       this.$refs["input"].focus();
       this.commentType = type;
       this.reply_content = info.content;
+      this.isMain = mainType;
       if (type === "author") {
         this.reply_user = Object.assign({}, info.user);
       } else {
