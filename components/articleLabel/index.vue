@@ -3,7 +3,7 @@
     <h3 class="label-title">文章标签</h3>
     <ul class="label-list">
       <li class="label-item" v-for="(label, index) in labelArr" :key="index">
-        <p class="label-text" >
+        <p class="label-text" @click="queryArticle(label._id)">
           <span>{{ label.tag_name }}</span>
           <span>{{ `(${ label.tag_count })` }}</span>
         </p>
@@ -33,6 +33,11 @@ export default {
       $http.get('/tag/query').then(res => {
         console.log(res, 'labal')
         this.labelArr = res;
+      })
+    },
+    queryArticle(id) {
+      $http.get('/tag/queryArticle', { tag_id: id }).then(res => {
+
       })
     }
   },
