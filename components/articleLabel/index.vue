@@ -3,7 +3,10 @@
     <h3 class="label-title">文章标签</h3>
     <ul class="label-list">
       <li class="label-item" v-for="(label, index) in labelArr" :key="index">
-        <p class="label-text" @mousemove="showBackgroundColor">{{ label }}</p>
+        <p class="label-text" >
+          <span>{{ label.tag_name }}</span>
+          <span>{{ `(${ label.tag_count })` }}</span>
+        </p>
       </li>
     </ul>
   </div>
@@ -11,37 +14,30 @@
 
 <script>
 import Colors from "~/plugins/color.js";
+import $http from "~/plugins/axios";
 export default {
   data() {
     return {
       labelArr: [
-        "分享 (257)",
-        "网络杂谈 (139)",
-        "站长 (134)",
-        "自媒体 (113)",
-        "新闻 (93)",
-        "经验 (92)",
-        "资讯 (90)",
-        "SEO优化 (90)",
-        "投稿 (90)",
-        "建站 (83)",
-        "推广 (82)",
-        "教程 (82)",
-        "百度 (80)",
-        "图文教程 (54)",
-        "zblog教程 (48)",
-        "zblog主题 (43)",
-        "胡言乱语 (40)",
-        "zblog模版 (37)",
-        "php模版 (35)",
-        "正经事 (28)",
-        "电子商务 (19)"
+        {
+          _id: '',
+          tag_name: '',
+          tag_count: 0
+        }
       ],
       colorsArr: Colors.colorName
     };
   },
   methods: {
-    showBackgroundColor() {}
+    queryLabel() {
+      $http.get('/tag/query').then(res => {
+        console.log(res, 'labal')
+        this.labelArr = res;
+      })
+    }
+  },
+  mounted() {
+    this.queryLabel();
   }
 };
 </script>
