@@ -43,7 +43,7 @@
         </el-row>
       </li>
     </ul>
-    <el-col :span="24" style="padding-top: 15px;" v-if="showPag">
+    <el-col :span="24" style="padding-top: 15px;" v-if="showPag && pagination.total > 0">
       <el-pagination
         background
         @size-change="handleSizeChange"
@@ -75,19 +75,18 @@ export default {
       image: require("~/assets/image/case.jpg"),
       articles: [
         {
-          _id: "acekdiel992882828",
-          image: require("~/assets/image/case.jpg"),
-          title: "如何建立个人博客？",
+          _id: "",
+          image: '',
+          title: "",
           user: {
-            avatar: require("~/assets/image/car.jpg"),
-            user_name: "博客"
+            avatar: '',
+            user_name: ""
           },
-          created_time: "2018-06-05 10:24:00",
-          category: "前端",
-          browse: "154",
-          commentCount: "4",
-          desc:
-            "明明是个缺心眼的娃，怎么想法就多呢，五花八门层出不穷，有点佩服自己了。开个淘宝店做业务考学力短期旅行义工旅行穷游咖啡馆。。。。大致的例了这段时间的想法，额，真的不少；但是真正去执行的是哪个，第一个没有，第二个没，第三个没有，第四个没...............试问自己：如果没有去执行了，如何可以成."
+          created_time: "",
+          category: "",
+          browse: "",
+          commentCount: "",
+          desc: ''
         }
       ],
       config: {
@@ -98,11 +97,19 @@ export default {
         page: 0,
         size: 0,
         total: 0
-      }
+      },
+      tagName: ""
     };
   },
   created() {
-    this.getArticleList();
+    try {
+      this.tagName = this.$route.query.name;
+      if (this.tagName) {
+        this.labelToArticle(this.tagName);
+      } else {
+        this.getArticleList();
+      }
+    } catch (e) {}
   },
   methods: {
     getArticleList() {
@@ -125,6 +132,19 @@ export default {
       this.config.page = val;
       this.getArticleList();
       console.log(`当前页: ${val}`);
+    },
+    labelToArticle(tagName) {
+      $http.get("/tag/queryArticle", { tag_name: tagName }).then(res => {
+        console.log(res, 'res')
+        try {
+          let list = res && res.length ? res : [];
+          list.forEach((article, index) => {
+            list[index].create_time = $.timeFormat(article.create_time - 0);
+            list[index].edit_time = $.timeFormat(article.edit_time - 0);
+          });
+          this.articles = res;
+        } catch (e) {}
+      });
     }
   }
 };
