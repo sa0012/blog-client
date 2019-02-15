@@ -8,7 +8,7 @@
       <div class="no-border"></div>
     </div>
     <div class="message-input-wrap">
-      <div class="textarea-wrap">
+      <div class="textarea-wrap" @click="showEmoji = false">
         <textarea name id class="message-input" v-model="content" maxlength="150" ref="message"></textarea>
       </div>
       <div class="feature-wrap">
