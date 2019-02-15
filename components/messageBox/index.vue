@@ -12,8 +12,8 @@
         <textarea name id class="message-input" v-model="content" maxlength="150" ref="message"></textarea>
       </div>
       <div class="feature-wrap">
-        <div class="expression">
-          <i class="iconfont icon-smile emoji-icon" @click="showEmoji = !showEmoji"></i>
+        <div class="expression" @click="showEmoji = !showEmoji">
+          <i class="iconfont icon-smile emoji-icon"></i>
           <span class="leave-text">表情</span>
         </div>
         <div class="upload">
@@ -22,12 +22,12 @@
         </div>
         <div class="login" @click="startComment">发表评论</div>
         <emoji-component
-            v-show="showEmoji"
-            @emotion="handleEmotion"
-            :height="200"
-            style="width: 300px;"
-            class="emoji-cop"
-          ></emoji-component>
+          v-show="showEmoji"
+          @emotion="handleEmotion"
+          :height="200"
+          style="width: 300px;"
+          class="emoji-cop"
+        ></emoji-component>
       </div>
     </div>
   </div>
@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       content: "",
-      showEmoji: false,
+      showEmoji: false
     };
   },
   computed: {
@@ -55,12 +55,13 @@ export default {
     },
     loginMsg() {
       return this.$store.state.login;
-    },
+    }
   },
   methods: {
     startComment() {
-      this.publish && this.publish(this.content)
-      this.content = '';
+      this.publish && this.publish(this.content);
+      this.content = "";
+      this.showEmoji = false;
     },
     handleLogin() {
       this.loginMsg.showLogin = true;
@@ -189,8 +190,8 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.$refs['message'].focus();
-    })
+      this.$refs["message"].focus();
+    });
   },
   components: {
     EmojiComponent
