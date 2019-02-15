@@ -59,7 +59,7 @@
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="icon-wrap">
+          <div class="icon-wrap" @click="handleSuggest">
             <i class="el-icon-edit-outline share-icon"></i>
           </div>
         </el-col>
@@ -92,6 +92,15 @@
 export default {
   data() {
     return {};
+  },
+  methods: {
+    handleSuggest() {
+      this.$suggest.alert({
+        handleConfirm: () => {
+          this.$suggest.hide();
+        }
+      });
+    }
   }
 };
 </script>

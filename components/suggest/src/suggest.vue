@@ -3,20 +3,28 @@
     <section class="category-wrap">
       <h3 class="category-title">建议 / 反馈</h3>
       <div class="suggest-content-wrap">
-        <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
+        <el-form :label-position="labelPosition" label-width="80px" :model="feedback">
           <el-form-item label="类型">
             <el-col :span="12">
-              <el-button plain>功能建议</el-button>
+              <el-button
+                plain
+                @click="selectType('SG')"
+                :class="{ 'is-select': feedback.type === 'SG' }"
+              >功能建议</el-button>
             </el-col>
             <el-col :span="12">
-              <el-button plain>BUG反馈</el-button>
+              <el-button
+                plain
+                @click="selectType('FD')"
+                :class="{ 'is-select': feedback.type === 'FD' }"
+              >BUG反馈</el-button>
             </el-col>
           </el-form-item>
           <el-form-item label="标题">
-            <el-input v-model="formLabelAlign.region"></el-input>
+            <el-input v-model="feedback.title"></el-input>
           </el-form-item>
           <el-form-item label="内容">
-            <el-input class="content-area" type="textarea" v-model="formLabelAlign.type"></el-input>
+            <el-input class="content-area" type="textarea" v-model="feedback.content"></el-input>
           </el-form-item>
           <el-form-item style="text-align: right;">
             <el-button plain @click="close">取消</el-button>
@@ -30,6 +38,7 @@
 </template>
 
 <script>
+import $http from "~/plugins/axios";
 export default {
   props: {
     showSuggest: {
@@ -49,10 +58,10 @@ export default {
     return {
       labelPosition: "left",
       visible: false,
-      formLabelAlign: {
-        name: "",
-        region: "",
-        type: ""
+      feedback: {
+        type: "SG",
+        title: "",
+        content: ""
       }
     };
   },
@@ -62,15 +71,43 @@ export default {
   created() {},
   methods: {
     close() {
-      // this.$emit("update:showSuggest", false);
       this.visible = false;
-      this.handleClose && this.handleClose()
+      this.handleClose && this.handleClose();
     },
     confirm() {
-      this.handleConfirm && this.handleConfirm()
+      this.sendFeedback();
+      this.handleConfirm && this.handleConfirm();
+    },
+    selectType(type) {
+      this.feedback.type = type;
+    },
+    sendFeedback() {
+      if (!this.feedback.type) {
+        this.$toast("没有反馈类型");
+        return;
+      } else if (!this.feedback.title) {
+        this.$toast("没有反馈标题");
+        return;
+      } else if (!this.feedback.content) {
+        this.$toast("没有反馈内容");
+        return;
+      } else if (this.feedback.content && this.feedback.content.length > 150) {
+        this.$toast("反馈内容不要超过150个字符");
+        return;
+      }
+      $http.get("/feedback/send", this.feedback).then(res => {
+        if (res == "SUCCESS") {
+          this.$message({
+            showClose: true,
+            message: "感谢您的反馈/建议, 我们会抓紧处理的",
+            type: "success"
+          });
+        }
+      });
     }
   },
-  mounted() {}
+  mounted() {
+  }
 };
 </script>
 
@@ -142,6 +179,10 @@ export default {
 
 textarea {
   resize: none;
+}
+
+.is-select {
+  border: 1px solid #409eff;
 }
 
 @keyframes slide {
