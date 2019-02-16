@@ -1,22 +1,27 @@
 import axios from 'axios'
 import qs from 'qs'
 import config from './config'
-import { getSession } from '~/common/mutils';
+import {
+  getSession
+} from '~/common/mutils';
 import Vue from 'vue';
 
-if (process.server) {
-  config.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 7778}`
-}
+// 全局设置
+axios.defaults.timeout = 10000; // 时间超时设置10s
 
-const service = axios.create(config)
+// 创建一个axios的实列
+const service = axios.create();
+// instance.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 
-// POST 传参序列化
+axios.interceptors.request.use = service.interceptors.request.use;
+
+// request拦截器，每次发送请求的时候拦截下来
 service.interceptors.request.use(
   config => {
     let token = '';
     try {
       token = JSON.parse(getSession('user')).token;
-    } catch(e) {}
+    } catch (e) {}
     if (token) {
       config.headers.Authorization = token;
     }
@@ -27,11 +32,13 @@ service.interceptors.request.use(
     return Promise.reject(error)
   }
 )
-// 返回状态判断
+
+// respone拦截器
 service.interceptors.response.use(
-  res => {
-    return res.data
+  response => {
+    return response.data;
   },
+  // 除了200以外的请求到这里来，，这里的200不是我们设置的那个code200,,我这里是，没有登录才会不返回200
   error => {
     let {
       response
@@ -50,39 +57,29 @@ service.interceptors.response.use(
   }
 )
 
+const get = (url, params = {}, method = 'get', headers) => new Promise((resolve, reject) => {
+  let req = method === 'get' ? {
+    params: params
+  } : params
+  url = '/api' + url;
+  headers = headers && headers.headers ? headers.headers : {
+    "Content-Type": "application/json; charset=utf-8"
+  }
+  service[method](url, req, headers).then(res => {
+    console.log(res, 'this is a res')
+    if (res.code != 200) {
+      new Vue().$message.error(res.msg)
+    }
+    resolve && res && typeof res !== 'undefined' && resolve(res)
+  }, error => {
+    reject && reject(error)
+  })
+});
+
+const post = (url, params, headers) => get(url, params, 'post', headers);
+
+
 export default {
-  get: (url, params = {}, method = 'get', headers) => new Promise((resolve, reject) => {
-    let req = method === 'get' ? {
-      params: params
-    } : params
-    url = '/api' + url;
-    headers = headers && headers.headers ? headers.headers : {
-      "Content-Type": "application/json; charset=utf-8"
-    }
-    service[method](url, req, headers).then(res => {
-      if (res.code != 200) {
-        new Vue().$message.error(res.msg)
-      }
-      resolve && res && typeof res !== 'undefined' && resolve(res.data)
-    }, error => {
-      reject && reject(error)
-    })
-  }),
-  post: (url, params = {}, method = 'post', headers) => new Promise((resolve, reject) => {
-    let req = method === 'get' ? {
-      params: params
-    } : params
-    url = '/api' + url;
-    headers = headers && headers.headers ? headers.headers : {
-      "Content-Type": "application/json; charset=utf-8",
-    }
-    service[method](url, req, headers).then(res => {
-      if (res.code != 200) {
-        new Vue().$message.error(res.msg)
-      }
-      resolve && res && typeof res !== 'undefined' && resolve(res)
-    }, error => {
-      reject && reject(error)
-    })
-  }),
+  get,
+  post
 }

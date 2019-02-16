@@ -96,7 +96,7 @@ export default {
         return;
       }
       $http.get("/feedback/send", this.feedback).then(res => {
-        if (res == "SUCCESS") {
+        if (res.data == "SUCCESS") {
           this.$message({
             showClose: true,
             message: "感谢您的反馈/建议, 我们会抓紧处理的",

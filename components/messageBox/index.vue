@@ -17,8 +17,17 @@
           <span class="leave-text">表情</span>
         </div>
         <div class="upload">
-          <i class="el-icon-picture"></i>
-          <span class="leave-text">图片</span>
+          <el-upload
+            class="avatar-uploader"
+            action
+            :headers="config"
+            :http-request="upqiniu"
+            :show-file-list="false"
+            :before-upload="beforeUpload"
+          >
+            <i class="el-icon-picture"></i>
+            <span class="leave-text">图片</span>
+          </el-upload>
         </div>
         <div class="login" @click="startComment">发表评论</div>
         <emoji-component
@@ -26,8 +35,12 @@
           @emotion="handleEmotion"
           @click.native.stop="handleShowEmoji"
           :height="200"
-          class="emoji-cop"
+          class="emoji-cop find-div-body"
         ></emoji-component>
+        <div class="img-modal find-div-body" v-if="imageUrl">
+          <img :src="imageUrl" class="avatar">
+          <i class="el-icon-close img-close" @click="closeImg"></i>
+        </div>
       </div>
     </div>
   </div>
@@ -47,6 +60,8 @@ export default {
     return {
       content: "",
       showEmoji: false,
+      imageUrl: "",
+      config: { "Content-Type": "multipart/form-data" }
     };
   },
   computed: {
@@ -58,6 +73,58 @@ export default {
     }
   },
   methods: {
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+    },
+    // 上传文件到七牛云
+    async upqiniu(req) {
+      console.log(req);
+      const config = {
+        headers: { "Content-Type": "multipart/form-data" }
+      };
+      let filetype = "";
+      if (req.file.type === "image/png") {
+        filetype = "png";
+      } else {
+        filetype = "jpg";
+      }
+      // 重命名要上传的文件
+      const keyname =
+        "juckchen" +
+        +new Date() +
+        Math.floor(Math.random() * 100) +
+        "." +
+        filetype;
+      // 从后端获取上传凭证token
+      const formdata = new FormData();
+      formdata.append("file", req.file);
+      // formdata.append("key", keyname);
+      $http.post("/upload/artiUploadImg", formdata, config).then(res => {
+        this.imageUrl = res.data.key;
+      });
+    },
+    beforeUpload(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG 格式!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
+    },
+    closeImg() {
+      const imgKey = this.imageUrl.split("/")[3];
+      $http
+        .post("/upload/deleteArticleImg", {
+          key: imgKey
+        })
+        .then(res => {
+          this.imageUrl = "";
+        });
+    },
     handleShowEmoji(type) {
       this.$refs["message"].focus();
       if (type === "emoji") {
@@ -335,6 +402,66 @@ export default {
       position: absolute;
       top: 12px;
       left: 80px;
+    }
+
+    .img-modal {
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      width: 200px;
+      height: 180px;
+      background: #fff;
+      text-align: center;
+      line-height: 180px;
+      border: 1px solid #e74851;
+      border-radius: 10px;
+      .avatar {
+        max-width: 140px;
+      }
+
+      .img-close {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 24px;
+        &:hover {
+          background: #ccc;
+          transition: all 0.2s;
+        }
+      }
+    }
+
+    .find-div-body:before {
+      box-sizing: content-box;
+      width: 0px;
+      height: 0px;
+      position: absolute;
+      top: -16px;
+      left: 41px;
+      padding: 0;
+      border-bottom: 8px solid #ffffff;
+      border-top: 8px solid transparent;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      display: block;
+      content: "";
+      z-index: 12;
+    }
+    .find-div-body:after {
+      box-sizing: content-box;
+      width: 0px;
+      height: 0px;
+      position: absolute;
+      top: -18px;
+      left: 40px;
+      padding: 0;
+      border-bottom: 9px solid #e74851;
+      border-top: 9px solid transparent;
+      border-left: 9px solid transparent;
+      border-right: 9px solid transparent;
+      display: block;
+      content: "";
+      z-index: 10;
     }
 
     .login {

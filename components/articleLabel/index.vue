@@ -32,7 +32,7 @@ export default {
     queryLabel() {
       $http.get('/tag/query').then(res => {
         console.log(res, 'labal')
-        this.labelArr = res;
+        this.labelArr = res.data;
       })
     },
     queryArticle(name) {

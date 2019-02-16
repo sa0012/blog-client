@@ -92,8 +92,7 @@ export default {
       console.log(this.$route)
       $http.get('/github/client').then(res => {
         this.$store.dispatch('CURRENT_ROUTE', this.$route.path)
-        console.log(res, 'github')
-        window.location.href = res
+        window.location.href = res.data;
         window.localStorage.setItem('GITHUB_LOGIN_REDIRECT_URL', `${this.$route.path}?comment=new`);
       })
       // window.location.href = 'https://github.com/login/oauth/authorize?client_id=1f08860dca3e7b4499a5&redirect_uri=http://192.168.31.230:8080/login&scope=User';
@@ -150,9 +149,9 @@ export default {
     async get_check_code() {
       $http.get('/other/checkcode').then(res => {
         console.log(res, 'get_check_code')
-        this.img_base64 = res.img
-        this.loginForm.code_token = res.token
-        this.registerForm.code_token = res.token
+        this.img_base64 = res.data.img
+        this.loginForm.code_token = res.data.token
+        this.registerForm.code_token = res.data.token
       })
     }
   },

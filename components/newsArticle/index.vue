@@ -137,12 +137,12 @@ export default {
       $http.get("/tag/queryArticle", { tag_name: tagName }).then(res => {
         console.log(res, 'res')
         try {
-          let list = res && res.length ? res : [];
+          let list = res.data && res.data.length ? res.data : [];
           list.forEach((article, index) => {
             list[index].create_time = $.timeFormat(article.create_time - 0);
             list[index].edit_time = $.timeFormat(article.edit_time - 0);
           });
-          this.articles = res;
+          this.articles = res.data;
         } catch (e) {}
       });
     }
