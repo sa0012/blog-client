@@ -19,11 +19,10 @@
         <div class="upload">
           <el-upload
             class="avatar-uploader"
-            action
-            :headers="config"
-            :http-request="upqiniu"
+            action="/api/upload/artiUploadImg"
             :show-file-list="false"
-            :before-upload="beforeUpload"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
           >
             <i class="el-icon-picture"></i>
             <span class="leave-text">图片</span>
@@ -74,7 +73,9 @@ export default {
   },
   methods: {
     handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
+      console.log(res, file);
+      this.imageUrl = res.data.key
+      this.content += `<img src="${this.imageUrl}" align="middle">`
     },
     // 上传文件到七牛云
     async upqiniu(req) {
@@ -103,7 +104,7 @@ export default {
         this.imageUrl = res.data.key;
       });
     },
-    beforeUpload(file) {
+    beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
       const isLt2M = file.size / 1024 / 1024 < 2;
 
