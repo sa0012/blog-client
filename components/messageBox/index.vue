@@ -12,7 +12,7 @@
         <textarea name id class="message-input" v-model="content" maxlength="150" ref="message"></textarea>
       </div>
       <div class="feature-wrap">
-        <div class="expression" @click="showEmoji = !showEmoji">
+        <div class="expression" @click.stop="handleShowEmoji('emoji')">
           <i class="iconfont icon-smile emoji-icon"></i>
           <span class="leave-text">表情</span>
         </div>
@@ -25,7 +25,7 @@
           v-show="showEmoji"
           @emotion="handleEmotion"
           :height="200"
-          style="width: 300px;"
+          style="width: 300px; margin-top: 30px;"
           class="emoji-cop"
         ></emoji-component>
       </div>
@@ -58,6 +58,11 @@ export default {
     }
   },
   methods: {
+    handleShowEmoji(type) {
+      if (type === 'emoji') {
+        this.showEmoji = true;
+      }
+    },
     startComment() {
       this.publish && this.publish(this.content);
       this.content = "";
@@ -191,6 +196,10 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.$refs["message"].focus();
+      document.body.addEventListener('click', () => {
+        console.log(111111111111)
+        this.showEmoji = false;
+      })
     });
   },
   components: {
@@ -297,6 +306,7 @@ export default {
 
   .feature-wrap {
     padding: 10px 0;
+    position: relative;
     // border: 1px solid #ccc;
     .expression,
     .upload,
@@ -308,6 +318,15 @@ export default {
 
     .expression {
       padding-right: 15px;
+      position: absolute;
+      top: 10px;
+      left: 0;
+    }
+
+    .upload {
+      position: absolute;
+      top: 10px;
+      left: 80px;
     }
 
     .login {
