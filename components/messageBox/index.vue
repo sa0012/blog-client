@@ -24,8 +24,8 @@
         <emoji-component
           v-show="showEmoji"
           @emotion="handleEmotion"
+          @click.native.stop="handleShowEmoji"
           :height="200"
-          style="width: 300px; margin-top: 30px;"
           class="emoji-cop"
         ></emoji-component>
       </div>
@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       content: "",
-      showEmoji: false
+      showEmoji: false,
     };
   },
   computed: {
@@ -59,7 +59,10 @@ export default {
   },
   methods: {
     handleShowEmoji(type) {
-      if (type === 'emoji') {
+      this.$refs["message"].focus();
+      if (type === "emoji") {
+        this.showEmoji = !this.showEmoji;
+      } else {
         this.showEmoji = true;
       }
     },
@@ -74,6 +77,8 @@ export default {
       this.$store.dispatch("LOGIN_MSG", this.loginMsg);
     },
     handleEmotion(i) {
+      console.log(i);
+      this.showEmoji = true;
       this.content += i;
     },
     // 将匹配结果替换表情图片
@@ -196,10 +201,9 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.$refs["message"].focus();
-      document.body.addEventListener('click', () => {
-        console.log(111111111111)
+      document.body.addEventListener("click", () => {
         this.showEmoji = false;
-      })
+      });
     });
   },
   components: {
@@ -217,6 +221,10 @@ export default {
 
   .emoji-cop {
     background: #fff;
+    width: 300px;
+    position: absolute;
+    top: 40px;
+    left: 0;
   }
 
   .avatar-wrap {
@@ -325,7 +333,7 @@ export default {
 
     .upload {
       position: absolute;
-      top: 10px;
+      top: 12px;
       left: 80px;
     }
 
