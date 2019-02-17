@@ -43,7 +43,7 @@ export default {
       categories: [
         { router: { name: "index" }, title: "首页" },
         { router: { path: "/article" }, title: "文章" },
-        { router: { path: "/diary" }, title: "个人日记" },
+        { router: { path: "/diary" }, title: "随笔杂谈" },
         { router: { path: "/about" }, title: "关于我" },
         { router: { path: "/board" }, title: "留言板" }
       ]

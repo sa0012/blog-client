@@ -2,15 +2,7 @@
   <section class="container">
     <header-nav></header-nav>
     <el-row class="content">
-      <el-col :span="15" class="content-left">
-        <message-box></message-box>
-      </el-col>
-      <el-col :span="9" class="content-right">
-        <profile-tip></profile-tip>
-        <article-label></article-label>
-        <hot-article></hot-article>
-        <news-comments></news-comments>
-      </el-col>
+      <time-line></time-line>
     </el-row>
     <net-footer></net-footer>
   </section>
@@ -18,28 +10,21 @@
 
 <script>
 import HeaderNav from "~/components/header/header.vue";
-import profileTip from "~/components/profile";
 import NetFooter from '~/components/footer';
-import MessageBox from '~/components/messageBox';
 
 export default {
   head () {
     return {
-      title: '个人日记',
+      title: '随笔杂谈',
       meta: [
-        { hid: '个人日记', name: '个人日记', content: '个人日记' }
+        { hid: '随笔杂谈', name: '随笔杂谈', content: '随笔杂谈' }
       ]
     }
   },
   components: {
     HeaderNav,
-    profileTip,
-    MessageBox,
     NetFooter,
-    NewsArticles: () => import('~/components/newsArticle'),
-    ArticleLabel: () => import('~/components/articleLabel'),
-    NewsComments: () => import('~/components/comments'),
-    HotArticle: () => import('~/components/hotArticle'),
+    TimeLine: () => import('~/components/timeLine')
   }
 };
 </script>
