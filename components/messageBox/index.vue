@@ -36,7 +36,7 @@
           :height="200"
           class="emoji-cop find-div-body"
         ></emoji-component>
-        <div class="img-modal find-div-body" v-if="imageUrl">
+        <div class="img-modal find-div-body" v-if="showImg">
           <img :src="imageUrl" class="avatar">
           <i class="el-icon-close img-close" @click="closeImg"></i>
         </div>
@@ -60,6 +60,7 @@ export default {
       content: "",
       showEmoji: false,
       imageUrl: "",
+      showImg: false,
       config: { "Content-Type": "multipart/form-data" }
     };
   },
@@ -75,6 +76,7 @@ export default {
     handleAvatarSuccess(res, file) {
       console.log(res, file);
       this.imageUrl = res.data.key
+      this.showImg = true;
       this.content += `<section><img src="${this.imageUrl}" class="upload" align="middle"></section>`
     },
     // 上传文件到七牛云
@@ -124,6 +126,7 @@ export default {
         })
         .then(res => {
           this.imageUrl = "";
+          this.showImg = false;
         });
     },
     handleShowEmoji(type) {
@@ -138,6 +141,7 @@ export default {
       this.publish && this.publish(this.content);
       this.content = "";
       this.showEmoji = false;
+      this.showImg = false;
     },
     handleLogin() {
       this.loginMsg.showLogin = true;
