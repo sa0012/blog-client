@@ -14,7 +14,7 @@
                     -webkit-box-orient: vertical;
                     -webkit-line-clamp: 1;
                     overflow: hidden;"
-                    v-html="comment.content.replace(/\#[\u4E00-\u9FA5]{1,3}\;/gi, emotion)"
+            v-html="comment.content.replace(/\#[\u4E00-\u9FA5]{1,3}\;/gi, emotion)"
           ></div>
           <div class="create-time">{{ comment.create_time }}</div>
         </div>
@@ -173,7 +173,7 @@ export default {
     }
   },
   created() {
-    this.queryCommentList()
+    this.queryCommentList();
   }
 };
 </script>
@@ -236,11 +236,14 @@ export default {
         font-size: 14px;
         color: #d32;
       }
-
-      .content-text {
-        // @include no-wrap(2);
-      }
     }
   }
+}
+</style>
+
+<style>
+.content-text section img {
+  width: 30px;
+  object-fit: fill;
 }
 </style>

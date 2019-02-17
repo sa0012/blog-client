@@ -75,7 +75,7 @@ export default {
     handleAvatarSuccess(res, file) {
       console.log(res, file);
       this.imageUrl = res.data.key
-      this.content += `<img src="${this.imageUrl}" align="middle">`
+      this.content += `<section><img src="${this.imageUrl}" class="upload" align="middle"></section>`
     },
     // 上传文件到七牛云
     async upqiniu(req) {

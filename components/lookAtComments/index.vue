@@ -648,12 +648,16 @@ textarea {
 }
 </style>
 
-<style>
-.content-text span {
+<style scoped>
+.content-text >>> span {
   color: blue;
   font-weight: bold;
 }
 </style>
 
-
-
+<style>
+.content-text section img {
+  width: 150px;
+  object-fit: fill;
+}
+</style>

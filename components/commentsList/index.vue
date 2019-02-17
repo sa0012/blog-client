@@ -72,7 +72,7 @@ export default {
           isLike: false
         },
         reply_like: false,
-        isWhoLike: 'ME',
+        isWhoLike: "ME",
         likes: 0,
         create_time: "",
         edit_time: ""
@@ -107,12 +107,12 @@ export default {
           edit_time: "",
           likes: 0,
           reply_like: false,
-          isWhoLike: 'ME'
+          isWhoLike: "ME"
         }
       ],
       cIndex: 0,
       isLike: false,
-      isWho: 'ME',
+      isWho: "ME",
       replyLike: false
     };
   },
@@ -138,7 +138,7 @@ export default {
           user_avatar: this.userMsg.avatar
         },
         reply_like: false,
-        isWhoLike: 'ME'
+        isWhoLike: "ME"
       };
       $http.post("/comment/saveComment", config).then(res => {
         console.log(res);
@@ -160,15 +160,15 @@ export default {
     handleLikes(index) {
       // 自己为自己点赞
       if (this.userMsg._id === this.comments[index].user.user_id) {
-        this.isWho = 'ME';
+        this.isWho = "ME";
         this.isLike = this.comments[index].user.isLike;
         this.isLike = !this.isLike;
         this.replyLike = false;
       } else {
         // 自己对别人的评论点赞
-        console.log(this.replyLike, '自己对别人')
+        console.log(this.replyLike, "自己对别人");
         this.replyLike = !this.replyLike;
-        this.isWho = 'YOU';
+        this.isWho = "YOU";
         this.isLike = false;
       }
 
@@ -185,7 +185,7 @@ export default {
         }
       };
 
-      console.log(config, 'config')
+      console.log(config, "config");
 
       $http.post("/comment/confirmLikes", config).then(res => {
         this.queryCommentList();
@@ -390,10 +390,6 @@ export default {
           color: #666;
         }
       }
-
-      .content-text {
-        // @include no-wrap(2);
-      }
     }
 
     .time,
@@ -416,5 +412,12 @@ export default {
 .second-list,
 .second-item {
   display: inline-block;
+}
+</style>
+
+<style>
+.content-text section img {
+  width: 150px;
+  object-fit: fill;
 }
 </style>
