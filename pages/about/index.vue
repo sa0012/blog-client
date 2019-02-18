@@ -55,6 +55,10 @@
             考虑SEO的需要， 故采用vue ssr去做， 后台采用koa， 数据库使用mongoDB, 建立此博客的目的， 一是， 练习下自己的技术，二是， 记录自己的工作学习经验和技术总结，三是， 借助此平台结识更多的同行们，
             大家一起学习交流。
           </p>
+          <p class="intro-content">
+            个人技能方面， 主要的前端技术， 包括：html, css, html5, css3, vue.js, react.js, 对于nodejs略有研究，本博客就是使用koa搭建，目前主要使用的框架是vue， 在公司主要负责移动h5业务的开发，业余时间研究过react， 写过一个豆瓣电影的小项目，完成度还算可以，
+            顺便使用了react技术栈的各大工具，react + react-router-dom + redux + ant-design-mobile， 还研究过谷歌推出的flutter， 略有了解， 对于web的技术发展一直保持关注，对于新的技术都会去尝试。
+          </p>
           <p
             class="intro-content"
           >最后， 感觉所有的同行好友们对我的支持， 有什么不对的地方或者bug欢迎大家提出， 有什么好的建议和想法也可以提出来，大家一起学习交流。</p>
