@@ -59,6 +59,16 @@
             class="intro-content"
           >最后， 感觉所有的同行好友们对我的支持， 有什么不对的地方或者bug欢迎大家提出， 有什么好的建议和想法也可以提出来，大家一起学习交流。</p>
         </section>
+        <section class="contact">
+          <el-col :span="12">
+            <h3 class="qr-title">QQ联系</h3>
+            <img src="~/assets/image/qr_qq.jpg" alt="qq" class="qr-qq">
+          </el-col>
+          <el-col :span="12">
+            <h3 class="qr-title">微信联系</h3>
+            <img src="~/assets/image/qr_weixin.jpg" alt="wechat" class="qr-wechat">
+          </el-col>
+        </section>
       </div>
     </el-row>
     <net-footer></net-footer>
@@ -135,6 +145,20 @@ export default {
 
   .profile {
     text-align: left;
+  }
+}
+
+.contact {
+  .qr-qq,
+  .qr-wechat {
+    width: 240px;
+    height: 240px;
+  }
+
+  .qr-title {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 0;
   }
 }
 </style>
