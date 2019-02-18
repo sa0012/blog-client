@@ -41,7 +41,7 @@
 
         <ul class="other-list" v-if="replyComments.length > 0">
           <li class="comments-item" v-for="(reply, index) in replyComments" :key="index">
-            <div class="comments-avatar">
+            <div class="comments-avatar" style="top: 15px;">
               <img v-lazy="reply.user.user_avatar" alt="avatar" class="user-avatar">
             </div>
             <div class="comments-content">
@@ -85,12 +85,26 @@
       <el-row class="reply-wrap">
         <el-col :span="20" style="position: relative;">
           <textarea class="text" rows="5" v-model="content" ref="input"></textarea>
-          <i class="iconfont icon-smile emoji-icon" @click="showEmoji = !showEmoji"></i>
+          <i class="iconfont icon-smile emoji-icon" @click.stop="handleShowEmoji('emoji')"></i>
+          <el-upload
+            class="avatar-uploader"
+            action="/api/upload/artiUploadImg"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
+          >
+            <i class="el-icon-picture"></i>
+            <div class="img-modal find-div-body" v-if="showImg">
+              <img :src="imageUrl" class="avatar">
+              <i class="el-icon-close img-close" @click.stop="closeImg"></i>
+            </div>
+          </el-upload>
         </el-col>
         <el-button style="margin-left: 20px;" @click="publish()">发布</el-button>
         <emoji-component
           v-show="showEmoji"
           @emotion="handleEmotion"
+          @click.native.stop="handleShowEmoji"
           :height="200"
           style="width: 300px;"
           class="emoji-cop"
@@ -188,7 +202,9 @@ export default {
 
       isReplyLike: false,
       isReplyWho: "ME",
-      replyLikeReply: false
+      replyLikeReply: false,
+      imageUrl: "",
+      showImg: false
     };
   },
   computed: {
@@ -212,6 +228,72 @@ export default {
     console.log(this.singleComment, "single");
   },
   methods: {
+    handleAvatarSuccess(res, file) {
+      console.log(res, file);
+      this.imageUrl = res.data.key;
+      this.showImg = true;
+      this.content += `<section><img src="${
+        this.imageUrl
+      }" class="upload" align="middle"></section>`;
+    },
+    // 上传文件到七牛云
+    async upqiniu(req) {
+      const config = {
+        headers: { "Content-Type": "multipart/form-data" }
+      };
+      let filetype = "";
+      if (req.file.type === "image/png") {
+        filetype = "png";
+      } else {
+        filetype = "jpg";
+      }
+      // 重命名要上传的文件
+      const keyname =
+        "juckchen" +
+        +new Date() +
+        Math.floor(Math.random() * 100) +
+        "." +
+        filetype;
+      // 从后端获取上传凭证token
+      const formdata = new FormData();
+      formdata.append("file", req.file);
+      // formdata.append("key", keyname);
+      $http.post("/upload/artiUploadImg", formdata, config).then(res => {
+        this.imageUrl = res.data.key;
+      });
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG 格式!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
+    },
+    closeImg() {
+      const imgKey = this.imageUrl.split("/")[3];
+      $http
+        .post("/upload/deleteArticleImg", {
+          key: imgKey
+        })
+        .then(res => {
+          this.imageUrl = "";
+          this.showImg = false;
+          this.content = '';
+        });
+    },
+    handleShowEmoji(type) {
+      this.$refs["input"].focus();
+      if (type === "emoji") {
+        this.showEmoji = !this.showEmoji;
+      } else {
+        this.showEmoji = true;
+      }
+    },
     publish() {
       const config = {
         comment_id: this.singleComment._id,
@@ -241,6 +323,7 @@ export default {
       $http.post("/comment/replySave", config).then(res => {
         if (res.data === "SUCCESS") {
           this.$refs["input"].blur();
+          this.content = "";
           this.commentType = "author";
           this.queryReplyCommentsList(config.comment_id);
         }
@@ -473,6 +556,9 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.$refs["input"].focus();
+      document.body.addEventListener("click", () => {
+        this.showEmoji = false;
+      });
     });
   },
   components: {
@@ -547,9 +633,8 @@ export default {
 
   .comments-avatar {
     position: absolute;
-    top: 50%;
+    top: 40px;
     left: 10px;
-    transform: translateY(-50%);
     display: inline-block;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -613,27 +698,98 @@ export default {
 
 textarea {
   resize: none;
-  height: 40px;
-  line-height: 40px;
+  height: 60px;
+  // line-height: 40px;
   border-radius: 4px;
   width: 100%;
+  padding-right: 35px;
+  padding-left: 5px;
   &::-webkit-scrollbar {
     display: none;
   }
 }
 
-.emoji-icon {
+.emoji-icon,
+.avatar-uploader {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  // top: 50%;
+  // transform: translateY(-50%);
   right: 10px;
   font-size: 26px;
   vertical-align: middle;
   color: #ff5722;
 }
 
+.emoji-icon {
+  top: 0;
+}
+
+.avatar-uploader {
+  bottom: 0;
+}
+
 .other-list {
   padding-left: 60px;
+}
+
+.img-modal {
+  position: absolute;
+  top: 40px;
+  left: -35px;
+  width: 200px;
+  height: 180px;
+  background: #fff;
+  text-align: center;
+  line-height: 180px;
+  border: 1px solid #e74851;
+  border-radius: 10px;
+  .avatar {
+    max-width: 140px;
+  }
+
+  .img-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 24px;
+    &:hover {
+      background: #ccc;
+      transition: all 0.2s;
+    }
+  }
+}
+
+.find-div-body:before {
+  box-sizing: content-box;
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  top: -16px;
+  left: 41px;
+  padding: 0;
+  border-bottom: 8px solid #ffffff;
+  border-top: 8px solid transparent;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  display: block;
+  content: "";
+  z-index: 12;
+}
+.find-div-body:after {
+  box-sizing: content-box;
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  top: -18px;
+  left: 40px;
+  padding: 0;
+  border-bottom: 9px solid #e74851;
+  border-top: 9px solid transparent;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  display: block;
+  content: "";
+  z-index: 10;
 }
 
 @keyframes slide {

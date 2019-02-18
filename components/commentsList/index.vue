@@ -357,20 +357,19 @@ export default {
     .comments-avatar {
       display: inline-block;
       position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 20px;
       .user-avatar {
         display: inline-block;
         height: auto;
         vertical-align: top;
-        width: 48px;
+        width: 50px;
         border-radius: 4px;
         border: 1px solid #ddd;
       }
     }
 
     .comments-content {
-      padding-left: 70px;
+      padding-left: 60px;
       box-sizing: border-box;
       color: #666;
       box-sizing: border-box;
@@ -417,7 +416,7 @@ export default {
 
 <style>
 .content-text section img {
-  width: 30px;
+  width: 150px;
   object-fit: fill;
 }
 </style>

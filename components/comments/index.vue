@@ -9,7 +9,7 @@
         <div class="comments-content">
           <div class="user-name">{{ comment.user.user_name }}</div>
           <div
-            class="content-text"
+            class="comments-content-text"
             style="display: -webkit-box;
                     -webkit-box-orient: vertical;
                     -webkit-line-clamp: 1;
@@ -217,7 +217,7 @@ export default {
         display: inline-block;
         height: auto;
         vertical-align: top;
-        width: 48px;
+        width: 50px;
         border-radius: 4px;
         border: 1px solid #ddd;
       }
@@ -242,7 +242,7 @@ export default {
 </style>
 
 <style>
-.content-text section img {
+.comments-content-text section img {
   width: 30px;
   object-fit: fill;
 }
