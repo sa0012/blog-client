@@ -15,6 +15,10 @@ export default {
     setSession('fatherComments', data);
     commit('father_comments', data);
   },
+  HOT_ARTICLE: ({ commit }, data) => {
+    setSession('hotArticle', data);
+    commit('hot_article', data);
+  },
   SINGLE_COMMENT: ({ commit }, data) => {
     commit('single_comment', data);
   },

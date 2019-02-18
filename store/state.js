@@ -1,7 +1,7 @@
 import {
   getSession
 } from '~/common/mutils';
-let user =  {
+let user = {
   user_id: '',
   avatar: '',
   _id: '',
@@ -28,10 +28,33 @@ let fatherComments = [{
 }]
 
 let route = '/'
+
+const hotArticle = [{
+  "user": {
+    "user_name": "",
+    "user_avatar": ""
+  },
+  "tags": [],
+  "article": "",
+  "draft": "",
+  "likes": 0,
+  "browser_count": 0,
+  "comments_count": 0,
+  "_id": "",
+  "user_id": "",
+  "category": "",
+  "title": "",
+  "desc": "",
+  "author": "",
+  "create_time": "",
+  "edit_time": "",
+  "__v": 0
+}, ]
 try {
   user = JSON.parse(getSession('user')) || user;
   fatherComments = JSON.parse(getSession('fatherComments')) || fatherComments
   route = getSession('currentRoute') || route
+  hotArticle = JSON.parse(getSession('hotArticle')) || hotArticle
 } catch (e) {}
 
 
@@ -61,6 +84,7 @@ export default {
   user,
   login,
   fatherComments,
+  hotArticle,
   everyOne: singleComment,
   currentRoute: route
 }

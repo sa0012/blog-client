@@ -113,13 +113,20 @@ export default {
   },
   methods: {
     getArticleList() {
-      $http.post("/article/getArticle", this.config).then(res => {
+      let type = 'hot'
+      if (this.showPag) {
+        type = 'getArticle'
+      }
+      $http.post(`/article/${type}`, this.config).then(res => {
         try {
           let list = res.data.list && res.data.list.length ? res.data.list : [];
           list.forEach((article, index) => {
             list[index].create_time = $.timeFormat(article.create_time - 0);
             list[index].edit_time = $.timeFormat(article.edit_time - 0);
           });
+          if (!this.showPag) {
+            this.$store.dispatch('HOT_ARTICLE', res.data.list);
+          }
           this.articles = res.data.list;
         } catch (e) {}
         this.pagination = res.data.pagination;

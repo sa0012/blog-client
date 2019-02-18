@@ -1,13 +1,13 @@
 <template>
   <div class="hot-article">
     <h3 class="hot-title">热门文章</h3>
-    <ul class="hot-list" v-for="(item, i) in 10" :key="i">
-      <li class="hot-item" v-for="(hot, index) in hotArr" :key="index">
+    <ul class="hot-list">
+      <li class="hot-item" v-for="(hot, index) in hotArticle" :key="index">
         <div 
           class="item-index"
           :style="{
-            'background': i === 0 ? '#ff858e' : i === 1 ? '#77d549' : i === 2 ? '#62c1ff' : '#979598'
-          }">{{ i + 1 }}</div>
+            'background': index === 0 ? '#ff858e' : index === 1 ? '#77d549' : index === 2 ? '#62c1ff' : '#979598'
+          }">{{ index + 1 }}</div>
         <h3 class="item-title">{{ hot.title }}</h3>
       </li>
     </ul>
@@ -26,6 +26,11 @@ export default {
       ],
       colorsArr: Colors.colorName
     };
+  },
+  computed: {
+    hotArticle() {
+      return this.$store.state.hotArticle;
+    }
   },
   methods: {
     showBackgroundColor() {}

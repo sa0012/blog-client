@@ -93,7 +93,7 @@
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
           >
-            <i class="el-icon-picture"></i>
+            <i class="el-icon-picture" style="font-size: 24px;"></i>
             <div class="img-modal find-div-body" v-if="showImg">
               <img :src="imageUrl" class="avatar">
               <i class="el-icon-close img-close" @click.stop="closeImg"></i>
@@ -283,7 +283,7 @@ export default {
         .then(res => {
           this.imageUrl = "";
           this.showImg = false;
-          this.content = '';
+          this.content = "";
         });
     },
     handleShowEmoji(type) {
@@ -325,6 +325,7 @@ export default {
           this.$refs["input"].blur();
           this.content = "";
           this.commentType = "author";
+          this.showImg = false;
           this.queryReplyCommentsList(config.comment_id);
         }
       });
@@ -683,9 +684,9 @@ export default {
 }
 
 .reply-wrap {
-  height: 40px;
+  height: 60px;
   box-sizing: border-box;
-  margin: 15px 10px 0 70px;
+  margin: 0px 10px 0 70px;
   position: relative;
 
   .emoji-cop {
