@@ -29,7 +29,7 @@
                 v-html="singleComment.content.replace(/\#[\u4E00-\u9FA5]{1,3}\;/gi, emotion)"
               ></div>
               <div class="create-time" style="padding-top: 5px;">
-                <p class="time">{{ singleComment.create_time }}</p>
+                <p class="time">{{ singleComment.create_time | dateformat }}</p>
                 <div class="answer-wrap" @click="handleComments(singleComment, 'author', 'main')">
                   <i class="iconfont icon-custom-comment"></i>
                   <span class="reply-text">回复</span>
@@ -67,7 +67,7 @@
                 v-html="reply.content.replace(/\#[\u4E00-\u9FA5]{1,3}\;/gi, emotion)"
               ></div>
               <div class="create-time" style="padding-top: 5px;">
-                <p class="time">{{ reply.create_time }}</p>
+                <p class="time">{{ reply.create_time | dateformat }}</p>
                 <div class="answer-wrap" @click="handleComments(reply, 'reply')">
                   <i class="iconfont icon-custom-comment"></i>
                   <span class="reply-text">回复</span>
@@ -657,7 +657,7 @@ textarea {
 
 <style>
 .content-text section img {
-  width: 150px;
+  width: 30px;
   object-fit: fill;
 }
 </style>

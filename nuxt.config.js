@@ -52,6 +52,7 @@ module.exports = {
     '@/plugins/element-ui',
     '@/plugins/lazyload',
     '@/plugins/axios',
+    '@/plugins/filter',
     {
       src: '@/plugins/suggest',
       ssr: false

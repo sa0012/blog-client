@@ -16,7 +16,7 @@
                     overflow: hidden;"
             v-html="comment.content.replace(/\#[\u4E00-\u9FA5]{1,3}\;/gi, emotion)"
           ></div>
-          <div class="create-time">{{ comment.create_time }}</div>
+          <div class="create-time">{{ comment.create_time | dateformat }}</div>
         </div>
       </li>
     </ul>

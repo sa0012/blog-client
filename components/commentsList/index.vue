@@ -31,7 +31,7 @@
               v-html="comment.content.replace(/\#[\u4E00-\u9FA5]{1,3}\;/gi, emotion)"
             ></div>
             <div class="create-time" style="padding-top: 5px;">
-              <p class="time">{{ comment.create_time }}</p>
+              <p class="time">{{ comment.create_time | dateformat }}</p>
               <div class="reply-wrap" @click="handleComments(index)">
                 <i class="iconfont icon-custom-comment"></i>
                 <span class="reply-text">回复</span>
@@ -417,7 +417,7 @@ export default {
 
 <style>
 .content-text section img {
-  width: 150px;
+  width: 30px;
   object-fit: fill;
 }
 </style>
