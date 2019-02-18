@@ -20,9 +20,21 @@
             <el-col :span="22">javascript, vue, react, webpack, git。。。</el-col>
           </el-row>
           <el-row>
+            <el-col :span="2">邮箱：</el-col>
+            <el-col :span="22">
+              <span>1583479514@qq.com</span>
+            </el-col>
+          </el-row>
+          <el-row>
             <el-col :span="2">网址：</el-col>
             <el-col :span="22">
               <a href="www.juckchen.cn">www.juckchen.cn</a>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="2">GitHub：</el-col>
+            <el-col :span="22">
+              <a href="https://github.com/sa0012?tab=repositories">https://github.com/sa0012</a>
             </el-col>
           </el-row>
         </section>

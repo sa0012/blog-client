@@ -31,17 +31,17 @@ export default {
         .then(res => {
           console.log(res, "gitHubCallback");
           let config = {
-            avatar: res.avatar,
+            avatar: res.data.avatar,
             isLogin: true,
-            token: res.token,
-            user_id: res.user_id,
-            user_name: res.user_name,
-            _id: res._id
+            token: res.data.token,
+            user_id: res.data.user_id,
+            user_name: res.data.user_name,
+            _id: res.data._id
           };
           this.$store.dispatch("USER_MSG", config);
           this.loginMsg.showLogin = false;
           this.$store.dispatch("LOGIN_MSG", this.loginMsg);
-          // this.$message.success(res.msg);
+          // this.$message.success(res.data.msg);
           this.$router.replace(this.route);
         });
     }
