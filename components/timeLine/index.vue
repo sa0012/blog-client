@@ -1,72 +1,83 @@
 <template>
-  <div class="timeline">
-    <ul class="event_list">
-      <div style="display: block;">
-        <h3 id="2018">2018</h3>
-        <li>
-          <span>08-06</span>
-          <p>
-            <span>
-              <a
-                target="_blank"
-                title="2018上半年，琐碎心情"
-              >2018上半年，琐碎心情</a>
-            </span>
-          </p>
-        </li>
-        <li>
-          <span>08-06</span>
-          <p>
-            <span>
-              <a
-                target="_blank"
-                title="2018上半年，琐碎心情"
-              >2018上半年，琐碎心情</a>
-            </span>
-          </p>
-        </li>
-      </div>
-      <div style="display: block;">
-        <h3 id="2018">2018</h3>
-        <li>
-          <span>08-06</span>
-          <p>
-            <span>
-              <a
-                target="_blank"
-                title="2018上半年，琐碎心情"
-              >2018上半年，琐碎心情</a>
-            </span>
-          </p>
-        </li>
-        <li>
-          <span>08-06</span>
-          <p>
-            <span>
-              <a
-                target="_blank"
-                title="2018上半年，琐碎心情"
-              >2018上半年，琐碎心情</a>
-            </span>
-          </p>
-        </li>
-      </div>
-    </ul>
-  </div>
+  <el-row class="timeline">
+    <el-col :span="4">
+      <ul class="time-list">
+        <li
+          class="time-item"
+          :class="{ 'is-select': nav == selectIndex }"
+          v-for="(nav, index) in timeNav"
+          :key="index"
+          @click="handleTime(nav)"
+        >{{ nav }}</li>
+      </ul>
+    </el-col>
+
+    <el-col :span="20">
+      <ul class="event_list">
+        <div
+          style="display: block;"
+          v-for="(nav, nIndex) in timeNav"
+          :key="nIndex"
+          :id="nav + 'list'"
+        >
+          <h3 :id="nav">{{ nav }}</h3>
+          <li v-for="(classify, cIndex) in classifyObj[nav]" :key="cIndex">
+            <span>{{ classify.create_time | momthAndDate }}</span>
+            <p>
+              <span>
+                <nuxt-link :to="'/article/' + classify._id">{{ classify.title }}</nuxt-link>
+              </span>
+            </p>
+          </li>
+        </div>
+      </ul>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
+import $ from '~/utils'
 export default {
+  props: {
+    timeNav: {
+      type: Array,
+      default: []
+    },
+    classifyObj: {
+      type: Object | Array,
+      default: {}
+    },
+    selectIndex: {
+      type: String,
+      default: ""
+    }
+  },
   data() {
-    return {};
+    return {
+      hideList: ""
+    };
+  },
+  methods: {
+    handleTime(nav) {
+      let dom = document.getElementById(nav + "list");
+      let height = $.getStyle(dom, 'height')
+      console.log(height, 'height')
+      // dom.style.height = 0;
+      // dom.style.transition = 'all 0.5s ease'
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      console.log(111111111);
+    });
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .event_list {
-  width: 850px;
-  float: right;
+  // width: 100%;
+  // float: right;
   background: url(../../assets/image/dian3.png) 139px 0 repeat-y;
   margin: 10px 0 20px 0;
 
@@ -94,7 +105,7 @@ export default {
     }
 
     p {
-      width: 680px;
+      width: 80%;
       margin-left: 24px;
       display: inline-block;
       padding-left: 10px;
@@ -102,7 +113,7 @@ export default {
       line-height: 25px;
 
       span {
-        width: 650px;
+        width: 90%;
         text-align: left;
         border-bottom: 2px solid #ddd;
         padding: 10px 15px;
@@ -115,6 +126,27 @@ export default {
         text-decoration: none;
         color: #666;
       }
+    }
+  }
+}
+
+.time-list {
+  width: 60px;
+  border-bottom: 2px solid #ddd;
+  text-align: center;
+  // float: left;
+  margin-top: 10px;
+
+  .time-item {
+    width: 60px;
+    background: #fff;
+    color: #828282;
+    height: 40px;
+    line-height: 40px;
+
+    &.is-select {
+      background: #db6d4c url(../../assets/image/jian.png) 60px 0 no-repeat;
+      color: #fff;
     }
   }
 }

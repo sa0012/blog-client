@@ -5,7 +5,6 @@ function add0(m) {
 }
 export default () => {
   Vue.filter('dateformat', timestamp => {
-    console.log(timestamp, 'timestamp')
     //timestamp是整数，否则要parseInt转换,不会出现少个0的情况
     var time = new Date(Number(timestamp));
     var year = time.getFullYear();
@@ -28,5 +27,13 @@ export default () => {
     console.log(time, 'year')
     // return year + '年' + month + '月' + date + '日' + hours + '时' + minutes + '分' + seconds + '秒';
     return year + '-' + add0(month) + '-' + add0(date) + ' ' + hours + ':' + minutes + ':' + seconds;
+  });
+
+  Vue.filter('momthAndDate', time => {
+    try {
+      if (time) {
+        return time.split(" ")[0].slice(5)
+      }
+    } catch(e) {}
   })
 }

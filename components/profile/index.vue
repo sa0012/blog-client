@@ -5,11 +5,11 @@
         <el-col :span="8">
           <img
             alt="博客主人：陈龙"
-            src="https://www.yangruolan.com/zb_users/avatar/1.png"
+            src="~/assets/image/avatar.jpg"
             class="avatar-photo"
             title="陈龙"
-            height="100"
-            width="100"
+            height="120"
+            width="120"
           >
         </el-col>
         <el-col :span="16">
@@ -192,6 +192,11 @@ export default {
       font-size: 16px;
     }
   }
+}
+
+.avatar-photo {
+  margin-top: 10px;
+  border-radius: 3px;
 }
 </style>
 
