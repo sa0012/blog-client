@@ -1,6 +1,6 @@
 <template>
   <el-row class="timeline">
-    <el-col :span="4">
+    <!-- <el-col :span="4"> -->
       <ul class="time-list">
         <li
           class="time-item"
@@ -10,10 +10,10 @@
           @click="handleTime(nav)"
         >{{ nav }}</li>
       </ul>
-    </el-col>
+    <!-- </el-col> -->
 
-    <el-col :span="20">
-      <ul class="event_list">
+    <!-- <el-col :span="20"> -->
+      <ul class="event_list" ref="eventList">
         <div
           style="display: block;"
           v-for="(nav, nIndex) in timeNav"
@@ -31,7 +31,7 @@
           </li>
         </div>
       </ul>
-    </el-col>
+    <!-- </el-col> -->
   </el-row>
 </template>
 
@@ -60,8 +60,10 @@ export default {
   methods: {
     handleTime(nav) {
       let dom = document.getElementById(nav + "list");
-      let height = $.getStyle(dom, 'height')
-      console.log(height, 'height')
+      let height = $.getStyle(dom, 'scrollTop')
+      console.dir(dom, 'height')
+      document.body.scrollTop = 0;
+      // this.$refs.eventList.scrollTop = 50;
       // dom.style.height = 0;
       // dom.style.transition = 'all 0.5s ease'
     }
@@ -75,9 +77,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.timeline {
+  position: relative;
+}
 .event_list {
-  // width: 100%;
-  // float: right;
+  width: 850px;
+  float: right;
   background: url(../../assets/image/dian3.png) 139px 0 repeat-y;
   margin: 10px 0 20px 0;
 
@@ -105,7 +110,7 @@ export default {
     }
 
     p {
-      width: 80%;
+      width: 680px;
       margin-left: 24px;
       display: inline-block;
       padding-left: 10px;
@@ -113,7 +118,7 @@ export default {
       line-height: 25px;
 
       span {
-        width: 90%;
+        width: 650px;
         text-align: left;
         border-bottom: 2px solid #ddd;
         padding: 10px 15px;
@@ -135,6 +140,9 @@ export default {
   border-bottom: 2px solid #ddd;
   text-align: center;
   // float: left;
+  position: absolute;
+  top: 0;
+  left: 0;
   margin-top: 10px;
 
   .time-item {

@@ -8,7 +8,9 @@
           :style="{
             'background': index === 0 ? '#ff858e' : index === 1 ? '#77d549' : index === 2 ? '#62c1ff' : '#979598'
           }">{{ index + 1 }}</div>
-        <h3 class="item-title">{{ hot.title }}</h3>
+        <h3 class="item-title">
+          <nuxt-link :to="'/article/' + hot._id">{{ hot.title }}</nuxt-link>
+        </h3>
       </li>
     </ul>
   </div>
