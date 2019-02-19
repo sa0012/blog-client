@@ -27,7 +27,7 @@
       <el-row class="share-icon-wrap">
         <el-col :span="6">
           <div class="icon-wrap share-icon-github">
-            <a href="https://github.com/sa0012">
+            <a href="https://github.com/sa0012" class="github-link">
               <i class="iconfont icon-github share-icon"></i>
             </a>
           </div>
@@ -170,6 +170,10 @@ export default {
       display: inline-block;
       vertical-align: middle;
     }
+  }
+
+  .github-link:hover {
+    color: #fff;
   }
 }
 
