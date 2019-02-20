@@ -2,7 +2,7 @@
   <section class="container">
     <header-nav></header-nav>
     <el-row class="content">
-      <time-line :classifyObj="classifyObj" :timeNav="timeNav" :selectIndex="selectIndex"></time-line>
+      <time-line :classifyObj="classifyObj" :timeNav="timeNav" :selectIndex.sync="selectIndex"></time-line>
     </el-row>
     <net-footer></net-footer>
   </section>

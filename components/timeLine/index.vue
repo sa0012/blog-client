@@ -1,42 +1,37 @@
 <template>
-  <el-row class="timeline">
-    <!-- <el-col :span="4"> -->
-      <ul class="time-list">
-        <li
-          class="time-item"
-          :class="{ 'is-select': nav == selectIndex }"
-          v-for="(nav, index) in timeNav"
-          :key="index"
-          @click="handleTime(nav)"
-        >{{ nav }}</li>
-      </ul>
-    <!-- </el-col> -->
-
-    <!-- <el-col :span="20"> -->
-      <ul class="event_list" ref="eventList">
-        <div
-          style="display: block;"
-          v-for="(nav, nIndex) in timeNav"
-          :key="nIndex"
-          :id="nav + 'list'"
-        >
-          <h3 :id="nav">{{ nav }}</h3>
-          <li v-for="(classify, cIndex) in classifyObj[nav]" :key="cIndex">
-            <span>{{ classify.create_time | momthAndDate }}</span>
-            <p>
-              <span>
-                <nuxt-link :to="'/article/' + classify._id">{{ classify.title }}</nuxt-link>
-              </span>
-            </p>
-          </li>
-        </div>
-      </ul>
-    <!-- </el-col> -->
-  </el-row>
+  <div class="timeline">
+    <ul class="time-list">
+      <li
+        class="time-item"
+        :class="{ 'is-select': nav == selectNav }"
+        v-for="(nav, index) in timeNav"
+        :key="index"
+        @click="handleTime(nav)"
+      >{{ nav }}</li>
+    </ul>
+    <ul class="event_list" ref="eventList">
+      <div
+        style="display: block;"
+        v-for="(nav, nIndex) in timeNav"
+        :key="nIndex"
+        :id="nav + 'list'"
+      >
+        <h3 :id="nav">{{ nav }}</h3>
+        <li v-for="(classify, cIndex) in classifyObj[nav]" :key="cIndex">
+          <span>{{ classify.create_time | momthAndDate }}</span>
+          <p>
+            <span>
+              <nuxt-link :to="'/article/' + classify._id">{{ classify.title }}</nuxt-link>
+            </span>
+          </p>
+        </li>
+      </div>
+    </ul>
+  </div>
 </template>
 
 <script>
-import $ from '~/utils'
+import $ from "~/utils";
 export default {
   props: {
     timeNav: {
@@ -54,14 +49,21 @@ export default {
   },
   data() {
     return {
-      hideList: ""
+      hideList: "",
+      selectNav: this.selectIndex
     };
+  },
+  watch: {
+    selectIndex(newVal, oldVal) {
+      this.selectNav = newVal
+    }
   },
   methods: {
     handleTime(nav) {
       let dom = document.getElementById(nav + "list");
-      let height = $.getStyle(dom, 'scrollTop')
-      console.dir(dom, 'height')
+      let height = $.getStyle(dom, "scrollTop");
+      this.selectNav = nav;
+      console.dir(dom, "height");
       document.body.scrollTop = 0;
       // this.$refs.eventList.scrollTop = 50;
       // dom.style.height = 0;
