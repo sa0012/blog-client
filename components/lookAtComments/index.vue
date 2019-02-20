@@ -128,54 +128,7 @@ export default {
     return {
       labelPosition: "left",
       replyComments: [
-        {
-          _id: "",
-          article_id: "",
-          content: "",
-          user: {
-            user_id: "",
-            user_name: "",
-            user_avatar: "",
-            isLike: false
-          },
-          reply_to_user: {
-            user_id: "",
-            user_name: "",
-            user_avatar: "",
-            isLike: false
-          },
-          isWhoLike: "ME",
-          reply_like: false,
-          create_time: "",
-          edit_time: ""
-        }
       ],
-      childComment: {
-        comment_id: "",
-        user: {
-          user_id: "",
-          user_name: "",
-          user_avatar: "",
-          isLike: false
-        },
-
-        // 被评论人信息
-        reply_to_user: {
-          user_name: "",
-          user_id: "",
-          user_avatar: "",
-          isLike: false
-        },
-        isWhoLike: "ME",
-        reply_like: false,
-        //评论内容
-        content: ""
-      },
-      formLabelAlign: {
-        name: "",
-        region: "",
-        type: ""
-      },
       queryReplyComment: {
         page: 1,
         size: 10,
@@ -204,7 +157,8 @@ export default {
       isReplyWho: "ME",
       replyLikeReply: false,
       imageUrl: "",
-      showImg: false
+      showImg: false,
+      type: "comment"
     };
   },
   computed: {
@@ -320,7 +274,11 @@ export default {
         article_id: this.singleComment.article_id
       };
 
-      $http.post("/comment/replySave", config).then(res => {
+      if (this.$route.path === "/board") {
+        this.type = "leave";
+      }
+
+      $http.post(`/${this.type}/replySave`, config).then(res => {
         if (res.data === "SUCCESS") {
           this.$refs["input"].blur();
           this.content = "";
@@ -347,7 +305,7 @@ export default {
       }
 
       let config = {
-        article_id: this.singleComment.article_id,
+        // article_id: this.singleComment.article_id,
         _id: this.singleComment._id,
         isWhoLike: this.isWho,
         reply_like: this.replyLike,
@@ -359,9 +317,14 @@ export default {
         }
       };
 
+      if (this.$route.path === "/board") {
+        this.type = "leave";
+      } else {
+        config.article_id = this.singleComment.article_id;
+      }
       console.log(config, "config_reply");
 
-      $http.post("/comment/confirmLikes", config).then(res => {
+      $http.post(`/${this.type}/confirmLikes`, config).then(res => {
         this.$store.dispatch("SINGLE_COMMENT", res.data);
       });
     },
@@ -408,15 +371,20 @@ export default {
       };
 
       console.log(config, "config_reply_config");
-
-      $http.post("/comment/ReplyLikes", config).then(res => {
+      if (this.$route.path === "/board") {
+        this.type = "leave";
+      }
+      $http.post(`/${this.type}/ReplyLikes`, config).then(res => {
         this.queryReplyCommentsList(config.comment_id);
       });
     },
     queryReplyCommentsList(id) {
       this.queryReplyComment.comment_id = id;
+      if (this.$route.path === "/board") {
+        this.type = "leave";
+      }
       $http
-        .post("/comment/queryReleyCommentsList", this.queryReplyComment)
+        .post(`/${this.type}/queryReleyCommentsList`, this.queryReplyComment)
         .then(res => {
           this.replyComments = res.data.list;
         });

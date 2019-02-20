@@ -93,27 +93,12 @@ export default {
         article_id: ""
       },
       comments: [
-        {
-          _id: "",
-          article_id: "",
-          content: "",
-          user: {
-            user_id: "",
-            user_name: "",
-            user_avatar: "",
-            isLike: false
-          },
-          create_time: "",
-          edit_time: "",
-          likes: 0,
-          reply_like: false,
-          isWhoLike: "ME"
-        }
       ],
       cIndex: 0,
       isLike: false,
       isWho: "ME",
-      replyLike: false
+      replyLike: false,
+      type: 'comment'
     };
   },
   computed: {
@@ -130,7 +115,6 @@ export default {
     },
     startComment(content) {
       const config = {
-        article_id: this.$route.params.detail,
         content: content,
         user: {
           user_id: this.userMsg._id,
@@ -140,7 +124,14 @@ export default {
         reply_like: false,
         isWhoLike: "ME"
       };
-      $http.post("/comment/saveComment", config).then(res => {
+
+      if (this.$route.path === '/board') {
+        this.type = 'leave'
+      } else {
+        config.article_id = this.$route.params.detail;
+      }
+
+      $http.post(`/${this.type}/saveComment`, config).then(res => {
         console.log(res);
         if (res.data === "SUCCESS") {
           this.queryCommentList();
@@ -148,9 +139,14 @@ export default {
       });
     },
     queryCommentList() {
-      this.queryFatherComment.article_id = this.$route.params.detail;
+      if (this.$route.path === '/board') {
+        this.type = 'leave'
+      } else {
+        this.queryFatherComment.article_id = this.$route.params.detail;
+      }
+      
       $http
-        .post("/comment/queryCommentList", this.queryFatherComment)
+        .post(`/${this.type}/queryCommentList`, this.queryFatherComment)
         .then(res => {
           this.comments = res.data.list;
           this.$emit("throwComments", this.comments);
@@ -173,7 +169,7 @@ export default {
       }
 
       let config = {
-        article_id: this.comments[index].article_id,
+        // article_id: this.comments[index].article_id,
         _id: this.comments[index]._id,
         isWhoLike: this.isWho,
         reply_like: this.replyLike,
@@ -185,9 +181,15 @@ export default {
         }
       };
 
+      if (this.$route.path === '/board') {
+        this.type = 'leave'
+      } else {
+        this.queryFatherComment.article_id = this.comments[index].article_id;
+      }
+
       console.log(config, "config");
 
-      $http.post("/comment/confirmLikes", config).then(res => {
+      $http.post(`/${this.type}/confirmLikes`, config).then(res => {
         this.queryCommentList();
       });
     },
@@ -312,6 +314,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$route, '$route')
     this.queryCommentList();
   },
   components: {

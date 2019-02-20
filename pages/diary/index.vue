@@ -2,6 +2,7 @@
   <section class="container">
     <header-nav></header-nav>
     <el-row class="content">
+      <bread-nav :navArr="navArr"></bread-nav>
       <time-line :classifyObj="classifyObj" :timeNav="timeNav" :selectIndex.sync="selectIndex"></time-line>
     </el-row>
     <net-footer></net-footer>
@@ -11,8 +12,9 @@
 <script>
 import HeaderNav from "~/components/header/header.vue";
 import NetFooter from "~/components/footer";
+import BreadNav from "~/components/breadNav";
 import $http from "~/plugins/axios";
-import $ from '~/utils'
+import $ from "~/utils";
 
 export default {
   head() {
@@ -23,43 +25,47 @@ export default {
   },
   data() {
     return {
-      classifyObj: [
-        {
-          _id: '',
-          tags: [],
-          article: "",
-          draft: "",
-          likes: 0,
-          browser_count: 0,
-          comments_count: 0,
-          user_id: '',
-          category: "",
-          title: "",
-          desc: "",
-          author: "",
-          user: {
-            user_name: "",
-            user_avatar: ""
-          },
-          create_time: "",
-          edit_time: "",
-          __v: 0
-        }
-      ],
+      classifyObj: {
+        _id: "",
+        tags: [],
+        article: "",
+        draft: "",
+        likes: 0,
+        browser_count: 0,
+        comments_count: 0,
+        user_id: "",
+        category: "",
+        title: "",
+        desc: "",
+        author: "",
+        user: {
+          user_name: "",
+          user_avatar: ""
+        },
+        create_time: "",
+        edit_time: "",
+        __v: 0
+      },
       timeNav: [],
-      selectIndex: ''
+      selectIndex: "",
+      navArr: [
+        {
+          title: '文章归类',
+          route: '/diary'
+        }
+      ]
     };
   },
   methods: {
     handleClassifyQuery() {
       $http.get("/article/classifyQuery").then(res => {
         this.classifyObj = Object.assign({}, res.data);
-        for(var i = 0; i < 5; i++) {
-          this.classifyObj[2019 - i] = this.classifyObj['2019']
+        for (var i = 0; i < 5; i++) {
+          this.classifyObj[2019 - i] = this.classifyObj["2019"];
         }
         this.timeNav = Object.keys(this.classifyObj).sort($.Descending);
-        this.selectIndex = this.timeNav[0]
-        console.log(this.classifyObj, 'timeNav')
+        this.selectIndex = this.timeNav[0];
+        console.log(this.classifyObj, "timeNav");
       });
     }
   },
@@ -69,6 +75,7 @@ export default {
   components: {
     HeaderNav,
     NetFooter,
+    BreadNav,
     TimeLine: () => import("~/components/timeLine")
   }
 };

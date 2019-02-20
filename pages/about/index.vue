@@ -2,6 +2,7 @@
   <section class="container">
     <header-nav></header-nav>
     <el-row class="content">
+      <bread-nav :navArr="navArr"></bread-nav>
       <div class="container">
         <h2 class="title">博客简介</h2>
         <img src="~/assets/image/avatar.jpg" class="avatar" alt>
@@ -82,7 +83,7 @@
 <script>
 import HeaderNav from "~/components/header/header.vue";
 import NetFooter from "~/components/footer";
-
+import BreadNav from "~/components/breadNav";
 export default {
   head() {
     return {
@@ -93,12 +94,19 @@ export default {
   data() {
     return {
       content: "",
-      comment: ""
+      comment: "",
+      navArr: [
+        {
+          title: '关于我',
+          route: '/about'
+        }
+      ]
     };
   },
   components: {
     HeaderNav,
-    NetFooter
+    NetFooter,
+    BreadNav
   },
   methods: {}
 };

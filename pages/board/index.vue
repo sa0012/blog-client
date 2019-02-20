@@ -2,8 +2,10 @@
   <section class="container">
     <header-nav></header-nav>
     <el-row class="content">
+      <bread-nav :navArr="navArr"></bread-nav>
       <el-col :span="15" class="content-left">
-        <message-box></message-box>
+        <!-- <message-box></message-box> -->
+        <comments-list></comments-list>
       </el-col>
       <el-col :span="9" class="content-right">
         <profile-tip></profile-tip>
@@ -20,6 +22,7 @@
 import HeaderNav from "~/components/header/header.vue";
 import profileTip from "~/components/profile";
 import NetFooter from "~/components/footer";
+import BreadNav from "~/components/breadNav";
 import MessageBox from '~/components/messageBox';
 
 export default {
@@ -29,11 +32,23 @@ export default {
       meta: [{ hid: "留言板", name: "留言板", content: "留言板" }]
     };
   },
+  data() {
+    return {
+      navArr: [
+        {
+          title: '留言板',
+          route: '/board'
+        }
+      ]
+    }
+  },
   components: {
     HeaderNav,
     profileTip,
     NetFooter,
     MessageBox,
+    BreadNav,
+    CommentsList: () => import("~/components/commentsList"),
     NewsArticles: () => import("~/components/newsArticle"),
     ArticleLabel: () => import("~/components/articleLabel"),
     NewsComments: () => import("~/components/comments"),
