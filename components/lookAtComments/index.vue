@@ -32,6 +32,7 @@
                 <p class="time">{{ singleComment.create_time | dateformat }}</p>
                 <div class="answer-wrap" @click="handleComments(singleComment, 'author', 'main')">
                   <i class="iconfont icon-custom-comment"></i>
+                  <span>{{ replyComments.length }}</span>
                   <span class="reply-text">回复</span>
                 </div>
               </div>
@@ -387,6 +388,10 @@ export default {
         .post(`/${this.type}/queryReleyCommentsList`, this.queryReplyComment)
         .then(res => {
           this.replyComments = res.data.list;
+          this.$emit('reply_count', {
+            id: this.singleComment._id,
+            length: this.replyComments.length
+          });
         });
     },
     close() {
@@ -597,12 +602,12 @@ export default {
 }
 .comments-item {
   border-top: 1px solid #ddd;
-  padding: 10px 0;
+  padding: 20px 0;
   position: relative;
 
   .comments-avatar {
     position: absolute;
-    top: 40px;
+    top: 20px;
     left: 10px;
     display: inline-block;
     border: 1px solid #ddd;

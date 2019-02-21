@@ -1,8 +1,8 @@
 <template>
   <div class="profile">
     <div class="profile-wrap">
-      <el-row>
-        <el-col :span="8">
+      <div style="position: relative;">
+        <div style="position: absolute; top: 0; left: 0;">
           <img
             alt="博客主人：陈龙"
             src="~/assets/image/avatar.jpg"
@@ -11,8 +11,8 @@
             height="120"
             width="120"
           >
-        </el-col>
-        <el-col :span="16">
+        </div>
+        <div style="padding-left: 130px;">
           <div class="author-right">
             <div class="intag" title="陈龙">博 主：</div>
             <span class="names">
@@ -22,8 +22,8 @@
               class="talk"
             >博客简介：专注于前端技术的研究与分享，还有自己日常生活和工作的记录，期望认识广大前端开发爱好者和同行们，共同研究web前端技术的新动向。『juckchen.cn』</span>
           </div>
-        </el-col>
-      </el-row>
+        </div>
+      </div>
       <el-row class="share-icon-wrap">
         <el-col :span="6">
           <div class="icon-wrap share-icon-github">

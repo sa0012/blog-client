@@ -34,6 +34,7 @@
               <p class="time">{{ comment.create_time | dateformat }}</p>
               <div class="reply-wrap" @click="handleComments(index)">
                 <i class="iconfont icon-custom-comment"></i>
+                <span>{{ comment.reply_count }}</span>
                 <span class="reply-text">回复</span>
               </div>
             </div>
@@ -45,6 +46,7 @@
         :showComments.sync="showComments"
         v-if="showComments"
         @updateComment="handleUpdate"
+        @reply_count="handleReplyCount"
       ></look-comments>
     </div>
     <div class="no-comment" v-else>暂无评论， 快去抢沙发吧</div>
@@ -112,6 +114,14 @@ export default {
   methods: {
     handleUpdate() {
       this.queryCommentList();
+    },
+    handleReplyCount(options) {
+      console.log(options, 'options')
+      this.comments.forEach((comment, index) => {
+        if (comment._id === options.id) {
+          this.comments[index].reply_count = length;
+        }
+      })
     },
     startComment(content) {
       const config = {
