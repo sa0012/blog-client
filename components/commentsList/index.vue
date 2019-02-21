@@ -37,6 +37,14 @@
                 <span>{{ comment.reply_count }}</span>
                 <span class="reply-text">回复</span>
               </div>
+              <div
+                class="reply-delete answer-wrap"
+                v-if="userMsg._id === comment.user.user_id"
+                @click="handleDelete(comment)"
+              >
+                <i class="el-icon-delete"></i>
+                <span>删除</span>
+              </div>
             </div>
           </div>
         </li>
@@ -94,13 +102,12 @@ export default {
         size: 10,
         article_id: ""
       },
-      comments: [
-      ],
+      comments: [],
       cIndex: 0,
       isLike: false,
       isWho: "ME",
       replyLike: false,
-      type: 'comment'
+      type: "comment"
     };
   },
   computed: {
@@ -116,12 +123,27 @@ export default {
       this.queryCommentList();
     },
     handleReplyCount(options) {
-      console.log(options, 'options')
+      console.log(options, "options");
       this.comments.forEach((comment, index) => {
         if (comment._id === options.id) {
           this.comments[index].reply_count = length;
         }
-      })
+      });
+    },
+    handleDelete(comment) {
+      let config = {
+        _id: comment._id,
+        user_id: comment.user.user_name
+      };
+      if (this.$route.path !== "/board") {
+        config.article_id = comment.article_id;
+      }
+      $http.post(`/${this.type}/deleteFather`, config).then(res => {
+        if (res.data === "SUCCESS") {
+          this.$message.success(res.msg);
+          this.queryCommentList();
+        }
+      });
     },
     startComment(content) {
       const config = {
@@ -135,9 +157,7 @@ export default {
         isWhoLike: "ME"
       };
 
-      if (this.$route.path === '/board') {
-        this.type = 'leave'
-      } else {
+      if (this.$route.path !== "/board") {
         config.article_id = this.$route.params.detail;
       }
 
@@ -149,12 +169,10 @@ export default {
       });
     },
     queryCommentList() {
-      if (this.$route.path === '/board') {
-        this.type = 'leave'
-      } else {
+      if (this.$route.path !== "/board") {
         this.queryFatherComment.article_id = this.$route.params.detail;
       }
-      
+
       $http
         .post(`/${this.type}/queryCommentList`, this.queryFatherComment)
         .then(res => {
@@ -191,9 +209,7 @@ export default {
         }
       };
 
-      if (this.$route.path === '/board') {
-        this.type = 'leave'
-      } else {
+      if (this.$route.path !== "/board") {
         this.queryFatherComment.article_id = this.comments[index].article_id;
       }
 
@@ -324,7 +340,10 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$route, '$route')
+    console.log(this.$route, "$route");
+    if (this.$route.path === "/board") {
+      this.type = "leave";
+    }
     this.queryCommentList();
   },
   components: {
@@ -419,6 +438,11 @@ export default {
   text-align: center;
   color: #666;
   padding: 10px 0;
+}
+.answer-wrap {
+  padding-left: 20px;
+  position: relative;
+  display: inline-block;
 }
 
 .second-list,
