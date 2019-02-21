@@ -1,7 +1,7 @@
 <template>
   <div class="article-label">
     <h3 class="label-title">文章标签</h3>
-    <ul class="label-list">
+    <ul class="label-list" v-if="labelArr.length > 0">
       <li class="label-item" v-for="(label, index) in labelArr" :key="index">
         <p class="label-text" @click="queryArticle(label.tag_name)">
           <span>{{ label.tag_name }}</span>
@@ -19,11 +19,6 @@ export default {
   data() {
     return {
       labelArr: [
-        {
-          _id: '',
-          tag_name: '',
-          tag_count: 0
-        }
       ],
       colorsArr: Colors.colorName
     };
@@ -32,7 +27,7 @@ export default {
     queryLabel() {
       $http.get('/tag/query').then(res => {
         console.log(res, 'labal')
-        this.labelArr = res.data;
+        this.labelArr = res.data || [];
       })
     },
     queryArticle(name) {
