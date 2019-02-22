@@ -176,6 +176,7 @@ export default {
       $http
         .post(`/${this.type}/queryCommentList`, this.queryFatherComment)
         .then(res => {
+          console.log(res, '查询成功了吗')
           this.comments = res.data.list;
           this.$emit("throwComments", this.comments);
           // this.$store.dispatch("FATHER_COMMENTS", this.comments);
@@ -340,7 +341,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$route, "$route");
     if (this.$route.path === "/board") {
       this.type = "leave";
     }

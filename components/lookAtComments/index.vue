@@ -35,6 +35,14 @@
                   <span>{{ replyComments.length }}</span>
                   <span class="reply-text">回复</span>
                 </div>
+                <div
+                  class="reply-delete answer-wrap"
+                  v-if="userMsg._id === singleComment.user.user_id"
+                  @click="handleDeleteReply(singleComment, 'deleteFather')"
+                >
+                  <i class="el-icon-delete"></i>
+                  <span>删除</span>
+                </div>
               </div>
             </div>
           </li>
@@ -73,7 +81,11 @@
                   <i class="iconfont icon-custom-comment"></i>
                   <span class="reply-text">回复</span>
                 </div>
-                <div class="reply-delete answer-wrap" v-if="userMsg._id === reply.user.user_id">
+                <div
+                  class="reply-delete answer-wrap"
+                  v-if="userMsg._id === reply.user.user_id"
+                  @click="handleDeleteReply(reply, 'deleteReply')"
+                >
                   <i class="el-icon-delete"></i>
                   <span>删除</span>
                 </div>
@@ -128,8 +140,7 @@ export default {
   data() {
     return {
       labelPosition: "left",
-      replyComments: [
-      ],
+      replyComments: [],
       queryReplyComment: {
         page: 1,
         size: 10,
@@ -178,6 +189,9 @@ export default {
     }
   },
   created() {
+    if (this.$route.path === "/board") {
+      this.type = "leave";
+    }
     this.queryReplyCommentsList(this.singleComment._id);
     this.commentId = this.singleComment._id;
     console.log(this.singleComment, "single");
@@ -190,6 +204,30 @@ export default {
       this.content += `<section><img src="${
         this.imageUrl
       }" class="upload" align="middle"></section>`;
+    },
+    handleDeleteReply(comment, type) {
+      let config = {
+        _id: comment._id,
+        user_id: comment.user.user_name,
+      };
+
+      if (type === 'deleteFather') {
+        config.article_id = comment.article_id;
+      } else {
+        config.comment_id = comment.comment_id;
+      }
+
+      $http.post(`/${this.type}/${type}`, config).then(res => {
+        if (res.data === 'SUCCESS') {
+          if (type === 'deleteFather') {
+            this.$message.success(res.msg);
+            this.close();
+          } else {
+            this.$message.success(res.msg);
+            this.queryReplyCommentsList(this.singleComment._id)
+          }
+        }
+      })
     },
     // 上传文件到七牛云
     async upqiniu(req) {
@@ -275,10 +313,6 @@ export default {
         article_id: this.singleComment.article_id
       };
 
-      if (this.$route.path === "/board") {
-        this.type = "leave";
-      }
-
       $http.post(`/${this.type}/replySave`, config).then(res => {
         if (res.data === "SUCCESS") {
           this.$refs["input"].blur();
@@ -318,12 +352,9 @@ export default {
         }
       };
 
-      if (this.$route.path === "/board") {
-        this.type = "leave";
-      } else {
+      if (this.$route.path !== "/board") {
         config.article_id = this.singleComment.article_id;
       }
-      console.log(config, "config_reply");
 
       $http.post(`/${this.type}/confirmLikes`, config).then(res => {
         this.$store.dispatch("SINGLE_COMMENT", res.data);
@@ -371,24 +402,17 @@ export default {
         }
       };
 
-      console.log(config, "config_reply_config");
-      if (this.$route.path === "/board") {
-        this.type = "leave";
-      }
       $http.post(`/${this.type}/ReplyLikes`, config).then(res => {
         this.queryReplyCommentsList(config.comment_id);
       });
     },
     queryReplyCommentsList(id) {
       this.queryReplyComment.comment_id = id;
-      if (this.$route.path === "/board") {
-        this.type = "leave";
-      }
       $http
         .post(`/${this.type}/queryReleyCommentsList`, this.queryReplyComment)
         .then(res => {
           this.replyComments = res.data.list;
-          this.$emit('reply_count', {
+          this.$emit("reply_count", {
             id: this.singleComment._id,
             length: this.replyComments.length
           });
