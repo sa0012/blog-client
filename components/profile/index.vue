@@ -69,19 +69,19 @@
       <el-col :span="8" class="count-item count-browse">
         <span class="bignum pn">
           文章
-          <a class="count-color">32</a> 篇
+          <a class="count-color">{{ countMes.article_count }}</a> 篇
         </span>
       </el-col>
       <el-col :span="8" class="count-item count-runtime">
         <span class="bignum">
           评论
-          <a class="count-color">448</a> 次
+          <a class="count-color">{{ countMes.leave_count }}</a> 次
         </span>
       </el-col>
       <el-col :span="8" class="count-item count-runtime" style="border-left: 1px solid #ddd;">
         <span class="bignum">
           浏览
-          <a class="count-color">448</a> 次
+          <a class="count-color">{{ countMes.browser_count }}</a> 次
         </span>
       </el-col>
     </el-row>
@@ -89,9 +89,19 @@
 </template>
 
 <script>
+import $http from "~/plugins/axios";
 export default {
   data() {
-    return {};
+    return {
+      countMes: {
+        article_count: 0,
+        leave_count: 0,
+        browser_count: 0
+      }
+    };
+  },
+  created() {
+    this.queryCount();
   },
   methods: {
     handleSuggest() {
@@ -99,6 +109,12 @@ export default {
         handleConfirm: () => {
           this.$suggest.hide();
         }
+      });
+    },
+    queryCount() {
+      $http.get("/count/statistical").then(res => {
+        console.log(res, "count");
+        this.countMes = Object.assign({}, res.data)
       });
     }
   }
