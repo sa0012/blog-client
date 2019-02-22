@@ -6,8 +6,8 @@
         <img v-lazy="article.user.user_avatar" alt class="avatar-image">
       </div>
       <div class="item-username">{{ article.user.user_name }}</div>
-      <div class="item-created-time">发布时间： {{ article.created_time }}</div>
-      <div class="item-created-time" style="padding-left: 15px;">浏览次数： 122次</div>
+      <div class="item-created-time">发布时间： {{ article.create_time | dateformat }}</div>
+      <div class="item-created-time" style="padding-left: 15px;">浏览次数： {{ article.browser_count }}次</div>
       <div class="item-category">分类： {{ article.category }}</div>
     </div>
     <!-- <p class="article-content" v-html="article.article"></p> -->
@@ -38,19 +38,18 @@ export default {
       toolbarsFlag: false,
       subfield: false,
       article: {
-        _id: "acekdiel992882828",
-        image: require("~/assets/image/case.jpg"),
-        title: "如何建立个人博客？",
+        _id: "",
+        image: '',
+        title: "",
         user: {
-          user_avatar: require("~/assets/image/car.jpg"),
-          user_name: "博客"
+          user_avatar: '',
+          user_name: ""
         },
-        created_time: "2018-06-05 10:24:00",
-        category: "前端",
-        browse: "154",
-        commentCount: "4",
-        desc:
-          "明明是个缺心眼的娃，怎么想法就多呢，五花八门层出不穷，有点佩服自己了。开个淘宝店做业务考学力短期旅行义工旅行穷游咖啡馆。。。。大致的例了这段时间的想法，额，真的不少；但是真正去执行的是哪个，第一个没有，第二个没，第三个没有，第四个没...............试问自己：如果没有去执行了，如何可以成."
+        create_time: "",
+        category: "",
+        browse: "",
+        commentCount: "",
+        desc: ""
       }
     };
   },

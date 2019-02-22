@@ -1,19 +1,14 @@
 <template>
   <section class="container">
-    <header-nav></header-nav>
     <el-row class="content">
       <bread-nav :navArr="navArr"></bread-nav>
       <news-articles :isShowTitle="showTitle" :showPag="showPag"></news-articles>
     </el-row>
-    <net-footer></net-footer>
   </section>
 </template>
 
 <script>
-import HeaderNav from "~/components/header/header.vue";
-import NetFooter from "~/components/footer";
 import BreadNav from "~/components/breadNav";
-// import $http from '~/plugin/axios';
 export default {
   head() {
     return {
@@ -30,15 +25,13 @@ export default {
       showPag: true,
       navArr: [
         {
-          title: '文章',
-          route: '/article'
+          title: "文章",
+          route: "/article"
         }
       ]
     };
   },
   components: {
-    HeaderNav,
-    NetFooter,
     BreadNav,
     NewsArticles: () => import("~/components/newsArticle")
   },
@@ -53,6 +46,7 @@ export default {
 .container {
   width: 100%;
   min-height: 100%;
+  height: auto;
 }
 
 .content {
@@ -60,6 +54,7 @@ export default {
   padding-top: 170px;
   position: relative;
   margin: 0 auto;
+  padding-bottom: 150px;
 
   .content-right {
     padding-left: 30px;
@@ -67,26 +62,5 @@ export default {
   }
 }
 
-.title {
-  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
 </style>
 

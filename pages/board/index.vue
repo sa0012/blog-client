@@ -1,6 +1,5 @@
 <template>
   <section class="container">
-    <header-nav></header-nav>
     <el-row class="content">
       <bread-nav :navArr="navArr"></bread-nav>
       <el-col :span="15" class="content-left">
@@ -14,14 +13,11 @@
         <news-comments></news-comments>
       </el-col>
     </el-row>
-    <net-footer></net-footer>
   </section>
 </template>
 
 <script>
-import HeaderNav from "~/components/header/header.vue";
 import profileTip from "~/components/profile";
-import NetFooter from "~/components/footer";
 import BreadNav from "~/components/breadNav";
 import MessageBox from '~/components/messageBox';
 
@@ -43,9 +39,7 @@ export default {
     }
   },
   components: {
-    HeaderNav,
     profileTip,
-    NetFooter,
     MessageBox,
     BreadNav,
     CommentsList: () => import("~/components/commentsList"),
@@ -61,6 +55,7 @@ export default {
 .container {
   width: 100%;
   min-height: 100%;
+  height: auto;
 }
 
 .content {
@@ -68,6 +63,7 @@ export default {
   padding-top: 170px;
   position: relative;
   margin: 0 auto;
+  padding-bottom: 150px;
 
   .content-right {
     padding-left: 30px;

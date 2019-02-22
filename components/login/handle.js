@@ -156,8 +156,7 @@ export default {
     }
   },
   created() {
-    this.get_check_code();
-    // this.showLogin = true;
+    console.log(this.isLogin, 'vue')
   },
   components: {
     SqTabs,

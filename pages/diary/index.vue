@@ -1,17 +1,13 @@
 <template>
   <section class="container">
-    <header-nav></header-nav>
     <el-row class="content">
       <bread-nav :navArr="navArr"></bread-nav>
       <time-line :classifyObj="classifyObj" :timeNav="timeNav" :selectIndex.sync="selectIndex"></time-line>
     </el-row>
-    <net-footer></net-footer>
   </section>
 </template>
 
 <script>
-import HeaderNav from "~/components/header/header.vue";
-import NetFooter from "~/components/footer";
 import BreadNav from "~/components/breadNav";
 import $http from "~/plugins/axios";
 import $ from "~/utils";
@@ -73,8 +69,6 @@ export default {
     this.handleClassifyQuery();
   },
   components: {
-    HeaderNav,
-    NetFooter,
     BreadNav,
     TimeLine: () => import("~/components/timeLine")
   }
@@ -85,6 +79,7 @@ export default {
 .container {
   width: 100%;
   min-height: 100%;
+  height: auto;
 }
 
 .content {
@@ -92,6 +87,7 @@ export default {
   padding-top: 170px;
   position: relative;
   margin: 0 auto;
+  padding-bottom: 150px;
 
   .content-right {
     padding-left: 30px;

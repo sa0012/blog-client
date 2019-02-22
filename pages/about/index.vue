@@ -1,6 +1,5 @@
 <template>
   <section class="container">
-    <header-nav></header-nav>
     <el-row class="content">
       <bread-nav :navArr="navArr"></bread-nav>
       <div class="container">
@@ -76,13 +75,10 @@
         </section>
       </div>
     </el-row>
-    <net-footer></net-footer>
   </section>
 </template>
 
 <script>
-import HeaderNav from "~/components/header/header.vue";
-import NetFooter from "~/components/footer";
 import BreadNav from "~/components/breadNav";
 export default {
   head() {
@@ -104,8 +100,6 @@ export default {
     };
   },
   components: {
-    HeaderNav,
-    NetFooter,
     BreadNav
   },
   methods: {}
@@ -116,6 +110,7 @@ export default {
 .container {
   width: 100%;
   min-height: 100%;
+  height: auto;
 }
 
 .content {
@@ -124,6 +119,7 @@ export default {
   position: relative;
   margin: 0 auto;
   text-align: center;
+  padding-bottom: 150px;
 
   .title {
     font-size: 18px;

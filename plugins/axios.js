@@ -10,8 +10,7 @@ import Vue from 'vue';
 axios.defaults.timeout = 10000; // 时间超时设置10s
 
 // 创建一个axios的实列
-const service = axios.create();
-// instance.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
+const service = axios.create(config);
 
 axios.interceptors.request.use = service.interceptors.request.use;
 
@@ -47,8 +46,9 @@ service.interceptors.response.use(
       // 这里为什么处理401错误,详见，server/untils/token check_token这个函数
       if (response.status == 401) {
         let msg = response.data || '请重新登录!';
-        new Vue().$message.error(msg)
-        window.sessionStorage.clear() // token过期,清除
+        new Vue().$message.error(msg);
+        window.sessionStorage.clear(); // token过期,清除
+        new Vue().prototype.isLogin = false;
         return Promise.reject(error.response);
       }
     } else {
@@ -66,10 +66,10 @@ const get = (url, params = {}, method = 'get', headers) => new Promise((resolve,
     "Content-Type": "application/json; charset=utf-8"
   }
   service[method](url, req, headers).then(res => {
-    console.log(res, 'this is a res')
     if (res.code != 200) {
       new Vue().$message.error(res.msg)
     }
+    console.log(new Vue(), 'store')
     resolve && res && typeof res !== 'undefined' && resolve(res)
   }, error => {
     reject && reject(error)

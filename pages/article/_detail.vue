@@ -1,25 +1,21 @@
 <template>
   <section class="container">
-    <header-nav></header-nav>
     <el-row class="content">
       <bread-nav :navArr="navArr"></bread-nav>
       <article-detail :articleId="articleId"></article-detail>
+
       <h3 class="comments-title first-title">发表评论</h3>
       <el-col :span="24" style="text-align: left;">
         <comments-list></comments-list>
       </el-col>
     </el-row>
-    <net-footer></net-footer>
     <nav-tip></nav-tip>
   </section>
 </template>
 
 <script>
-import HeaderNav from "~/components/header/header.vue";
-import NetFooter from "~/components/footer";
 import BreadNav from "~/components/breadNav";
 import NavTip from '~/components/navTip';
-// import MessageBox from "~/components/messageBox";
 
 export default {
   head() {
@@ -44,15 +40,11 @@ export default {
     };
   },
   created() {
-    // this.articleDetail()
     console.log(this.$route, "route");
   },
   components: {
-    HeaderNav,
-    NetFooter,
     BreadNav,
     NavTip,
-    // MessageBox,
     ArticleDetail: () => import("~/components/articleDetail"),
     CommentsList: () => import("~/components/commentsList")
   },
@@ -67,6 +59,7 @@ export default {
 .container {
   width: 100%;
   min-height: 100%;
+  height: auto;
 }
 
 .content {
@@ -75,6 +68,7 @@ export default {
   position: relative;
   margin: 0 auto;
   text-align: center;
+  padding-bottom: 150px;
 
   .content-right {
     padding-left: 30px;

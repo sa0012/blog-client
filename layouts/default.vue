@@ -1,8 +1,32 @@
 <template>
-  <div>
+  <div class="root">
+    <header-nav></header-nav>
     <nuxt />
+    <net-footer class="footer"></net-footer>
   </div>
 </template>
+
+<script>
+import HeaderNav from "~/components/header/header.vue";
+import NetFooter from "~/components/footer";
+export default {
+  data() {
+    return {}
+  },
+  components: {
+    HeaderNav,
+    NetFooter,
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+.root {
+  height: 100%;
+}
+</style>
+
+
 
 <style>
 html {
@@ -15,6 +39,11 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+}
+
+#__layout, #__nuxt {
+  height: 100%;
+  width: 100%;
 }
 
 *,
