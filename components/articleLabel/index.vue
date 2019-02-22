@@ -34,7 +34,7 @@ export default {
       this.$router.push('/article?name=' + name)
     }
   },
-  mounted() {
+  created() {
     this.queryLabel();
   }
 };

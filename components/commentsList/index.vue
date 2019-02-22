@@ -340,7 +340,7 @@ export default {
       return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
     }
   },
-  mounted() {
+  created() {
     if (this.$route.path === "/board") {
       this.type = "leave";
     }
