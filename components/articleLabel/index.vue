@@ -26,7 +26,6 @@ export default {
   methods: {
     queryLabel() {
       $http.get('/tag/query').then(res => {
-        console.log(res, 'labal')
         this.labelArr = res.data || [];
       })
     },

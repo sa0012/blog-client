@@ -194,11 +194,9 @@ export default {
     }
     this.queryReplyCommentsList(this.singleComment._id);
     this.commentId = this.singleComment._id;
-    console.log(this.singleComment, "single");
   },
   methods: {
     handleAvatarSuccess(res, file) {
-      console.log(res, file);
       this.imageUrl = res.data.key;
       this.showImg = true;
       this.content += `<section><img src="${
@@ -332,7 +330,6 @@ export default {
         this.replyLike = false;
       } else {
         // 自己对别人的评论点赞
-        console.log(this.replyLike, "自己对别人");
         this.replyLike = this.singleComment.reply_like;
         this.replyLike = !this.replyLike;
         this.isWho = "YOU";
@@ -382,7 +379,6 @@ export default {
         this.replyLike = false;
       } else {
         // 自己对别人的评论点赞
-        console.log(this.replyLike, "自己对别人");
         this.replyLikeReply = reply.reply_like;
         this.replyLikeReply = !this.replyLikeReply;
         this.isReplyWho = "YOU";
@@ -423,7 +419,6 @@ export default {
       this.$emit("updateComment");
     },
     handleComments(info, type, mainType) {
-      console.log(info, "info");
       this.$refs["input"].focus();
       this.commentType = type;
       this.reply_content = info.content;

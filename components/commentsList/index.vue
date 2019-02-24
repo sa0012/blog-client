@@ -123,7 +123,6 @@ export default {
       this.queryCommentList();
     },
     handleReplyCount(options) {
-      console.log(options, "options");
       this.comments.forEach((comment, index) => {
         if (comment._id === options.id) {
           this.comments[index].reply_count = length;
@@ -162,7 +161,6 @@ export default {
       }
 
       $http.post(`/${this.type}/saveComment`, config).then(res => {
-        console.log(res);
         if (res.data === "SUCCESS") {
           this.queryCommentList();
         }
@@ -176,7 +174,6 @@ export default {
       $http
         .post(`/${this.type}/queryCommentList`, this.queryFatherComment)
         .then(res => {
-          console.log(res, '查询成功了吗')
           this.comments = res.data.list;
           this.$emit("throwComments", this.comments);
           // this.$store.dispatch("FATHER_COMMENTS", this.comments);
@@ -191,7 +188,6 @@ export default {
         this.replyLike = false;
       } else {
         // 自己对别人的评论点赞
-        console.log(this.replyLike, "自己对别人");
         this.replyLike = !this.replyLike;
         this.isWho = "YOU";
         this.isLike = false;
@@ -214,7 +210,6 @@ export default {
         this.queryFatherComment.article_id = this.comments[index].article_id;
       }
 
-      console.log(config, "config");
 
       $http.post(`/${this.type}/confirmLikes`, config).then(res => {
         this.queryCommentList();

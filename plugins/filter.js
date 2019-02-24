@@ -24,7 +24,6 @@ export default () => {
     if (seconds < 10) {
       seconds = '0' + seconds;
     }
-    console.log(time, 'year')
     // return year + '年' + month + '月' + date + '日' + hours + '时' + minutes + '分' + seconds + '秒';
     return year + '-' + add0(month) + '-' + add0(date) + ' ' + hours + ':' + minutes + ':' + seconds;
   });

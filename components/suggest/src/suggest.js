@@ -30,7 +30,6 @@ const suggestPlugin = {
         callback && callback()
       },
       alert (option) {
-        console.log(option)
         this.show(Object.assign({}, option))
       },
     }

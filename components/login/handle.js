@@ -73,7 +73,6 @@ export default {
   watch: {
     loginMsg: {
       handler(newVal, oldVal) {
-        console.log(newVal, 'loginMsg')
         if (newVal && newVal.showLogin) {
           this.get_check_code();
         }
@@ -89,7 +88,6 @@ export default {
       removeSession('user');
     },
     githubLogin() {
-      console.log(this.$route)
       $http.get('/github/client').then(res => {
         this.$store.dispatch('CURRENT_ROUTE', this.$route.path)
         window.location.href = res.data;
@@ -148,7 +146,6 @@ export default {
     },
     async get_check_code() {
       $http.get('/other/checkcode').then(res => {
-        console.log(res, 'get_check_code')
         this.img_base64 = res.data.img
         this.loginForm.code_token = res.data.token
         this.registerForm.code_token = res.data.token
@@ -156,7 +153,6 @@ export default {
     }
   },
   created() {
-    console.log(this.isLogin, 'vue')
   },
   components: {
     SqTabs,

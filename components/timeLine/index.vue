@@ -72,7 +72,6 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      console.log(111111111);
     });
   }
 };

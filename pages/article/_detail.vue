@@ -40,7 +40,6 @@ export default {
     };
   },
   created() {
-    console.log(this.$route, "route");
   },
   components: {
     BreadNav,

@@ -69,7 +69,6 @@ const get = (url, params = {}, method = 'get', headers) => new Promise((resolve,
     if (res.code != 200) {
       new Vue().$message.error(res.msg)
     }
-    console.log(new Vue(), 'store')
     resolve && res && typeof res !== 'undefined' && resolve(res)
   }, error => {
     reject && reject(error)

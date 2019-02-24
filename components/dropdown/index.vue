@@ -27,7 +27,6 @@ export default {
       if (command === "home") {
         this.$router.push(`/`);
       } else {
-        console.log(command);
       }
     },
     quitLogin() {

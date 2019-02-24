@@ -74,14 +74,12 @@ export default {
   },
   methods: {
     handleAvatarSuccess(res, file) {
-      console.log(res, file);
       this.imageUrl = res.data.key
       this.showImg = true;
       this.content += `<section><img src="${this.imageUrl}" class="upload" align="middle"></section>`
     },
     // 上传文件到七牛云
     async upqiniu(req) {
-      console.log(req);
       const config = {
         headers: { "Content-Type": "multipart/form-data" }
       };
@@ -149,7 +147,6 @@ export default {
       this.$store.dispatch("LOGIN_MSG", this.loginMsg);
     },
     handleEmotion(i) {
-      console.log(i);
       this.showEmoji = true;
       this.content += i;
     },

@@ -61,7 +61,6 @@ export default {
         }
         this.timeNav = Object.keys(this.classifyObj).sort($.Descending);
         this.selectIndex = this.timeNav[0];
-        console.log(this.classifyObj, "timeNav");
       });
     }
   },

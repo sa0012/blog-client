@@ -138,11 +138,9 @@ export default {
     handleCurrentChange(val) {
       this.config.page = val;
       this.getArticleList();
-      console.log(`当前页: ${val}`);
     },
     labelToArticle(tagName) {
       $http.get("/tag/queryArticle", { tag_name: tagName }).then(res => {
-        console.log(res, 'res')
         try {
           let list = res.data && res.data.length ? res.data : [];
           list.forEach((article, index) => {

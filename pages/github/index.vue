@@ -25,11 +25,9 @@ export default {
   },
   mounted() {
     if (this.$route.query.code) {
-      console.log(this.$route, "route");
       $http
         .get(`/oauth/callback?code=${this.$route.query.code}&type=client`)
         .then(res => {
-          console.log(res, "gitHubCallback");
           let config = {
             avatar: res.data.avatar,
             isLogin: true,

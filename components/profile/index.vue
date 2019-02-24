@@ -113,7 +113,6 @@ export default {
     },
     queryCount() {
       $http.get("/count/statistical").then(res => {
-        console.log(res, "count");
         this.countMes = Object.assign({}, res.data)
       });
     }
