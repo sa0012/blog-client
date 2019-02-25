@@ -98,9 +98,6 @@ module.exports = {
     }
   },
   generate: {
-    routes: [
-      '/article/:id',
-    ],
     minify: {
       collapseWhitespace: false
     }
