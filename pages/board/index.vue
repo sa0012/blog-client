@@ -20,8 +20,19 @@
 import profileTip from "~/components/profile";
 import BreadNav from "~/components/breadNav";
 import MessageBox from '~/components/messageBox';
+import $http from "~/plugins/axios";
+import $ from "~/utils";
 
 export default {
+  async asyncData ({ store }) {
+    let res = await $http.post('/article/hot');
+    let list = res.data.list && res.data.list.length ? res.data.list : [];
+    list.forEach((article, index) => {
+      list[index].create_time = $.timeFormat(article.create_time - 0);
+      list[index].edit_time = $.timeFormat(article.edit_time - 0);
+    });
+    store.dispatch('HOT_ARTICLE', res.data.list)
+  },
   head() {
     return {
       title: "留言板",
