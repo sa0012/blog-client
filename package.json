@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server --host 0.0.0.0",
-    "build": "nuxt build && rm -rf !(.nuxt|static|package.json|nuxt.config.js) && cnpm install --production && npm start && npm run pm2",
+    "build": "nuxt build",
     "start": "nuxt start",
     "pm2": "cross-env NODE_ENV=production pm2 start npm --name blog-client -- start",
     "generate": "nuxt generate"
