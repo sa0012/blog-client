@@ -54,6 +54,10 @@ module.exports = {
     '@/plugins/axios',
     '@/plugins/filter',
     {
+      src: '~/plugins/commen',
+      ssr: false
+    },
+    {
       src: '@/plugins/suggest',
       ssr: false
     },

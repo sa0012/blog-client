@@ -1,8 +1,8 @@
 <template>
   <div class="root">
-    <header-nav></header-nav>
-    <nuxt />
-    <net-footer class="footer"></net-footer>
+    <header-nav v-if="$route.path !== '/github'"></header-nav>
+    <nuxt/>
+    <net-footer class="footer" v-if="$route.path !== '/github'"></net-footer>
   </div>
 </template>
 
@@ -11,13 +11,19 @@ import HeaderNav from "~/components/header/header.vue";
 import NetFooter from "~/components/footer";
 export default {
   data() {
-    return {}
+    return {};
   },
   components: {
     HeaderNav,
-    NetFooter,
+    NetFooter
   },
-}
+  created() {
+    window.addEventListener("setItem", () => {
+      this.$store.dispatch("USER_MSG", {});
+      this.$store.dispatch("LOGIN_MSG", { loginType: "login", showLogin: true });
+    });
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -30,8 +36,8 @@ export default {
 
 <style>
 html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -41,7 +47,8 @@ html {
   box-sizing: border-box;
 }
 
-#__layout, #__nuxt {
+#__layout,
+#__nuxt {
   height: 100%;
   width: 100%;
 }

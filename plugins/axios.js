@@ -48,7 +48,7 @@ service.interceptors.response.use(
         let msg = response.data || '请重新登录!';
         new Vue().$message.error(msg);
         window.sessionStorage.clear(); // token过期,清除
-        new Vue().prototype.isLogin = false;
+        new Vue().resetSetItem('watchStorage', JSON.stringify({ test: 'user' }))
         return Promise.reject(error.response);
       }
     } else {
