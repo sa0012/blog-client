@@ -4,7 +4,6 @@ var resetSetItem = {
   install(Vue) {
     Vue.prototype.resetSetItem = (key, newVal) => {
       if (key === 'watchStorage') {
-        console.log(1111111)
         // 创建一个StorageEvent事件
         var newStorageEvent = document.createEvent('StorageEvent');
         const storage = {
@@ -18,7 +17,6 @@ var resetSetItem = {
             window.dispatchEvent(newStorageEvent)
           }
         }
-        console.log(key, newVal, 'key-value')
         return storage.setItem(key, newVal);
       }
     }
