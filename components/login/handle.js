@@ -131,7 +131,7 @@ export default {
         return;
       }
 
-      $http.post('/user', this.registerForm).then(res => {
+      $http.post('/user/register', this.registerForm).then(res => {
         if (res.code == 200) {
           res.data.isLogin = true;
           this.$store.dispatch('USER_MSG', res.data);
