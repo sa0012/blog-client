@@ -80,7 +80,8 @@ export default {
           title: "",
           user: {
             avatar: '',
-            user_name: ""
+            user_name: "",
+            address: null,
           },
           created_time: "",
           category: "",

@@ -34,6 +34,7 @@ export default {
             token: res.data.token,
             user_id: res.data.user_id,
             user_name: res.data.user_name,
+            address: res.data.address,
             _id: res.data._id
           };
           this.$store.dispatch("USER_MSG", config);

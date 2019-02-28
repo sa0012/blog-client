@@ -34,5 +34,16 @@ export default () => {
         return time.split(" ")[0].slice(5)
       }
     } catch(e) {}
+  });
+
+  Vue.filter('location', address => {
+    console.log(address, 'address')
+    try {
+      if (Object.prototype.toString.call(address) === "[object Object]") {
+        return '[' + address.city + '网友' + ']'
+      }
+    } catch(e) {
+      console.log(e);
+    }
   })
 }

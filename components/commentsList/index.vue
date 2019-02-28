@@ -13,6 +13,7 @@
           <div class="comments-content">
             <div class="user-name">
               <p class="username">{{ comment.user.user_name }}</p>
+              <p class="location">{{ comment.user.address.address_component | location }}</p>
               <div class="dianzan">
                 <i
                   class="iconfont icon-dianzan"
@@ -79,6 +80,7 @@ export default {
           user_id: "",
           user_name: "",
           user_avatar: "",
+          address: null,
           isLike: false
         },
         reply_like: false,
@@ -94,6 +96,7 @@ export default {
           user_id: "",
           user_name: "",
           user_avatar: "",
+          address: null,
           isLike: false
         }
       },
@@ -150,7 +153,8 @@ export default {
         user: {
           user_id: this.userMsg._id,
           user_name: this.userMsg.user_id,
-          user_avatar: this.userMsg.avatar
+          user_avatar: this.userMsg.avatar,
+          address: this.userMsg.address
         },
         reply_like: false,
         isWhoLike: "ME"
@@ -202,6 +206,7 @@ export default {
           user_id: this.comments[index].user.user_id,
           user_name: this.comments[index].user.user_name,
           user_avatar: this.comments[index].user.user_avatar,
+          address: this.comments[index].user.address,
           isLike: this.isLike
         }
       };
@@ -209,7 +214,6 @@ export default {
       if (this.$route.path !== "/board") {
         this.queryFatherComment.article_id = this.comments[index].article_id;
       }
-
 
       $http.post(`/${this.type}/confirmLikes`, config).then(res => {
         this.queryCommentList();
@@ -407,6 +411,16 @@ export default {
         color: #d32;
         padding-bottom: 5px;
         position: relative;
+
+        .username,
+        .location {
+          display: inline-block;
+        }
+
+        .location {
+          color: #dbdbdb;
+          margin-left: 10px;
+        }
 
         .dianzan {
           position: absolute;

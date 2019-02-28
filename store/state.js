@@ -6,6 +6,7 @@ let user = {
   avatar: '',
   _id: '',
   token: '',
+  address: null,
   user_name: '',
   isLogin: false
 }
@@ -18,6 +19,7 @@ let fatherComments = [{
     user_id: "",
     user_name: "",
     user_avatar: "",
+    address: null,
     isLike: false
   },
   isWhoLike: 'ME',
@@ -32,7 +34,8 @@ let route = '/'
 const hotArticle = [{
   "user": {
     "user_name": "",
-    "user_avatar": ""
+    "user_avatar": "",
+    "address": null,
   },
   "tags": [],
   "article": "",
@@ -73,6 +76,7 @@ const singleComment = {
       user_id: "",
       user_name: "",
       user_avatar: "",
+      address: null,
       isLike: false
     },
     create_time: "",

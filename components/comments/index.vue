@@ -37,7 +37,8 @@ export default {
           user: {
             user_id: "",
             user_name: "",
-            user_avatar: ""
+            user_avatar: "",
+            address: null
           },
           create_time: "",
           edit_time: ""

@@ -15,6 +15,7 @@
             <div class="comments-content">
               <div class="user-name">
                 <p class="username">{{ singleComment.user.user_name }}</p>
+                <p class="landlord">楼主</p>
                 <div class="dianzan">
                   <i
                     class="iconfont icon-dianzan"
@@ -61,6 +62,7 @@
                   <span
                     @click="handleComments(reply, 'reply', 'you')"
                   >{{ reply.reply_to_user.user_name }}</span>
+                   <span class="location">{{ reply.user.address.address_component | location }}</span>
                 </p>
                 <div class="dianzan">
                   <i
@@ -156,6 +158,7 @@ export default {
         user_avatar: "",
         user_id: "",
         user_name: "",
+        address: null,
         isLike: false
       },
       reply_content: "",
@@ -206,26 +209,26 @@ export default {
     handleDeleteReply(comment, type) {
       let config = {
         _id: comment._id,
-        user_id: comment.user.user_name,
+        user_id: comment.user.user_name
       };
 
-      if (type === 'deleteFather') {
+      if (type === "deleteFather") {
         config.article_id = comment.article_id;
       } else {
         config.comment_id = comment.comment_id;
       }
 
       $http.post(`/${this.type}/${type}`, config).then(res => {
-        if (res.data === 'SUCCESS') {
-          if (type === 'deleteFather') {
+        if (res.data === "SUCCESS") {
+          if (type === "deleteFather") {
             this.$message.success(res.msg);
             this.close();
           } else {
             this.$message.success(res.msg);
-            this.queryReplyCommentsList(this.singleComment._id)
+            this.queryReplyCommentsList(this.singleComment._id);
           }
         }
-      })
+      });
     },
     // 上传文件到七牛云
     async upqiniu(req) {
@@ -291,7 +294,8 @@ export default {
         user: {
           user_id: this.userMsg._id,
           user_name: this.userMsg.user_id,
-          user_avatar: this.userMsg.avatar
+          user_avatar: this.userMsg.avatar,
+          address: this.userMsg.address
         },
 
         // 被评论人信息
@@ -345,6 +349,7 @@ export default {
           user_id: this.singleComment.user.user_id,
           user_name: this.singleComment.user.user_name,
           user_avatar: this.singleComment.user.user_avatar,
+          address: this.singleComment.user.address,
           isLike: this.isLike
         }
       };
@@ -358,19 +363,6 @@ export default {
       });
     },
     handleReplyLikes(reply) {
-      // let like = reply.user.isLike;
-      // like = !like;
-      // const config = {
-      //   comment_id: reply.comment_id,
-      //   _id: reply._id,
-      //   user: {
-      //     user_id: reply.user.user_id,
-      //     user_name: reply.user.user_name,
-      //     user_avatar: reply.user.user_avatar,
-      //     isLike: like
-      //   }
-      // };
-
       // 自己为自己点赞
       if (this.userMsg._id === reply.user.user_id) {
         this.isReplyWho = "ME";
@@ -394,6 +386,7 @@ export default {
           user_id: reply.user.user_id,
           user_name: reply.user.user_name,
           user_avatar: reply.user.user_avatar,
+          address: reply.user.address,
           isLike: this.isReplyLike
         }
       };
@@ -651,8 +644,28 @@ export default {
       font-weight: bold;
       font-size: 14px;
       color: #d32;
-      // padding-bottom: 5px;
+      padding-bottom: 5px;
       position: relative;
+
+      .username,
+      .landlord,
+      .location {
+        display: inline-block;
+      }
+
+      .location {
+        color: #dbdbdb;
+        margin-left: 10px;
+      }
+
+      .landlord {
+        border: 1px solid royalblue;
+        padding: 0px 3px;
+        font-size: 12px;
+        border-radius: 3px;
+        margin-left: 5px;
+        color: royalblue;
+      }
 
       .dianzan {
         position: absolute;

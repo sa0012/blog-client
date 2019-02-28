@@ -43,7 +43,8 @@ export default {
         title: "",
         user: {
           user_avatar: '',
-          user_name: ""
+          user_name: "",
+          address: null
         },
         create_time: "",
         category: "",
