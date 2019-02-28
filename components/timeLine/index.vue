@@ -11,9 +11,9 @@
     </ul>
     <ul class="event_list" ref="eventList">
       <transition-group name="list" tag="p">
-        <div v-for="(nav, nIndex) in timeNav" :key="nIndex" :id="nav + 'list'">
-          <h3 :id="nav">{{ nav }}</h3>
-          <li v-for="(classify, cIndex) in classifyObj[nav]" :key="cIndex">
+        <div v-for="(nav, nIndex) in timeArr" :key="nIndex" :id="nav.time + 'list'" v-if="nav.showStatus">
+          <h3 :id="nav">{{ nav.time }}</h3>
+          <li v-for="(classify, cIndex) in classifyObj[nav.time]" :key="cIndex">
             <span>{{ classify.create_time | momthAndDate }}</span>
             <p>
               <span>
@@ -24,16 +24,6 @@
         </div>
       </transition-group>
     </ul>
-
-    <!-- <div id="app">
-      <div id="list-demo" class="demo">
-        <button v-on:click="add">插入一个元素</button>
-        <button v-on:click="remove">移除一个元素</button>
-        <transition-group name="list" tag="p">
-          <span v-for="item in items" v-bind:key="item" class="list-item">{{ item }}</span>
-        </transition-group>
-      </div>
-    </div>-->
   </div>
 </template>
 
@@ -63,13 +53,13 @@ export default {
     };
   },
   computed: {
-    oDivHeight() {
+    timeArr() {
       let heightArr = [];
       this.timeNav.forEach((item, index) => {
         let dom = document.getElementById(item + "list");
         let height = $.getStyle(dom, "height").split("px")[0];
-        let showStatus = $.getStyle(dom, "display");
-        heightArr.push({ height });
+        let showStatus = true;
+        heightArr.push({ height, showStatus, time: item });
       });
       return heightArr;
     }
@@ -113,14 +103,14 @@ export default {
           } else {
             oDiv.style.height = 0;
             oDiv.style.display = "none";
-            // _this.oDivHeight[index - 1].showStatus = 'none';
+            // _this.timeArr[index - 1].showStatus = 'none';
             cancelAnimationFrame(timer);
           }
         });
       }
     },
     handleTime(index) {
-      console.log(this.oDivHeight, 'oDivHeight')
+      console.log(this.timeArr, 'timeArr')
       this.selectNav = this.timeNav[index];
       if (index < (this.timeNav.length - 1)) {
         let nextDiv = document.getElementById(this.timeNav[index + 1] + "list");
@@ -128,7 +118,7 @@ export default {
       if (index > 0) {
         let dom = document.getElementById(this.timeNav[index - 1] + "list");
         let height = $.getStyle(dom, "height").split("px")[0];
-        this.backTop(dom, height, index);
+        // this.backTop(dom, height, index);
       }
 
     }
@@ -220,34 +210,5 @@ export default {
       color: #fff;
     }
   }
-}
-</style>
-
-
-<style>
-/** 方块元素的样式 **/
-.list-item {
-  display: inline-block;
-  margin-right: 10px;
-  background-color: orange;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  color: #ffffff;
-}
-/** 插入过程 **/
-.list-enter-active {
-  transition: all 1s;
-}
-/** 移除过程 **/
-.list-leave-active {
-  transition: all 1s;
-}
-/*** 开始插入、移除结束的位置变化 ***/
-.list-enter,
-.list-leave-to {
-  opacity: 0;
-  /* transform: translateY(30px); */
 }
 </style>
