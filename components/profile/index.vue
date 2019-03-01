@@ -1,8 +1,8 @@
 <template>
   <div class="profile">
     <div class="profile-wrap">
-      <div style="position: relative;">
-        <div style="position: absolute; top: 0; left: 0;">
+      <div class="clearfix">
+        <div style="float: left;">
           <img
             alt="博客主人：陈龙"
             src="~/assets/image/avatar.jpg"

@@ -11,7 +11,12 @@
     </ul>
     <ul class="event_list" ref="eventList">
       <transition-group name="list" tag="p">
-        <div v-for="(nav, nIndex) in timeArr" :key="nIndex" :id="nav.time + 'list'" v-if="nav.showStatus">
+        <div
+          v-for="(nav, nIndex) in timeArr"
+          :key="nIndex"
+          :id="nav.time + 'list'"
+          v-show="nav.showStatus"
+        >
           <h3 :id="nav">{{ nav.time }}</h3>
           <li v-for="(classify, cIndex) in classifyObj[nav.time]" :key="cIndex">
             <span>{{ classify.create_time | momthAndDate }}</span>
@@ -49,24 +54,27 @@ export default {
       hideList: "",
       selectNav: this.selectIndex,
       items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      nextNum: 10
+      nextNum: 10,
+      timeArr: []
     };
   },
   computed: {
-    timeArr() {
-      let heightArr = [];
-      this.timeNav.forEach((item, index) => {
-        let dom = document.getElementById(item + "list");
-        let height = $.getStyle(dom, "height").split("px")[0];
-        let showStatus = true;
-        heightArr.push({ height, showStatus, time: item });
-      });
-      return heightArr;
-    }
   },
   watch: {
     selectIndex(newVal, oldVal) {
       this.selectNav = newVal;
+    },
+    timeNav: {
+      handler(newVal, oldVal) {
+        newVal.forEach((item, index) => {
+          // let dom = document.getElementById(item + "list");
+          // console.log(dom, 'dom')
+          // let height = $.getStyle(dom, "height").split("px")[0];
+          let showStatus = true;
+          this.timeArr.push({ showStatus, time: item });
+        });
+      },
+      immediate: true
     }
   },
   methods: {
@@ -110,17 +118,16 @@ export default {
       }
     },
     handleTime(index) {
-      console.log(this.timeArr, 'timeArr')
+      console.log(this.timeArr, "timeArr");
       this.selectNav = this.timeNav[index];
-      if (index < (this.timeNav.length - 1)) {
+      if (index < this.timeNav.length - 1) {
         let nextDiv = document.getElementById(this.timeNav[index + 1] + "list");
       }
       if (index > 0) {
         let dom = document.getElementById(this.timeNav[index - 1] + "list");
         let height = $.getStyle(dom, "height").split("px")[0];
-        // this.backTop(dom, height, index);
+        this.backTop(dom, height, index);
       }
-
     }
   },
   mounted() {

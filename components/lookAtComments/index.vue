@@ -62,7 +62,7 @@
                   <span
                     @click="handleComments(reply, 'reply', 'you')"
                   >{{ reply.reply_to_user.user_name }}</span>
-                   <span class="location">{{ reply.user.address.address_component | location }}</span>
+                   <span class="location" v-if="reply.user.address">{{ reply.user.address.address_component | location }}</span>
                 </p>
                 <div class="dianzan">
                   <i
