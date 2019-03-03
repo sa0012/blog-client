@@ -58,8 +58,7 @@ export default {
       timeArr: []
     };
   },
-  computed: {
-  },
+  computed: {},
   watch: {
     selectIndex(newVal, oldVal) {
       this.selectNav = newVal;
@@ -217,5 +216,347 @@ export default {
       color: #fff;
     }
   }
+}
+</style>
+
+<style type="text/css">
+.op_weather4_twoicon {
+  height: 282px;
+}
+
+.op_weather4_twoicon_bg {
+  height: 404px;
+}
+
+.op_weather4_xiala {
+  width: 100%;
+  position: absolute;
+  z-index: 5;
+  top: 269px;
+  font-family: "微软雅黑", "黑体", Arial;
+}
+
+.op_weather4_xltab ul li {
+  width: 78px;
+  list-style: none;
+  float: left;
+  background: rgba(255, 255, 255, 0.2);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1, startColorstr='#20ffffff', endColorstr='#20ffffff');
+  text-align: center;
+  line-height: 26px;
+  margin-right: 1px;
+  font-size: 12px;
+  cursor: pointer;
+  display: block;
+}
+
+.op_weather4_xltab ul li.op_weather4_xlactive {
+  height: 27px;
+  background: rgba(255, 255, 255, 0.1);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1, startColorstr=#10ffffff, endColorstr=#10ffffff);
+}
+
+.op_weather4_xlcon {
+  background: rgba(255, 255, 255, 0.1);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1, startColorstr=#10ffffff, endColorstr=#10ffffff);
+  height: 114px;
+}
+
+.op_weather4_xlleft {
+  float: left;
+  height: 86px;
+  width: 35px;
+  font-size: 10px;
+  color: #fff;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  -webkit-transform: scale(0.8);
+  -moz-transform: scale(0.8);
+  -o-transform: scale(0.8);
+}
+
+.op_weather4_xlleft ul li {
+  padding-top: 4px;
+  padding-top: 2px\9;
+  list-style: none;
+  text-align: right;
+}
+
+.op_weather4_xltimeul {
+  clear: both;
+  font-size: 12px;
+  padding-left: 42px;
+  padding-top: 2px\9;
+}
+
+.op_weather4_xltimeul ul {
+  width: 520px;
+}
+
+.op_weather4_xltimeul ul li {
+  float: left;
+  list-style: none;
+  width: 56px;
+  text-align: left;
+  color: #fff;
+}
+
+.op_weather4_xltimeul-s ul li {
+  float: left;
+  list-style: none;
+  width: 56px;
+  text-align: left;
+  color: #fff;
+}
+
+.op_weather4_xltimeul-s ul {
+  width: 520px;
+}
+
+.op_weather4_yuandian {
+  background: url("//www.baidu.com/aladdin/img/new_weath/ico.png") no-repeat;
+}
+
+.op_weather4_xllefts {
+  font-size: 10px;
+  -webkit-transform: scale(0.8);
+  -moz-transform: scale(0.8);
+  -o-transform: scale(0.8);
+  position: absolute;
+  top: -14px;
+  left: -11px;
+  color: #fff;
+  width: 40px;
+  text-align: center;
+}
+
+.op_weather4_xlqyyc {
+  float: left;
+  width: 40px;
+  height: 106px;
+  position: absolute;
+  top: 0;
+  cursor: pointer;
+  z-index: 9;
+}
+
+.op_weather4_xltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  font-size: 12px;
+}
+
+.op_weather4_xlico {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: transparent transparent white transparent;
+  border-style: solid;
+  border-width: 0 5px 5px 5px;
+  width: 0;
+  height: 0;
+  top: 1px;
+  z-index: 2;
+}
+
+.op_weather4_xlcont {
+  background: #fff;
+  margin-top: 5px;
+  color: #555;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.op_weather4_jsl {
+  width: 20px;
+  height: 114px;
+  float: left;
+}
+
+.op_weather4_jsm {
+  width: 498px;
+  height: 84px;
+  float: left;
+  margin-top: 15px;
+  font-size: 12px;
+}
+
+.op_weather4_jsm ul li {
+  width: 55px;
+  float: left;
+  background: url("//www.baidu.com/aladdin/img/new_weath/icobg.png") no-repeat
+    right 0;
+}
+
+.op_weather4_jsm span {
+  display: block;
+  text-align: center;
+}
+
+.op_weather4_jsr {
+  width: 20px;
+  height: 114px;
+  float: left;
+}
+
+.op_weather4_jsm ul li .op_weather4_jsico {
+  height: 24px;
+  padding: 13px 0 13px 18px;
+}
+
+.op_weather4_jsiconborw0,
+.op_weather4_jsiconborw1,
+.op_weather4_jsiconborw2,
+.op_weather4_jsiconborw3,
+.op_weather4_jsiconborw4,
+.op_weather4_jsiconborw5,
+.op_weather4_jsiconborw6,
+.op_weather4_jsiconborw7,
+.op_weather4_jsiconborw8,
+.op_weather4_jsiconborw9,
+.op_weather4_jsiconborw10 {
+  width: 18px;
+  height: 23px;
+  background: url("//www.baidu.com/aladdin/img/new_weath/icowater.png")
+    no-repeat;
+}
+
+.op_weather4_jsiconborw0 {
+  background-position: 0 0px;
+}
+
+.op_weather4_jsiconborw1 {
+  background-position: 0 -33px;
+}
+
+.op_weather4_jsiconborw2 {
+  background-position: 0 -66px;
+}
+
+.op_weather4_jsiconborw3 {
+  background-position: 0 -99px;
+}
+
+.op_weather4_jsiconborw4 {
+  background-position: 0 -132px;
+}
+
+.op_weather4_jsiconborw5 {
+  background-position: 0 -165px;
+}
+
+.op_weather4_jsiconborw6 {
+  background-position: 0 -198px;
+}
+
+.op_weather4_jsiconborw7 {
+  background-position: 0 -231px;
+}
+
+.op_weather4_jsiconborw8 {
+  background-position: 0 -264px;
+}
+
+.op_weather4_jsiconborw9 {
+  background-position: 0 -297px;
+}
+
+.op_weather4_jsiconborw10 {
+  background-position: 0 -330px;
+}
+
+.op_weather4_xlzs {
+  width: 240px;
+  float: left;
+  margin-left: 17px;
+  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  line-height: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.op_weather4_xlzstit {
+  font-size: 16px;
+}
+
+.op_weather4_xlzstitdes {
+  font-size: 12px;
+}
+
+.op_weather4_xlbornone {
+  border-bottom: 0;
+}
+
+.op_weather4_xltop {
+  padding-top: 8px;
+  clear: both;
+}
+
+.op_weather4_xltiptitle {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 24px;
+}
+
+.op_weather4_xltipcontent {
+  line-height: 20px;
+}
+
+.op_weather4_xlopen {
+  width: 100%;
+  height: 29px;
+  background: rgba(0, 0, 0, 0.1);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1, startColorstr=#10000000, endColorstr=#10000000);
+  cursor: pointer;
+  text-align: center;
+  z-index: 6;
+  padding-top: 3px;
+}
+
+.op_weather4_tipbtn {
+  display: inline-block;
+  padding: 2px 0;
+  cursor: pointer;
+}
+
+.op_weather4_tipbtn span {
+  display: inline-block;
+}
+
+.op_weather4_icobottom {
+  background: url("//www.baidu.com/aladdin/img/new_weath/ico.png") 0 -188px no-repeat;
+  width: 27px;
+  height: 11px;
+  display: inline-block;
+}
+
+.op_weather4_xlclose {
+  height: 32px;
+  cursor: pointer;
+  text-align: center;
+  z-index: 6;
+}
+
+.op_weather4_xlclose .op_weather4_icobottom {
+  background: url("//www.baidu.com/aladdin/img/new_weath/ico.png") 0 -212px no-repeat;
+}
+
+.op_weather4_xlCanvascon1,
+.op_weather4_xlCanvascon2 {
+  position: relative;
+  margin-left: 36px;
+}
+
+.op_weather4_jslNovalue {
+  background: none;
+  padding-top: 4px;
+}
+
+.op_weather4_xltab ul .op_weather4_temperature {
+  width: 106px;
 }
 </style>

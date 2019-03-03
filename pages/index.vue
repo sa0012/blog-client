@@ -11,7 +11,7 @@
       </el-col>
       <el-col :span="9" class="content-right">
         <profile-tip></profile-tip>
-        <weather-component></weather-component>
+        <!-- <weather-component></weather-component> -->
         <article-label></article-label>
         <hot-article></hot-article>
         <news-comments></news-comments>
