@@ -55,7 +55,8 @@ export default {
       selectNav: this.selectIndex,
       items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       nextNum: 10,
-      timeArr: []
+      timeArr: [],
+      oldIndex: 0
     };
   },
   computed: {},
@@ -117,16 +118,28 @@ export default {
       }
     },
     handleTime(index) {
-      console.log(this.timeArr, "timeArr");
+      console.log(this.timeArr, index, "timeArr");
       this.selectNav = this.timeNav[index];
-      if (index < this.timeNav.length - 1) {
-        let nextDiv = document.getElementById(this.timeNav[index + 1] + "list");
+      if (index === 0 && !this.timeArr[index + 1].showStatus) {
+        this.timeArr.forEach((time, tIndex) => {
+          this.timeArr[tIndex].showStatus = true;
+        });
+      } else if (index !== 0 && this.timeArr[index - 1].showStatus) {
+        for (let i = 0; i < index; i++) {
+          this.timeArr[i].showStatus = false;
+        }
+      } else if (index !== 0 && !this.timeArr[index - 1].showStatus) {
+        for (let j = index; j < this.timeArr.length - 1; j++) {
+          this.timeArr[j].showStatus = true;
+        }
+      } else if (index === 0 && this.timeArr[index + 1].showStatus) {
+        this.timeArr[index].showStatus = true;
       }
-      if (index > 0) {
-        let dom = document.getElementById(this.timeNav[index - 1] + "list");
-        let height = $.getStyle(dom, "height").split("px")[0];
-        this.backTop(dom, height, index);
-      }
+      // if (index > 0) {
+      //   let dom = document.getElementById(this.timeNav[index - 1] + "list");
+      //   let height = $.getStyle(dom, "height").split("px")[0];
+      //   this.backTop(dom, height, index);
+      // }
     }
   },
   mounted() {
@@ -558,5 +571,22 @@ export default {
 
 .op_weather4_xltab ul .op_weather4_temperature {
   width: 106px;
+}
+</style>
+
+<style>
+/** 插入过程 **/
+.list-enter-active {
+  transition: all 1s;
+}
+/** 移除过程 **/
+.list-leave-active {
+  transition: all 1s;
+}
+/*** 开始插入、移除结束的位置变化 ***/
+.list-enter,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(-100px);
 }
 </style>
