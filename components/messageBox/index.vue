@@ -74,9 +74,11 @@ export default {
   },
   methods: {
     handleAvatarSuccess(res, file) {
-      this.imageUrl = res.data.key
+      this.imageUrl = res.data.key;
       this.showImg = true;
-      this.content += `<section><img src="${this.imageUrl}" class="upload" align="middle"></section>`
+      this.content += `<section><img src="${
+        this.imageUrl
+      }" class="upload" align="middle"></section>`;
     },
     // 上传文件到七牛云
     async upqiniu(req) {
@@ -415,10 +417,17 @@ export default {
       background: #fff;
       text-align: center;
       line-height: 180px;
-      border: 1px solid #e74851;
+      border: 1px solid #b4b4b4;
       border-radius: 10px;
       .avatar {
         max-width: 140px;
+      }
+
+      &:before {
+        left: 51px;
+      }
+      &:after {
+        left: 50px;
       }
 
       .img-close {
@@ -433,43 +442,19 @@ export default {
       }
     }
 
-    .find-div-body:before {
-      box-sizing: content-box;
-      width: 0px;
-      height: 0px;
-      position: absolute;
-      top: -16px;
-      left: 41px;
-      padding: 0;
-      border-bottom: 8px solid #ffffff;
-      border-top: 8px solid transparent;
-      border-left: 8px solid transparent;
-      border-right: 8px solid transparent;
-      display: block;
-      content: "";
-      z-index: 12;
-    }
-    .find-div-body:after {
-      box-sizing: content-box;
-      width: 0px;
-      height: 0px;
-      position: absolute;
-      top: -18px;
-      left: 40px;
-      padding: 0;
-      border-bottom: 9px solid #e74851;
-      border-top: 9px solid transparent;
-      border-left: 9px solid transparent;
-      border-right: 9px solid transparent;
-      display: block;
-      content: "";
-      z-index: 10;
-    }
-
     .login {
       float: right;
       padding-right: 10px;
     }
   }
+}
+
+.find-div-body:before {
+  top: -15px;
+  left: 30px;
+}
+
+.find-div-body:after {
+  left: 29px;
 }
 </style>

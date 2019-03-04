@@ -765,39 +765,6 @@ textarea {
   }
 }
 
-.find-div-body:before {
-  box-sizing: content-box;
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  top: -16px;
-  left: 41px;
-  padding: 0;
-  border-bottom: 8px solid #ffffff;
-  border-top: 8px solid transparent;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  display: block;
-  content: "";
-  z-index: 12;
-}
-.find-div-body:after {
-  box-sizing: content-box;
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  top: -18px;
-  left: 40px;
-  padding: 0;
-  border-bottom: 9px solid #e74851;
-  border-top: 9px solid transparent;
-  border-left: 9px solid transparent;
-  border-right: 9px solid transparent;
-  display: block;
-  content: "";
-  z-index: 10;
-}
-
 @keyframes slide {
   from {
     opacity: 0;
