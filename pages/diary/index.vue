@@ -46,8 +46,8 @@ export default {
       selectIndex: "",
       navArr: [
         {
-          title: '文章归类',
-          route: '/diary'
+          title: "文章归类",
+          route: "/diary"
         }
       ]
     };
@@ -56,9 +56,12 @@ export default {
     handleClassifyQuery() {
       $http.get("/article/classifyQuery").then(res => {
         this.classifyObj = Object.assign({}, res.data);
-        for (var i = 0; i < 5; i++) {
-          this.classifyObj[2019 - i] = this.classifyObj["2019"];
+        if (process.env.NODE_ENV === "development") {
+          for (var i = 0; i < 5; i++) {
+            this.classifyObj[2019 - i] = this.classifyObj["2019"];
+          }
         }
+
         this.timeNav = Object.keys(this.classifyObj).sort($.Descending);
         this.selectIndex = this.timeNav[0];
       });
