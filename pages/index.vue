@@ -3,8 +3,12 @@
     <el-row class="content">
       <el-col :span="15" class="content-left">
         <el-carousel height="150px">
-          <el-carousel-item v-for="item in 4" :key="item">
-            <h3>{{ item }}</h3>
+          <el-carousel-item v-for="(item, index) in bannerArr" :key="index">
+            <h3>
+              <a :href="item.routeUrl" target="_blank">
+                <img :src="item.bImgUrl" alt="" style="width: 100%;">
+              </a>
+            </h3>
           </el-carousel-item>
         </el-carousel>
         <news-articles></news-articles>
@@ -31,6 +35,28 @@ export default {
       title: '首页',
       meta: [
         { hid: '首页', name: '首页', content: '首页' }
+      ]
+    }
+  },
+  data() {
+    return {
+      bannerArr: [
+        {
+          bImgUrl: require('~/assets/image/client.jpg'),
+          routeUrl: 'http://client.juckchen.cn'
+        },
+        {
+          bImgUrl: require('~/assets/image/blog-front.jpg'),
+          routeUrl: 'http://admin.juckchen.cn'
+        },
+        {
+          bImgUrl: require('~/assets/image/react.jpg'),
+          routeUrl: 'http://m.juckchen.cn'
+        },
+        {
+          bImgUrl: require('~/assets/image/xiaozhi.jpg'),
+          routeUrl: 'https://sa0012.github.io/xiaozhi/'
+        },
       ]
     }
   },
