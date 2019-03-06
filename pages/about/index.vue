@@ -26,15 +26,18 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="2">网址：</el-col>
+            <el-col :span="2">个人博客：</el-col>
             <el-col :span="22">
-              <a href="www.juckchen.cn">www.juckchen.cn</a>
+              <a href="http://client.juckchen.cn" target="_blank">client.juckchen.cn</a>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="2">GitHub：</el-col>
             <el-col :span="22">
-              <a href="https://github.com/sa0012?tab=repositories">https://github.com/sa0012</a>
+              <a
+                href="https://github.com/sa0012?tab=repositories"
+                target="_blank"
+              >https://github.com/sa0012</a>
             </el-col>
           </el-row>
         </section>
@@ -93,8 +96,8 @@ export default {
       comment: "",
       navArr: [
         {
-          title: '关于我',
-          route: '/about'
+          title: "关于我",
+          route: "/about"
         }
       ]
     };
