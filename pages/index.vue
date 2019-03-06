@@ -6,7 +6,7 @@
           <el-carousel-item v-for="(item, index) in bannerArr" :key="index">
             <h3>
               <a :href="item.routeUrl" target="_blank">
-                <img :src="item.bImgUrl" alt="" style="width: 100%;">
+                <img :src="item.bImgUrl" alt="" style="width: 100%; height: 100%;">
               </a>
             </h3>
           </el-carousel-item>

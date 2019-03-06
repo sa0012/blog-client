@@ -18,6 +18,7 @@
       :toolbarsFlag="toolbarsFlag"
       :subfield="subfield"
       defaultOpen="preview"
+      style="    background: #e7e7e7;"
     ></mavon-editor>
   </div>
 </template>
@@ -123,4 +124,15 @@ export default {
   z-index: 222;
 }
 </style>
+
+<style>
+.v-note-wrapper .v-note-panel .v-note-show .v-show-content, .v-note-wrapper .v-note-panel .v-note-show .v-show-content-html {
+  background: #e7e7e7 !important;
+}
+
+.v-note-wrapper .v-note-panel.shadow {
+    box-shadow: none !important;
+}
+</style>
+
 
