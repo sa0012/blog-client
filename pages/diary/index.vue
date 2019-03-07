@@ -4,11 +4,13 @@
       <bread-nav :navArr="navArr"></bread-nav>
       <time-line :classifyObj="classifyObj" :timeNav="timeNav" :selectIndex.sync="selectIndex"></time-line>
     </el-row>
+    <nav-tip></nav-tip>
   </section>
 </template>
 
 <script>
 import BreadNav from "~/components/breadNav";
+import NavTip from '~/components/navTip';
 import $http from "~/plugins/axios";
 import $ from "~/utils";
 
@@ -72,6 +74,7 @@ export default {
   },
   components: {
     BreadNav,
+    NavTip,
     TimeLine: () => import("~/components/timeLine")
   }
 };
