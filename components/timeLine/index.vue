@@ -153,10 +153,11 @@ export default {
   position: relative;
 }
 .event_list {
-  width: 850px;
-  float: right;
-  background: url(../../assets/image/dian3.png) 139px 0 repeat-y;
+  width: 1050px;
+  float: left;
+  background: url(../../assets/image/dian3.png) 339px 0 repeat-y;
   margin: 10px 0 20px 0;
+  padding-left: 200px;
 
   h3 {
     margin: 0 0 10px 132px;
@@ -177,8 +178,8 @@ export default {
       width: 127px;
       text-align: right;
       display: inline-block;
-      // float: left;
-      margin-top: 10px;
+      float: left;
+      margin-top: 20px;
     }
 
     p {
@@ -208,7 +209,7 @@ export default {
 }
 
 .time-list {
-  width: 60px;
+  width: 100px;
   border-bottom: 2px solid #ddd;
   text-align: center;
   // float: left;
@@ -218,14 +219,15 @@ export default {
   margin-top: 10px;
 
   .time-item {
-    width: 60px;
+    width: 100px;
     background: #fff;
     color: #828282;
-    height: 40px;
-    line-height: 40px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
 
     &.is-select {
-      background: #db6d4c url(../../assets/image/jian.png) 60px 0 no-repeat;
+      background: #db6d4c;
       color: #fff;
     }
   }
