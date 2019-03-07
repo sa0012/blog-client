@@ -3,7 +3,8 @@
     <el-row class="content">
       <bread-nav :navArr="navArr"></bread-nav>
       <article-detail :articleId="articleId"></article-detail>
-
+      <el-col :span="12" style="text-align: left;">上一篇</el-col>
+      <el-col :span="12" style="text-align: right;">下一篇</el-col>
       <h3 class="comments-title first-title">发表评论</h3>
       <el-col :span="24" style="text-align: left;">
         <comments-list></comments-list>
