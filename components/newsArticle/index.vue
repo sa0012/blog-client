@@ -35,7 +35,7 @@
                 <i class="iconfont icon-custom-comment count-icon"></i>
                 <span>{{ news.comments_count }}条评论</span>
               </div>
-              <nuxt-link :to="'/article/' + news._id">
+              <nuxt-link :to="'/article/' + news._id" @click.native="toPage(index)">
                 <el-button type="primary" size="mini" class="read-btn">阅读全文</el-button>
               </nuxt-link>
             </div>
@@ -59,6 +59,7 @@
 <script>
 import $http from "~/plugins/axios";
 import $ from "~/utils";
+import { setLocal } from "~/common/mutils";
 export default {
   props: {
     isShowTitle: {
@@ -76,18 +77,18 @@ export default {
       articles: [
         {
           _id: "",
-          image: '',
+          image: "",
           title: "",
           user: {
-            avatar: '',
+            avatar: "",
             user_name: "",
-            address: null,
+            address: null
           },
           created_time: "",
           category: "",
           browse: "",
           commentCount: "",
-          desc: ''
+          desc: ""
         }
       ],
       config: {
@@ -113,10 +114,32 @@ export default {
     } catch (e) {}
   },
   methods: {
+    toPage(index) {
+      try {
+        setLocal("browser_history", {
+          prev: {
+            title: (index !== 0 && this.articles[index - 1].title) || "",
+            id: (index !== 0 && this.articles[index - 1]._id) || ""
+          },
+          next: {
+            title:
+              (index !== this.articles.length - 1 &&
+                this.articles[index + 1].title) ||
+              "",
+            id:
+              (index !== this.articles.length - 1 &&
+                this.articles[index + 1]._id) ||
+              ""
+          }
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    },
     getArticleList() {
-      let type = 'hot'
+      let type = "hot";
       if (this.showPag) {
-        type = 'getArticle'
+        type = "getArticle";
       }
       $http.post(`/article/${type}`, this.config).then(res => {
         try {
@@ -126,7 +149,7 @@ export default {
             list[index].edit_time = $.timeFormat(article.edit_time - 0);
           });
           if (!this.showPag) {
-            this.$store.dispatch('HOT_ARTICLE', res.data.list);
+            this.$store.dispatch("HOT_ARTICLE", res.data.list);
           }
           this.articles = res.data.list;
         } catch (e) {}

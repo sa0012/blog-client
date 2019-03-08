@@ -16,5 +16,8 @@ export default {
   },
   current_route: (state, data) => {
     state.current_route = data;
+  },
+  browser_history: (state, data) => {
+    state.browserHistory = data;
   }
 }

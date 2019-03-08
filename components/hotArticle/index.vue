@@ -3,13 +3,14 @@
     <h3 class="hot-title">热门文章</h3>
     <ul class="hot-list">
       <li class="hot-item" v-for="(hot, index) in hotArticle" :key="index">
-        <div 
+        <div
           class="item-index"
           :style="{
             'background': index === 0 ? '#ff858e' : index === 1 ? '#77d549' : index === 2 ? '#62c1ff' : '#979598'
-          }">{{ index + 1 }}</div>
+          }"
+        >{{ index + 1 }}</div>
         <h3 class="item-title">
-          <nuxt-link :to="'/article/' + hot._id">{{ hot.title }}</nuxt-link>
+          <nuxt-link :to="'/article/' + hot._id" @click.native="toPage(index)">{{ hot.title }}</nuxt-link>
         </h3>
       </li>
     </ul>
@@ -18,6 +19,7 @@
 
 <script>
 import Colors from "~/plugins/color.js";
+import { setLocal } from "~/common/mutils";
 export default {
   data() {
     return {
@@ -35,7 +37,22 @@ export default {
     }
   },
   methods: {
-    showBackgroundColor() {}
+    toPage(index) {
+      try {
+        setLocal("browser_history", {
+          prev: {
+            title: index !== 0 && this.hotArticle[index - 1].title || '',
+            id: index !== 0 && this.hotArticle[index - 1]._id || '',
+          },
+          next: {
+            title: index !== this.hotArticle.length - 1 && this.hotArticle[index + 1].title || '',
+            id: index !== this.hotArticle.length - 1 && this.hotArticle[index + 1]._id || '',
+          }
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
   }
 };
 </script>

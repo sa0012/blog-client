@@ -1,5 +1,6 @@
 import {
-  getSession
+  getSession,
+  getLocal
 } from '~/common/mutils';
 let user = {
   user_id: '',
@@ -52,12 +53,25 @@ const hotArticle = [{
   "create_time": "",
   "edit_time": "",
   "__v": 0
-}, ]
+}, ];
+
+let bsHistory = {
+  prev: {
+    title: '',
+    id: ''
+  },
+  next: {
+    title: '',
+    id: ''
+  }
+};
+
 try {
   user = JSON.parse(getSession('user')) || user;
   fatherComments = JSON.parse(getSession('fatherComments')) || fatherComments
   route = getSession('currentRoute') || route
   hotArticle = JSON.parse(getSession('hotArticle')) || hotArticle
+  bsHistory = JSON.parse(getLocal('browser_history')) || bsHistory
 } catch (e) {}
 
 
@@ -90,5 +104,6 @@ export default {
   fatherComments,
   hotArticle,
   everyOne: singleComment,
-  currentRoute: route
+  currentRoute: route,
+  browserHistory: bsHistory
 }

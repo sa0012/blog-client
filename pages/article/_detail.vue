@@ -3,8 +3,20 @@
     <el-row class="content">
       <bread-nav :navArr="navArr"></bread-nav>
       <article-detail :articleId="articleId"></article-detail>
-      <el-col :span="12" style="text-align: left;">上一篇</el-col>
-      <el-col :span="12" style="text-align: right;">下一篇</el-col>
+      <el-row>
+        <el-col class="history" :span="12" style="text-align: left;">
+          <nuxt-link
+            :to="'/article/' + bsHistory.prev.id"
+            v-show="bsHistory.prev.id"
+          >上一篇: {{ bsHistory.prev.title }}</nuxt-link>
+        </el-col>
+        <el-col class="history" :span="12" style="text-align: right;">
+          <nuxt-link
+            :to="'/article/' + bsHistory.next.id"
+            v-show="bsHistory.next.id"
+          >下一篇: {{ bsHistory.next.title }}</nuxt-link>
+        </el-col>
+      </el-row>
       <h3 class="comments-title first-title">发表评论</h3>
       <el-col :span="24" style="text-align: left;">
         <comments-list></comments-list>
@@ -16,7 +28,8 @@
 
 <script>
 import BreadNav from "~/components/breadNav";
-import NavTip from '~/components/navTip';
+import NavTip from "~/components/navTip";
+import { getLocal } from "~/common/mutils";
 
 export default {
   head() {
@@ -40,8 +53,12 @@ export default {
       articleId: this.$route.params.detail
     };
   },
-  created() {
+  computed: {
+    bsHistory() {
+      return JSON.parse(getLocal("browser_history"));
+    }
   },
+  created() {},
   components: {
     BreadNav,
     NavTip,
@@ -49,7 +66,6 @@ export default {
     CommentsList: () => import("~/components/commentsList")
   },
   methods: {
-    
     handleCurrentChange() {}
   }
 };
@@ -80,6 +96,11 @@ export default {
   text-align: left;
   background: #ccc;
   color: #666;
+}
+
+.history {
+  height: 30px;
+  line-height: 30px;
 }
 </style>
 

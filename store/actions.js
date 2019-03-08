@@ -1,6 +1,8 @@
 import $http from '~/plugins/axios';
 import {
   setSession,
+  setLocal,
+  getLocal
 } from '~/common/mutils';
 export default {
   USER_MSG: ({ commit }, data) => {
@@ -25,5 +27,9 @@ export default {
   CURRENT_ROUTE: ({ commit }, data) => {
     setSession('currentRoute', data);
     commit('current_route', data)
+  },
+  BROWSER_HISTORY: ({ commit }, data) => {
+    setLocal('browser_history', data);
+    commit('browser_history', data);
   }
 }
