@@ -3,10 +3,10 @@
     <h3 class="label-title">文章标签</h3>
     <ul class="label-list" v-if="labelArr.length > 0">
       <li class="label-item" v-for="(label, index) in labelArr" :key="index">
-        <p class="label-text" @click="queryArticle(label.tag_name)">
+        <el-tag @click="queryArticle(label.tag_name)" size="medium" :hit="true">
           <span>{{ label.tag_name }}</span>
           <span>{{ `(${ label.tag_count })` }}</span>
-        </p>
+        </el-tag>
       </li>
     </ul>
   </div>
@@ -18,19 +18,18 @@ import $http from "~/plugins/axios";
 export default {
   data() {
     return {
-      labelArr: [
-      ],
+      labelArr: [],
       colorsArr: Colors.colorName
     };
   },
   methods: {
     queryLabel() {
-      $http.get('/tag/query').then(res => {
+      $http.get("/tag/query").then(res => {
         this.labelArr = res.data || [];
-      })
+      });
     },
     queryArticle(name) {
-      this.$router.push('/article?name=' + name)
+      this.$router.push("/article?name=" + name);
     }
   },
   created() {
@@ -76,6 +75,70 @@ export default {
         border: 1px solid #ddd;
       }
     }
+  }
+}
+
+.el-tag {
+  color: hsla(0, 0%, 100%, 0.8);
+  margin: 5px;
+  cursor: pointer;
+}
+
+.el-tag:hover {
+  opacity: 0.6;
+}
+
+.label-item:nth-child(1n + 0) {
+  .el-tag {
+    background: #3f51b5;
+  }
+}
+
+.label-item:nth-child(2n + 0) {
+  .el-tag {
+    background: #36c978;
+  }
+}
+
+.label-item:nth-child(3n + 0) {
+  .el-tag {
+    background: #673ab7;
+  }
+}
+
+.label-item:nth-child(4n + 0) {
+  .el-tag {
+    background: #ce24c6;
+  }
+}
+
+.label-item:nth-child(5n + 0) {
+  .el-tag {
+    background: #dd5c53;
+  }
+}
+
+.label-item:nth-child(6n + 0) {
+  .el-tag {
+    background: #00abc0;
+  }
+}
+
+.label-item:nth-child(7n + 0) {
+  .el-tag {
+    background: #2196f3;
+  }
+}
+
+.label-item:nth-child(8n + 0) {
+  .el-tag {
+    background: #9408d5;
+  }
+}
+
+.label-item:nth-child(9n + 0) {
+  .el-tag {
+    background: #34dad4;
   }
 }
 </style>
