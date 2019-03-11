@@ -8,7 +8,7 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: pkg.name,
+    title: '陈龙 client.juckchen.cn | 前端技术分享',
     meta: [{
         charset: 'utf-8'
       },
