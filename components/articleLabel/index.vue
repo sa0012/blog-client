@@ -29,7 +29,7 @@ export default {
       });
     },
     queryArticle(name) {
-      this.$router.push("/article?name=" + name);
+      this.$router.push("/article?tag_name=" + name);
     }
   },
   created() {
