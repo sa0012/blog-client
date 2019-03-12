@@ -39,8 +39,8 @@ export default () => {
   Vue.filter('location', address => {
     console.log(address, 'address')
     try {
-      if (Object.prototype.toString.call(address) === "[object Object]") {
-        return '[' + address.city + '网友' + ']'
+      if (address) {
+        return '[' + address + '网友' + ']'
       }
     } catch(e) {
       console.log(e);

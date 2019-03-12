@@ -13,7 +13,7 @@
           <div class="comments-content">
             <div class="user-name">
               <p class="username">{{ comment.user.user_name }}</p>
-              <p class="location" v-if="comment.user.address">{{ (comment.user.address.address_component || null) | location }}</p>
+              <p class="location" v-if="comment.user.address">{{ (comment.user.address.city || null) | location }}</p>
               <div class="dianzan">
                 <i
                   class="iconfont icon-dianzan"
