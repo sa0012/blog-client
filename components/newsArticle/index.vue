@@ -90,20 +90,19 @@ export default {
   },
   watch: {
     $route(newVal) {
-      console.log(newVal, "route");
       if (newVal.query.category_name) {
         this.labelToArticle(newVal.query.category_name, "category", "category_name");
       } else if (newVal.query.tag_name) {
         this.labelToArticle(newVal.query.tag_name, "tag", "tag_name");
+      } else if (newVal.query.name == 'ALL') {
+        this.getArticleList();
       }
     }
   },
   created() {
-    console.log(1111111111111)
     try {
       this.tagName = this.$route.query.tag_name || "";
       this.categoryName = this.$route.query.category_name || "";
-      console.log(222222222);
       if (this.tagName) {
         this.labelToArticle(this.tagName, "tag", "tag_name");
       } else if (this.categoryName) {

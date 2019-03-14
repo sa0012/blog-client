@@ -6,7 +6,14 @@
         <div class="category">
           <div class="cate-name">分类：</div>
           <section class="cate-tag">
-            <el-tag size="medium" @click="tagToQueryArticle(cate.category_name, 'category_name')" :hit="true" v-for="(cate, cIndex) in categorysArr" :key="cIndex">
+            <el-tag size="medium" :hit="true" @click="tagToQueryArticle('ALL', 'name')">ALL</el-tag>
+            <el-tag
+              size="medium"
+              @click="tagToQueryArticle(cate.category_name, 'category_name')"
+              :hit="true"
+              v-for="(cate, cIndex) in categorysArr"
+              :key="cIndex"
+            >
               <span>{{ cate.category_name }}</span>
             </el-tag>
           </section>
@@ -14,12 +21,14 @@
         <div class="category">
           <div class="cate-name">标签：</div>
           <section class="cate-tag">
-            <el-tag 
-              size="medium" 
-              :hit="true" 
-              v-for="(tag, tIndex) in tagsArr" 
+            <el-tag size="medium" :hit="true" @click="tagToQueryArticle('ALL', 'name')">ALL</el-tag>
+            <el-tag
+              size="medium"
+              :hit="true"
+              v-for="(tag, tIndex) in tagsArr"
               @click="tagToQueryArticle(tag.tag_name, 'tag_name')"
-              :key="tIndex">
+              :key="tIndex"
+            >
               <span>{{ tag.tag_name }}</span>
             </el-tag>
           </section>
@@ -71,7 +80,7 @@ export default {
   },
   methods: {
     tagToQueryArticle(query, type) {
-      this.$router.push(`/article?${type}=${query}`)
+      this.$router.push(`/article?${type}=${query}`);
     },
     handleCurrentChange() {}
   }
