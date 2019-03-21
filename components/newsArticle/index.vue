@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import $http from "~/plugins/axios";
+import axios from "axios";
 // import $ from "~/utils";
 // import { setLocal } from "~/common/mutils";
 export default {
@@ -71,17 +71,19 @@ export default {
       default: false
     },
     articles: {
-      type: Array,
-      default: []
+      type: [Array, Object],
+      default: () => {}
     },
-    // pagination: {
-    //   type: Object,
-    //   default: {
-    //     page: 0,
-    //     size: 0,
-    //     total: 0
-    //   }
-    // }
+    pagination: {
+      type: [Array, Object],
+      default: () => {
+        return {
+          page: 0,
+          size: 0,
+          total: 0
+        };
+      }
+    }
   },
   data() {
     return {
@@ -91,11 +93,11 @@ export default {
         size: 10,
         page: 1
       },
-      pagination: {
-        page: 0,
-        size: 0,
-        total: 0
-      },
+      // pagination: {
+      //   page: 0,
+      //   size: 0,
+      //   total: 0
+      // },
       tagName: "",
       categoryName: ""
     };
@@ -152,7 +154,7 @@ export default {
       if (this.showPag) {
         type = "getArticle";
       }
-      $http.post(`/article/${type}`, this.config).then(res => {
+      axios.post(`/article/${type}`, this.config).then(res => {
         try {
           let list = res.data.list && res.data.list.length ? res.data.list : [];
           list.forEach((article, index) => {
@@ -175,7 +177,7 @@ export default {
       // this.getArticleList();
     },
     labelToArticle(query, type, queryType) {
-      $http.get(`/${type}/queryArticle`, { [queryType]: query }).then(res => {
+      axios.get(`/${type}/queryArticle`, { [queryType]: query }).then(res => {
         try {
           let list = res.data && res.data.length ? res.data : [];
           list.forEach((article, index) => {

@@ -22,6 +22,7 @@ import {
   Form,
   FormItem,
   Tag,
+  Tooltip,
   Alert,
   Icon,
   Row,
@@ -53,6 +54,7 @@ export default () => {
   Vue.use(Form);
   Vue.use(FormItem);
   Vue.use(Tag);
+  Vue.use(Tooltip);
   Vue.use(Alert);
   Vue.use(Icon);
   Vue.use(Row);

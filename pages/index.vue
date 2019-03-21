@@ -3,10 +3,10 @@
     <el-row class="content">
       <el-col :span="15" class="content-left">
         <el-carousel height="150px">
-          <el-carousel-item height="150px">
+          <el-carousel-item height="150px" v-for="(item, index) in bannerArr" :key="index">
             <h3>
-              <a href="" target="_blank">
-                <img :src="imgUrl" alt style="width: 100%; height: 100%;">
+              <a :href="item.routeUrl" target="_blank">
+                <img :src="item.bImgUrl" alt style="width: 100%; height: 100%;">
               </a>
             </h3>
           </el-carousel-item>
@@ -46,6 +46,11 @@ export default {
     return {
       countMes: count.data.data,
       articles: articleList.data.data.list,
+      pagination: {
+        page: 0,
+        size: 0,
+        total: 0
+      },
       labelArr: tags.data.data,
       comments: commentList.data.data.list
     };
@@ -80,7 +85,8 @@ export default {
       articles: [],
       countMes: {},
       labelArr: [],
-      comments: []
+      comments: [],
+      pagination: {}
     };
   },
   components: {

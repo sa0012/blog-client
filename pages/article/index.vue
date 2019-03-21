@@ -14,10 +14,7 @@
               :key="cIndex"
               :to="'/article?category_name=' + cate.category_name"
             >
-              <el-tag
-                size="medium"
-                :hit="true"
-              >
+              <el-tag size="medium" :hit="true">
                 <span>{{ cate.category_name }}</span>
               </el-tag>
             </nuxt-link>
@@ -29,11 +26,12 @@
             <nuxt-link :to="'/article?name=ALL'">
               <el-tag size="medium" :hit="true">ALL</el-tag>
             </nuxt-link>
-            <nuxt-link v-for="(tag, tIndex) in tagsArr" :key="tIndex" :to="'/article?tag_name=' + tag.tag_name">
-              <el-tag
-                size="medium"
-                :hit="true"
-              >
+            <nuxt-link
+              v-for="(tag, tIndex) in tagsArr"
+              :key="tIndex"
+              :to="'/article?tag_name=' + tag.tag_name"
+            >
+              <el-tag size="medium" :hit="true">
                 <span>{{ tag.tag_name }}</span>
               </el-tag>
             </nuxt-link>
@@ -60,24 +58,45 @@ export default {
       meta: [{ hid: "文章", name: "文章", content: "文章" }]
     };
   },
-  async asyncData({ app }) {
-    // console.log(context, 'context')
+  watchQuery: ["name", "category_name", "tag_name"],
+  async asyncData({ app, route }) {
+    let queryArticle = app.$axios.post("/api/article/getArticle", {
+      page: 1,
+      size: 10
+    });
+    if (route.query.name === "name") {
+      queryArticle = queryArticle;
+    } else if (route.query.category_name || route.query.tag_name) {
+      let type = route.query.category_name ? "category" : "tag";
+      let queryType = Object.keys(route.query)[0];
+      let query = route.query.category_name || route.query.tag_name;
+      console.log({
+        [queryType]: query
+      }, 'query')
+      queryArticle = app.$axios.get(`/api/${type}/queryArticle?${queryType}=${query}`);
+    }
     let [tags, categorys, articleList] = await Promise.all([
       app.$axios.get("/api/tag/query"),
       app.$axios.get("/api/category/query"),
-      app.$axios.post("/api/article/getArticle", {
-        page: 1,
-        size: 10
-      })
+      queryArticle
     ]);
 
-    console.log(tags, "tags");
+    console.log(articleList.data, "articleList");
 
     return {
       tagsArr: tags.data.data,
       categorysArr: categorys.data.data,
-      articles: articleList.data.data.list,
-      pagination: articleList.data.data.pagination
+      articles:
+        route.query.category_name || route.query.tag_name
+          ? articleList.data.data
+          : articleList.data.data.list,
+      pagination: !(route.query.category_name || route.query.tag_name)
+        ? articleList.data.data.pagination
+        : {
+            page: 0,
+            size: 0,
+            total: 0
+          }
     };
   },
   data() {

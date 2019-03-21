@@ -1,9 +1,9 @@
 <template>
   <section class="github">
     <div class="wavetext" v-if="addTextNode.length > 0">
-      <!-- <transition-group name="list" tag="p">
-        <p class="text-node" v-for="(node, nIndex) in addTextNode" :key="nIndex">{{ node }}</p>
-      </transition-group> -->
+      <transition-group name="list">
+        <p class="text-node" v-for="(node, nIndex) in addTextNode" :key="nIndex + 'timeline'">{{ node }}</p>
+      </transition-group>
     </div>
     <div class="waveWrapper waveAnimation">
       <div class="waveWrapperInner bgTop">

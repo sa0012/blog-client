@@ -9,7 +9,7 @@
         @click="handleTime(index)"
       >{{ nav }}</li>
     </ul>
-    <!-- <ul class="event_list" ref="eventList">
+    <ul class="event_list" ref="eventList">
       <transition-group name="list" tag="p">
         <div
           v-for="(nav, nIndex) in timeArr"
@@ -28,7 +28,7 @@
           </li>
         </div>
       </transition-group>
-    </ul> -->
+    </ul>
   </div>
 </template>
 
