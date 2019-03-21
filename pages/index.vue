@@ -3,10 +3,10 @@
     <el-row class="content">
       <el-col :span="15" class="content-left">
         <el-carousel height="150px">
-          <el-carousel-item v-for="(item, index) in bannerArr" :key="index">
+          <el-carousel-item height="150px">
             <h3>
-              <a :href="item.routeUrl" target="_blank">
-                <img :src="item.bImgUrl" alt style="width: 100%; height: 100%;">
+              <a href="" target="_blank">
+                <img :src="imgUrl" alt style="width: 100%; height: 100%;">
               </a>
             </h3>
           </el-carousel-item>
@@ -40,10 +40,8 @@ export default {
       app.$axios.post("/api/leave/queryAll", {
         page: 1,
         size: 10
-      }),
+      })
     ]);
-
-    console.log(count, 'count')
 
     return {
       countMes: count.data.data,
@@ -60,6 +58,7 @@ export default {
   },
   data() {
     return {
+      imgUrl: require("~/assets/image/client.jpg"),
       bannerArr: [
         {
           bImgUrl: require("~/assets/image/client.jpg"),
@@ -125,6 +124,7 @@ export default {
 
 .el-carousel__item,
 .el-carousel__container {
+  display: block;
   height: 300px !important;
 }
 .el-carousel__item h3 {
@@ -133,7 +133,6 @@ export default {
   opacity: 0.75;
   line-height: 150px;
   margin: 0;
-  /* width: 80%; */
   height: 300px;
 }
 

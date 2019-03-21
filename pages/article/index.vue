@@ -6,39 +6,46 @@
         <div class="category">
           <div class="cate-name">分类：</div>
           <section class="cate-tag">
-            <el-tag size="medium" :hit="true" @click="tagToQueryArticle('ALL', 'name')">ALL</el-tag>
-            <el-tag
-              size="medium"
-              @click="tagToQueryArticle(cate.category_name, 'category_name')"
-              :hit="true"
+            <nuxt-link :to="'/article?name=ALL'">
+              <el-tag size="medium" :hit="true">ALL</el-tag>
+            </nuxt-link>
+            <nuxt-link
               v-for="(cate, cIndex) in categorysArr"
               :key="cIndex"
+              :to="'/article?category_name=' + cate.category_name"
             >
-              <span>{{ cate.category_name }}</span>
-            </el-tag>
+              <el-tag
+                size="medium"
+                :hit="true"
+              >
+                <span>{{ cate.category_name }}</span>
+              </el-tag>
+            </nuxt-link>
           </section>
         </div>
         <div class="category">
           <div class="cate-name">标签：</div>
           <section class="cate-tag">
-            <el-tag size="medium" :hit="true" @click="tagToQueryArticle('ALL', 'name')">ALL</el-tag>
-            <el-tag
-              size="medium"
-              :hit="true"
-              v-for="(tag, tIndex) in tagsArr"
-              @click="tagToQueryArticle(tag.tag_name, 'tag_name')"
-              :key="tIndex"
-            >
-              <span>{{ tag.tag_name }}</span>
-            </el-tag>
+            <nuxt-link :to="'/article?name=ALL'">
+              <el-tag size="medium" :hit="true">ALL</el-tag>
+            </nuxt-link>
+            <nuxt-link v-for="(tag, tIndex) in tagsArr" :key="tIndex" :to="'/article?tag_name=' + tag.tag_name">
+              <el-tag
+                size="medium"
+                :hit="true"
+              >
+                <span>{{ tag.tag_name }}</span>
+              </el-tag>
+            </nuxt-link>
           </section>
         </div>
       </div>
-      <news-articles 
-        :isShowTitle="showTitle" 
-        :showPag="showPag" 
+      <news-articles
+        :isShowTitle="showTitle"
+        :showPag="showPag"
         :articles="articles"
-        :pagination="pagination"></news-articles>
+        :pagination="pagination"
+      ></news-articles>
     </el-row>
   </section>
 </template>
@@ -64,7 +71,7 @@ export default {
       })
     ]);
 
-    console.log(tags, 'tags')
+    console.log(tags, "tags");
 
     return {
       tagsArr: tags.data.data,
@@ -94,10 +101,6 @@ export default {
     NewsArticles: () => import("~/components/newsArticle")
   },
   methods: {
-    tagToQueryArticle(query, type) {
-      console.log('onclick')
-      this.$router.push(`/article?${type}=${query}`);
-    },
     handleCurrentChange() {}
   }
 };

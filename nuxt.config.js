@@ -48,9 +48,14 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [
-    '@/plugins/element-ui',
-    '@/plugins/lazyload',
+  plugins: [{
+      src: '@/plugins/element-ui',
+      ssr: true
+    },
+    {
+      src: '@/plugins/lazyload',
+      ssr: false
+    },
     '@/plugins/filter',
     {
       src: '~/plugins/commen',
@@ -77,11 +82,6 @@ module.exports = {
   axios: {
     proxy: true
   },
-  // axios: {
-  //   proxy: true,
-  //   prefix: '/api', // baseURL
-  //   credentials: true,
-  // },
   proxy: {
     //开启代理
     "/api": {
@@ -97,6 +97,21 @@ module.exports = {
    ** Build configuration
    */
   build: {
+    babel: { //配置按需引入规则
+      "plugins": [
+        [
+          "component",
+          {
+            "libraryName": "element-ui",
+            "styleLibraryName": "theme-chalk"
+          }
+        ]
+      ]
+    },
+    // npm run build --analyze
+    // analyze: true,
+    // maxChunkSize: 300000,
+    transpile: [/^element-ui/],
     /*
      ** You can extend webpack config here
      */
