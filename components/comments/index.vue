@@ -27,23 +27,15 @@
 import Colors from "~/plugins/color.js";
 import $http from "~/plugins/axios";
 export default {
+  props: {
+    comments: {
+      type: Array,
+      default: []
+    }
+  },
   data() {
     return {
-      comments: [
-        {
-          _id: "",
-          article_id: "",
-          content: "",
-          user: {
-            user_id: "",
-            user_name: "",
-            user_avatar: "",
-            address: null
-          },
-          create_time: "",
-          edit_time: ""
-        }
-      ],
+      // comments: [],
       colorsArr: Colors.colorName,
       queryFatherComment: {
         page: 1,
@@ -174,7 +166,7 @@ export default {
     }
   },
   created() {
-    this.queryCommentList();
+    // this.queryCommentList();
   }
 };
 </script>

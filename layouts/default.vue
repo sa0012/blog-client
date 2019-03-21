@@ -17,12 +17,12 @@ export default {
     HeaderNav,
     NetFooter
   },
-  created() {
+  mounted() {
     // 监听sessionStorage变化
-    window.addEventListener("setItem", () => {
-      this.$store.dispatch("USER_MSG", {});
-      this.$store.dispatch("LOGIN_MSG", { loginType: "login", showLogin: true });
-    });
+    // window.addEventListener("setItem", () => {
+    //   this.$store.dispatch("USER_MSG", {});
+    //   this.$store.dispatch("LOGIN_MSG", { loginType: "login", showLogin: true });
+    // });
   }
 };
 </script>

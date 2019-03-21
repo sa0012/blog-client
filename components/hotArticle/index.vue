@@ -1,7 +1,7 @@
 <template>
   <div class="hot-article">
     <h3 class="hot-title">热门文章</h3>
-    <ul class="hot-list">
+    <ul class="hot-list" v-if="hotArticle.length > 0">
       <li class="hot-item" v-for="(hot, index) in hotArticle" :key="index">
         <div
           class="item-index"
@@ -21,6 +21,12 @@
 import Colors from "~/plugins/color.js";
 import { setLocal } from "~/common/mutils";
 export default {
+  props: {
+    hotArticle: {
+      type: Array,
+      default: []
+    }
+  },
   data() {
     return {
       hotArr: [
@@ -32,26 +38,26 @@ export default {
     };
   },
   computed: {
-    hotArticle() {
-      return this.$store.state.hotArticle;
-    }
+    // hotArticle() {
+    //   return this.$store.state.hotArticle;
+    // }
   },
   methods: {
     toPage(index) {
-      try {
-        setLocal("browser_history", {
-          prev: {
-            title: index !== 0 && this.hotArticle[index - 1].title || '',
-            id: index !== 0 && this.hotArticle[index - 1]._id || '',
-          },
-          next: {
-            title: index !== this.hotArticle.length - 1 && this.hotArticle[index + 1].title || '',
-            id: index !== this.hotArticle.length - 1 && this.hotArticle[index + 1]._id || '',
-          }
-        });
-      } catch (e) {
-        console.log(e);
-      }
+      // try {
+      //   setLocal("browser_history", {
+      //     prev: {
+      //       title: index !== 0 && this.hotArticle[index - 1].title || '',
+      //       id: index !== 0 && this.hotArticle[index - 1]._id || '',
+      //     },
+      //     next: {
+      //       title: index !== this.hotArticle.length - 1 && this.hotArticle[index + 1].title || '',
+      //       id: index !== this.hotArticle.length - 1 && this.hotArticle[index + 1]._id || '',
+      //     }
+      //   });
+      // } catch (e) {
+      //   console.log(e);
+      // }
     }
   }
 };

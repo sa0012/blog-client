@@ -1,29 +1,36 @@
 import axios from 'axios'
 import qs from 'qs'
 import config from './config'
-import {
-  getSession
-} from '~/common/mutils';
+// import {
+//   getSession
+// } from '~/common/mutils';
 import Vue from 'vue';
 
 // 全局设置
 axios.defaults.timeout = 10000; // 时间超时设置10s
+if (process.server) {
+  // axios.defaults.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3000}/api`
+  axios.defaults.baseURL = 'http://127.0.0.1:7778/api'
+}
 
 // 创建一个axios的实列
 const service = axios.create(config);
 
 axios.interceptors.request.use = service.interceptors.request.use;
+console.log(process.server, 'process')
+
+// axios.defaults.baseURL = 'http://127.0.0.1:7778/api'
 
 // request拦截器，每次发送请求的时候拦截下来
 service.interceptors.request.use(
   config => {
-    let token = '';
-    try {
-      token = JSON.parse(getSession('user')).token;
-    } catch (e) {}
-    if (token) {
-      config.headers.Authorization = token;
-    }
+    // let token = '';
+    // try {
+    //   token = JSON.parse(getSession('user')).token;
+    // } catch (e) {}
+    // if (token) {
+    //   config.headers.Authorization = token;
+    // }
     if (config.method === 'post') config.data = qs.stringify(config.data)
     return config
   },
@@ -47,8 +54,8 @@ service.interceptors.response.use(
       if (response.status == 401) {
         let msg = response.data || '请重新登录!';
         new Vue().$message.error(msg);
-        window.sessionStorage.clear(); // token过期,清除
-        new Vue().resetSetItem('watchStorage', JSON.stringify({ test: 'user' }))
+        // window.sessionStorage.clear(); // token过期,清除
+        // new Vue().resetSetItem('watchStorage', JSON.stringify({ test: 'user' }))
         return Promise.reject(error.response);
       }
     } else {
@@ -61,7 +68,7 @@ const get = (url, params = {}, method = 'get', headers) => new Promise((resolve,
   let req = method === 'get' ? {
     params: params
   } : params
-  url = '/api' + url;
+  url = 'http://127.0.0.1:7778/api' + url;
   headers = headers && headers.headers ? headers.headers : {
     "Content-Type": "application/json; charset=utf-8"
   }

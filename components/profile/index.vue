@@ -91,17 +91,27 @@
 <script>
 import $http from "~/plugins/axios";
 export default {
-  data() {
-    return {
-      countMes: {
+  props: {
+    countMes: {
+      type: Object,
+      default: {
         article_count: 0,
         leave_count: 0,
         browser_count: 0
       }
+    }
+  },
+  data() {
+    return {
+      // countMes: {
+      //   article_count: 0,
+      //   leave_count: 0,
+      //   browser_count: 0
+      // }
     };
   },
   created() {
-    this.queryCount();
+    // this.queryCount();
   },
   methods: {
     handleSuggest() {
@@ -113,7 +123,7 @@ export default {
     },
     queryCount() {
       $http.get("/count/statistical").then(res => {
-        this.countMes = Object.assign({}, res.data)
+        this.countMes = Object.assign({}, res.data);
       });
     }
   }

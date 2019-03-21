@@ -2,6 +2,7 @@ import http from 'http'
 import https from 'https'
 
 export default {
+  // baseURL: 'http://127.0.0.1:7778',
   // 自定义的请求头
   headers: {
     post: {

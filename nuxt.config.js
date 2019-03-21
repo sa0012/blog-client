@@ -2,7 +2,7 @@ const pkg = require('./package')
 
 
 module.exports = {
-  mode: 'spa',
+  mode: 'universal',
 
   /*
    ** Headers of the page
@@ -51,7 +51,6 @@ module.exports = {
   plugins: [
     '@/plugins/element-ui',
     '@/plugins/lazyload',
-    '@/plugins/axios',
     '@/plugins/filter',
     {
       src: '~/plugins/commen',
@@ -72,13 +71,17 @@ module.exports = {
    */
   //处理跨域问题
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
   ],
   axios: {
-    proxy: true,
-    prefix: '/api',
-    // See https://github.com/nuxt-community/axios-module#options
+    proxy: true
   },
+  // axios: {
+  //   proxy: true,
+  //   prefix: '/api', // baseURL
+  //   credentials: true,
+  // },
   proxy: {
     //开启代理
     "/api": {

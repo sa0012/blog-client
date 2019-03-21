@@ -1,7 +1,7 @@
 <template>
   <div class="news-article">
     <h2 class="news-title" v-if="isShowTitle">推荐文章</h2>
-    <ul class="news-list">
+    <ul class="news-list" v-if="articles.length > 0">
       <li class="news-item" v-for="(news, index) in articles" :key="index">
         <el-row>
           <el-col>
@@ -58,8 +58,8 @@
 
 <script>
 import $http from "~/plugins/axios";
-import $ from "~/utils";
-import { setLocal } from "~/common/mutils";
+// import $ from "~/utils";
+// import { setLocal } from "~/common/mutils";
 export default {
   props: {
     isShowTitle: {
@@ -69,12 +69,24 @@ export default {
     showPag: {
       type: Boolean,
       default: false
-    }
+    },
+    articles: {
+      type: Array,
+      default: []
+    },
+    // pagination: {
+    //   type: Object,
+    //   default: {
+    //     page: 0,
+    //     size: 0,
+    //     total: 0
+    //   }
+    // }
   },
   data() {
     return {
       image: require("~/assets/image/case.jpg"),
-      articles: [],
+      // articles: [],
       config: {
         size: 10,
         page: 1
@@ -89,51 +101,51 @@ export default {
     };
   },
   watch: {
-    $route(newVal) {
-      if (newVal.query.category_name) {
-        this.labelToArticle(newVal.query.category_name, "category", "category_name");
-      } else if (newVal.query.tag_name) {
-        this.labelToArticle(newVal.query.tag_name, "tag", "tag_name");
-      } else if (newVal.query.name == 'ALL') {
-        this.getArticleList();
-      }
-    }
+    // $route(newVal) {
+    //   if (newVal.query.category_name) {
+    //     this.labelToArticle(newVal.query.category_name, "category", "category_name");
+    //   } else if (newVal.query.tag_name) {
+    //     this.labelToArticle(newVal.query.tag_name, "tag", "tag_name");
+    //   } else if (newVal.query.name == 'ALL') {
+    //     this.getArticleList();
+    //   }
+    // }
   },
   created() {
-    try {
-      this.tagName = this.$route.query.tag_name || "";
-      this.categoryName = this.$route.query.category_name || "";
-      if (this.tagName) {
-        this.labelToArticle(this.tagName, "tag", "tag_name");
-      } else if (this.categoryName) {
-        this.labelToArticle(this.categoryName, "category", "category_name");
-      } else {
-        this.getArticleList();
-      }
-    } catch (e) {}
+    // try {
+    //   this.tagName = this.$route.query.tag_name || "";
+    //   this.categoryName = this.$route.query.category_name || "";
+    //   if (this.tagName) {
+    //     this.labelToArticle(this.tagName, "tag", "tag_name");
+    //   } else if (this.categoryName) {
+    //     this.labelToArticle(this.categoryName, "category", "category_name");
+    //   } else {
+    //     this.getArticleList();
+    //   }
+    // } catch (e) {}
   },
   methods: {
     toPage(index) {
-      try {
-        setLocal("browser_history", {
-          prev: {
-            title: (index !== 0 && this.articles[index - 1].title) || "",
-            id: (index !== 0 && this.articles[index - 1]._id) || ""
-          },
-          next: {
-            title:
-              (index !== this.articles.length - 1 &&
-                this.articles[index + 1].title) ||
-              "",
-            id:
-              (index !== this.articles.length - 1 &&
-                this.articles[index + 1]._id) ||
-              ""
-          }
-        });
-      } catch (e) {
-        console.log(e);
-      }
+      // try {
+      //   setLocal("browser_history", {
+      //     prev: {
+      //       title: (index !== 0 && this.articles[index - 1].title) || "",
+      //       id: (index !== 0 && this.articles[index - 1]._id) || ""
+      //     },
+      //     next: {
+      //       title:
+      //         (index !== this.articles.length - 1 &&
+      //           this.articles[index + 1].title) ||
+      //         "",
+      //       id:
+      //         (index !== this.articles.length - 1 &&
+      //           this.articles[index + 1]._id) ||
+      //         ""
+      //     }
+      //   });
+      // } catch (e) {
+      //   console.log(e);
+      // }
     },
     getArticleList() {
       let type = "hot";
@@ -160,7 +172,7 @@ export default {
     },
     handleCurrentChange(val) {
       this.config.page = val;
-      this.getArticleList();
+      // this.getArticleList();
     },
     labelToArticle(query, type, queryType) {
       $http.get(`/${type}/queryArticle`, { [queryType]: query }).then(res => {

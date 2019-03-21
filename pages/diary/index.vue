@@ -70,7 +70,7 @@ export default {
     }
   },
   created() {
-    this.handleClassifyQuery();
+    // this.handleClassifyQuery();
   },
   components: {
     BreadNav,

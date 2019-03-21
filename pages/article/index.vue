@@ -34,7 +34,11 @@
           </section>
         </div>
       </div>
-      <news-articles :isShowTitle="showTitle" :showPag="showPag"></news-articles>
+      <news-articles 
+        :isShowTitle="showTitle" 
+        :showPag="showPag" 
+        :articles="articles"
+        :pagination="pagination"></news-articles>
     </el-row>
   </section>
 </template>
@@ -49,15 +53,24 @@ export default {
       meta: [{ hid: "文章", name: "文章", content: "文章" }]
     };
   },
-  async asyncData(context) {
-    let [tags, categorys] = await Promise.all([
-      $http.get("/tag/query"),
-      $http.get("/category/query")
+  async asyncData({ app }) {
+    // console.log(context, 'context')
+    let [tags, categorys, articleList] = await Promise.all([
+      app.$axios.get("/api/tag/query"),
+      app.$axios.get("/api/category/query"),
+      app.$axios.post("/api/article/getArticle", {
+        page: 1,
+        size: 10
+      })
     ]);
 
+    console.log(tags, 'tags')
+
     return {
-      tagsArr: tags.data,
-      categorysArr: categorys.data
+      tagsArr: tags.data.data,
+      categorysArr: categorys.data.data,
+      articles: articleList.data.data.list,
+      pagination: articleList.data.data.pagination
     };
   },
   data() {
@@ -71,7 +84,9 @@ export default {
         }
       ],
       tagsArr: [],
-      categorysArr: []
+      categorysArr: [],
+      articles: [],
+      pagination: {}
     };
   },
   components: {
@@ -80,6 +95,7 @@ export default {
   },
   methods: {
     tagToQueryArticle(query, type) {
+      console.log('onclick')
       this.$router.push(`/article?${type}=${query}`);
     },
     handleCurrentChange() {}

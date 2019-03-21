@@ -1,11 +1,11 @@
-const ua = navigator.userAgent
+// const ua = navigator.userAgent
 import Vue from 'vue'
 let utils = {
   version: 0.01,
-  isIOS: !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
-  isAndroid: ua.indexOf('Android') > -1 || ua.indexOf('Adr') > -1,
-  isiPhone: ua.indexOf('iPhone') > -1,
-  isWeChat: () => (/micromessenger/i).test(navigator.userAgent),
+  // isIOS: !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+  // isAndroid: ua.indexOf('Android') > -1 || ua.indexOf('Adr') > -1,
+  // isiPhone: ua.indexOf('iPhone') > -1,
+  // isWeChat: () => (/micromessenger/i).test(navigator.userAgent),
   isMobile: phone => /^1(3|4|5|6|7|8|9)[0-9]\d{8}$/.test(phone),
   isCar: car => /(^(浙|闽|粤|京|津|冀|晋|蒙|辽|吉|黑|沪|苏|皖|赣|鲁|豫|鄂|湘|桂|琼|渝|川|贵|云|藏|陕|甘|青|宁|新){1}[A-Z0-9]{6,7}$)|(^[A-Z]{2}[A-Z0-9]{2}[A-Z0-9\u4E00-\u9FA5]{1}[A-Z0-9]{4}$)|(^[\u4E00-\u9FA5]{1}[A-Z0-9]{5}[挂学警军港澳]{1}$)|(^[A-Z]{2}[0-9]{5}$)|(^(08|38){1}[A-Z0-9]{4}[A-Z0-9挂学警军港澳]{1}$)/.test(car),
   isID: function (ID) { // 是否是PRC身份证
@@ -163,32 +163,32 @@ let utils = {
     return parseInt((date.getTime() - parmDate.getTime()) / (1000 * 60 * 60 * 24))
   },
   // requestAnimationFrame兼容处理
-  requestAnimationFrame: () => {
-    var lastTime = 0;
-    var vendors = ['webkit', 'moz'];
-    for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-      window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-      window.cancelAnimationFrame =
-        window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
-    }
+  // requestAnimationFrame: () => {
+  //   var lastTime = 0;
+  //   var vendors = ['webkit', 'moz'];
+  //   for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+  //     window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+  //     window.cancelAnimationFrame =
+  //       window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
+  //   }
 
-    if (!window.requestAnimationFrame)
-      window.requestAnimationFrame = function (callback) {
-        var currTime = new Date().getTime();
-        var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-        var id = window.setTimeout(function () {
-            callback(currTime + timeToCall);
-          },
-          timeToCall);
-        lastTime = currTime + timeToCall;
-        return id;
-      };
+  //   if (!window.requestAnimationFrame)
+  //     window.requestAnimationFrame = function (callback) {
+  //       var currTime = new Date().getTime();
+  //       var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+  //       var id = window.setTimeout(function () {
+  //           callback(currTime + timeToCall);
+  //         },
+  //         timeToCall);
+  //       lastTime = currTime + timeToCall;
+  //       return id;
+  //     };
 
-    if (!window.cancelAnimationFrame)
-      window.cancelAnimationFrame = function (id) {
-        clearTimeout(id);
-      };
-  },
+  //   if (!window.cancelAnimationFrame)
+  //     window.cancelAnimationFrame = function (id) {
+  //       clearTimeout(id);
+  //     };
+  // },
   //获取非行间样式(style标签里的样式或者link css文件里的样式)，obj是元素，attr是样式名
   getStyle(obj, attr) {
     //针对IE

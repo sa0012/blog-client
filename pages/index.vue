@@ -6,19 +6,18 @@
           <el-carousel-item v-for="(item, index) in bannerArr" :key="index">
             <h3>
               <a :href="item.routeUrl" target="_blank">
-                <img :src="item.bImgUrl" alt="" style="width: 100%; height: 100%;">
+                <img :src="item.bImgUrl" alt style="width: 100%; height: 100%;">
               </a>
             </h3>
           </el-carousel-item>
         </el-carousel>
-        <news-articles></news-articles>
+        <news-articles :articles="articles"></news-articles>
       </el-col>
       <el-col :span="9" class="content-right">
-        <profile-tip></profile-tip>
-        <!-- <weather-component></weather-component> -->
-        <article-label></article-label>
-        <hot-article></hot-article>
-        <news-comments></news-comments>
+        <profile-tip :countMes="countMes"></profile-tip>
+        <article-label :labelArr="labelArr"></article-label>
+        <hot-article :hotArticle="articles"></hot-article>
+        <news-comments :comments="comments"></news-comments>
       </el-col>
     </el-row>
     <nav-tip></nav-tip>
@@ -27,47 +26,72 @@
 
 <script>
 import profileTip from "~/components/profile";
-import NavTip from '~/components/navTip';
-
+import NavTip from "~/components/navTip";
+import $http from "~/plugins/axios";
 export default {
-  head () {
+  async asyncData({ app }) {
+    let [count, articleList, tags, commentList] = await Promise.all([
+      app.$axios.get("/api/count/statistical"),
+      app.$axios.post("/api/article/hot", {
+        page: 1,
+        size: 10
+      }),
+      app.$axios.get("/api/tag/query"),
+      app.$axios.post("/api/leave/queryAll", {
+        page: 1,
+        size: 10
+      }),
+    ]);
+
+    console.log(count, 'count')
+
     return {
-      title: '首页',
-      meta: [
-        { hid: '首页', name: '首页', content: '首页' }
-      ]
-    }
+      countMes: count.data.data,
+      articles: articleList.data.data.list,
+      labelArr: tags.data.data,
+      comments: commentList.data.data.list
+    };
+  },
+  head() {
+    return {
+      title: "首页",
+      meta: [{ hid: "首页", name: "首页", content: "首页" }]
+    };
   },
   data() {
     return {
       bannerArr: [
         {
-          bImgUrl: require('~/assets/image/client.jpg'),
-          routeUrl: 'http://client.juckchen.cn'
+          bImgUrl: require("~/assets/image/client.jpg"),
+          routeUrl: "http://client.juckchen.cn"
         },
         {
-          bImgUrl: require('~/assets/image/blog-front.jpg'),
-          routeUrl: 'http://admin.juckchen.cn'
+          bImgUrl: require("~/assets/image/blog-front.jpg"),
+          routeUrl: "http://admin.juckchen.cn"
         },
         {
-          bImgUrl: require('~/assets/image/react.jpg'),
-          routeUrl: 'http://m.juckchen.cn'
+          bImgUrl: require("~/assets/image/react.jpg"),
+          routeUrl: "http://m.juckchen.cn"
         },
         {
-          bImgUrl: require('~/assets/image/xiaozhi.jpg'),
-          routeUrl: 'https://sa0012.github.io/xiaozhi/'
-        },
-      ]
-    }
+          bImgUrl: require("~/assets/image/xiaozhi.jpg"),
+          routeUrl: "https://sa0012.github.io/xiaozhi/"
+        }
+      ],
+      articles: [],
+      countMes: {},
+      labelArr: [],
+      comments: []
+    };
   },
   components: {
     profileTip,
     NavTip,
-    NewsArticles: () => import('~/components/newsArticle'),
-    ArticleLabel: () => import('~/components/articleLabel'),
-    NewsComments: () => import('~/components/comments'),
-    HotArticle: () => import('~/components/hotArticle'),
-    WeatherComponent: () => import('~/components/weather'),
+    NewsArticles: () => import("~/components/newsArticle"),
+    ArticleLabel: () => import("~/components/articleLabel"),
+    NewsComments: () => import("~/components/comments"),
+    HotArticle: () => import("~/components/hotArticle"),
+    WeatherComponent: () => import("~/components/weather")
   }
 };
 </script>
@@ -91,7 +115,6 @@ export default {
     box-sizing: border-box;
   }
 }
-
 </style>
 
 <style>

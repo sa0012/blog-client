@@ -16,9 +16,15 @@
 import Colors from "~/plugins/color.js";
 import $http from "~/plugins/axios";
 export default {
+  props: {
+    labelArr: {
+      type: Array,
+      default: []
+    }
+  },
   data() {
     return {
-      labelArr: [],
+      // labelArr: [],
       colorsArr: Colors.colorName
     };
   },
@@ -33,7 +39,7 @@ export default {
     }
   },
   created() {
-    this.queryLabel();
+    // this.queryLabel();
   }
 };
 </script>
