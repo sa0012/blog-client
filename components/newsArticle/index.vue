@@ -50,7 +50,7 @@
         @current-change="handleCurrentChange"
         :page-size="1"
         layout="total, prev, pager, next"
-        :total="pagination.page"
+        :total="pagination.total"
       ></el-pagination>
     </el-col>
   </div>
@@ -88,7 +88,6 @@ export default {
   data() {
     return {
       image: require("~/assets/image/case.jpg"),
-      // articles: [],
       config: {
         size: 10,
         page: 1
@@ -102,92 +101,23 @@ export default {
       categoryName: ""
     };
   },
-  watch: {
-    // $route(newVal) {
-    //   if (newVal.query.category_name) {
-    //     this.labelToArticle(newVal.query.category_name, "category", "category_name");
-    //   } else if (newVal.query.tag_name) {
-    //     this.labelToArticle(newVal.query.tag_name, "tag", "tag_name");
-    //   } else if (newVal.query.name == 'ALL') {
-    //     this.getArticleList();
-    //   }
-    // }
-  },
-  created() {
-    // try {
-    //   this.tagName = this.$route.query.tag_name || "";
-    //   this.categoryName = this.$route.query.category_name || "";
-    //   if (this.tagName) {
-    //     this.labelToArticle(this.tagName, "tag", "tag_name");
-    //   } else if (this.categoryName) {
-    //     this.labelToArticle(this.categoryName, "category", "category_name");
-    //   } else {
-    //     this.getArticleList();
-    //   }
-    // } catch (e) {}
-  },
   methods: {
-    toPage(index) {
-      // try {
-      //   setLocal("browser_history", {
-      //     prev: {
-      //       title: (index !== 0 && this.articles[index - 1].title) || "",
-      //       id: (index !== 0 && this.articles[index - 1]._id) || ""
-      //     },
-      //     next: {
-      //       title:
-      //         (index !== this.articles.length - 1 &&
-      //           this.articles[index + 1].title) ||
-      //         "",
-      //       id:
-      //         (index !== this.articles.length - 1 &&
-      //           this.articles[index + 1]._id) ||
-      //         ""
-      //     }
-      //   });
-      // } catch (e) {
-      //   console.log(e);
-      // }
-    },
-    getArticleList() {
-      let type = "hot";
-      if (this.showPag) {
-        type = "getArticle";
-      }
-      axios.post(`/article/${type}`, this.config).then(res => {
-        try {
-          let list = res.data.list && res.data.list.length ? res.data.list : [];
-          list.forEach((article, index) => {
-            list[index].create_time = $.timeFormat(article.create_time - 0);
-            list[index].edit_time = $.timeFormat(article.edit_time - 0);
-          });
-          if (!this.showPag) {
-            this.$store.dispatch("HOT_ARTICLE", res.data.list);
-          }
-          this.articles = res.data.list;
-        } catch (e) {}
-        this.pagination = res.data.pagination;
-      });
-    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
       this.config.page = val;
+      console.log(this.$route.fullPath, 'route')
+      let url = ''
+      if (this.$route.fullPath === '/article') {
+        url = `${this.$route.fullPath}?page=${val}`
+      } else if (this.$route.query.name || this.$route.query.category_name || this.$route.query.tag_name) {
+        url = `${this.$route.fullPath}&page=${val}`
+      }
+      // let route = this.$route.fullPath
+      this.$router.push(url)
       // this.getArticleList();
     },
-    labelToArticle(query, type, queryType) {
-      axios.get(`/${type}/queryArticle`, { [queryType]: query }).then(res => {
-        try {
-          let list = res.data && res.data.length ? res.data : [];
-          list.forEach((article, index) => {
-            list[index].create_time = $.timeFormat(article.create_time - 0);
-            list[index].edit_time = $.timeFormat(article.edit_time - 0);
-          });
-          this.articles = res.data;
-        } catch (e) {}
-      });
-    }
   }
 };
 </script>

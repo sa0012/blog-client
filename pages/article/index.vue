@@ -58,11 +58,11 @@ export default {
       meta: [{ hid: "文章", name: "文章", content: "文章" }]
     };
   },
-  watchQuery: ["name", "category_name", "tag_name"],
+  watchQuery: ["name", "category_name", "tag_name", "page"],
   async asyncData({ app, route }) {
     let queryArticle = app.$axios.post("/api/article/getArticle", {
-      page: 1,
-      size: 10
+      page: route.query.page || 1,
+      size: 1
     });
     if (route.query.name === "name") {
       queryArticle = queryArticle;
@@ -70,9 +70,6 @@ export default {
       let type = route.query.category_name ? "category" : "tag";
       let queryType = Object.keys(route.query)[0];
       let query = route.query.category_name || route.query.tag_name;
-      console.log({
-        [queryType]: query
-      }, 'query')
       queryArticle = app.$axios.get(`/api/${type}/queryArticle?${queryType}=${query}`);
     }
     let [tags, categorys, articleList] = await Promise.all([
@@ -80,8 +77,7 @@ export default {
       app.$axios.get("/api/category/query"),
       queryArticle
     ]);
-
-    console.log(articleList.data, "articleList");
+// console.log(articleList.data.data.pagination, 'articleList.data.data.pagination')
 
     return {
       tagsArr: tags.data.data,
