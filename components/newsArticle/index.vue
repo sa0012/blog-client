@@ -72,7 +72,9 @@ export default {
     },
     articles: {
       type: [Array, Object],
-      default: () => {}
+      default: () => {
+        return []
+      }
     },
     pagination: {
       type: [Array, Object],
@@ -92,11 +94,6 @@ export default {
         size: 10,
         page: 1
       },
-      // pagination: {
-      //   page: 0,
-      //   size: 0,
-      //   total: 0
-      // },
       tagName: "",
       categoryName: ""
     };
@@ -106,17 +103,7 @@ export default {
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-      this.config.page = val;
-      console.log(this.$route.fullPath, 'route')
-      let url = ''
-      if (this.$route.fullPath === '/article') {
-        url = `${this.$route.fullPath}?page=${val}`
-      } else if (this.$route.query.name || this.$route.query.category_name || this.$route.query.tag_name) {
-        url = `${this.$route.fullPath}&page=${val}`
-      }
-      // let route = this.$route.fullPath
-      this.$router.push(url)
-      // this.getArticleList();
+      this.$emit('propPage', val)
     },
   }
 };

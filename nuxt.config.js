@@ -29,6 +29,10 @@ module.exports = {
     }]
   },
 
+  router: {
+    middleware: ['auth']
+  },
+
   /*
    ** Customize the progress-bar color
    */
@@ -65,6 +69,7 @@ module.exports = {
       src: '@/plugins/suggest',
       ssr: false
     },
+    '@/plugins/axios',
     // {
     //   src: '@/plugins/directive',
     //   ssr: false

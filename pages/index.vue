@@ -30,29 +30,29 @@ import NavTip from "~/components/navTip";
 import $http from "~/plugins/axios";
 export default {
   async asyncData({ app }) {
+    console.dir(app.$axios, '$axios')
     let [count, articleList, tags, commentList] = await Promise.all([
-      app.$axios.get("/api/count/statistical"),
-      app.$axios.post("/api/article/hot", {
+      app.$axios.$get("/api/count/statistical"),
+      app.$axios.$post("/api/article/hot", {
         page: 1,
         size: 10
       }),
-      app.$axios.get("/api/tag/query"),
-      app.$axios.post("/api/leave/queryAll", {
+      app.$axios.$get("/api/tag/query"),
+      app.$axios.$post("/api/leave/queryAll", {
         page: 1,
         size: 10
       })
     ]);
-
     return {
-      countMes: count.data.data,
-      articles: articleList.data.data.list,
+      countMes: count,
+      articles: articleList.list,
       pagination: {
         page: 0,
         size: 0,
         total: 0
       },
-      labelArr: tags.data.data,
-      comments: commentList.data.data.list
+      labelArr: tags,
+      comments: commentList.list
     };
   },
   head() {

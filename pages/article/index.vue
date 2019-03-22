@@ -6,35 +6,39 @@
         <div class="category">
           <div class="cate-name">分类：</div>
           <section class="cate-tag">
-            <nuxt-link :to="'/article?name=ALL'">
-              <el-tag size="medium" :hit="true">ALL</el-tag>
-            </nuxt-link>
-            <nuxt-link
+            <el-tag
+              size="medium"
+              :hit="true"
+              @click.native="queryArticle('article', 'ALL', 'name')"
+            >ALL</el-tag>
+            <el-tag
+              size="medium"
               v-for="(cate, cIndex) in categorysArr"
               :key="cIndex"
-              :to="'/article?category_name=' + cate.category_name"
+              @click.native="queryArticle('category', cate.category_name, 'category_name')"
+              :hit="true"
             >
-              <el-tag size="medium" :hit="true">
-                <span>{{ cate.category_name }}</span>
-              </el-tag>
-            </nuxt-link>
+              <span>{{ cate.category_name }}</span>
+            </el-tag>
           </section>
         </div>
         <div class="category">
           <div class="cate-name">标签：</div>
           <section class="cate-tag">
-            <nuxt-link :to="'/article?name=ALL'">
-              <el-tag size="medium" :hit="true">ALL</el-tag>
-            </nuxt-link>
-            <nuxt-link
+            <el-tag
+              size="medium"
+              :hit="true"
+              @click.native="queryArticle('article', 'ALL', 'name')"
+            >ALL</el-tag>
+            <el-tag
+              size="medium"
               v-for="(tag, tIndex) in tagsArr"
+              @click.native="queryArticle('tag', tag.tag_name, 'tag_name')"
               :key="tIndex"
-              :to="'/article?tag_name=' + tag.tag_name"
+              :hit="true"
             >
-              <el-tag size="medium" :hit="true">
-                <span>{{ tag.tag_name }}</span>
-              </el-tag>
-            </nuxt-link>
+              <span>{{ tag.tag_name }}</span>
+            </el-tag>
           </section>
         </div>
       </div>
@@ -43,6 +47,7 @@
         :showPag="showPag"
         :articles="articles"
         :pagination="pagination"
+        @propPage="queryPage"
       ></news-articles>
     </el-row>
   </section>
@@ -58,41 +63,22 @@ export default {
       meta: [{ hid: "文章", name: "文章", content: "文章" }]
     };
   },
-  watchQuery: ["name", "category_name", "tag_name", "page"],
+  // watchQuery: ["name", "category_name", "tag_name"],
   async asyncData({ app, route }) {
-    let queryArticle = app.$axios.post("/api/article/getArticle", {
-      page: route.query.page || 1,
-      size: 1
-    });
-    if (route.query.name === "name") {
-      queryArticle = queryArticle;
-    } else if (route.query.category_name || route.query.tag_name) {
-      let type = route.query.category_name ? "category" : "tag";
-      let queryType = Object.keys(route.query)[0];
-      let query = route.query.category_name || route.query.tag_name;
-      queryArticle = app.$axios.get(`/api/${type}/queryArticle?${queryType}=${query}`);
-    }
     let [tags, categorys, articleList] = await Promise.all([
-      app.$axios.get("/api/tag/query"),
-      app.$axios.get("/api/category/query"),
-      queryArticle
+      app.$axios.$get("/api/tag/query"),
+      app.$axios.$get("/api/category/query"),
+      app.$axios.$post("/api/article/getArticle", {
+        page: 1,
+        size: 1
+      })
     ]);
-// console.log(articleList.data.data.pagination, 'articleList.data.data.pagination')
 
     return {
-      tagsArr: tags.data.data,
-      categorysArr: categorys.data.data,
-      articles:
-        route.query.category_name || route.query.tag_name
-          ? articleList.data.data
-          : articleList.data.data.list,
-      pagination: !(route.query.category_name || route.query.tag_name)
-        ? articleList.data.data.pagination
-        : {
-            page: 0,
-            size: 0,
-            total: 0
-          }
+      tagsArr: tags,
+      categorysArr: categorys,
+      articles: articleList.list,
+      pagination: articleList.pagination
     };
   },
   data() {
@@ -116,7 +102,38 @@ export default {
     NewsArticles: () => import("~/components/newsArticle")
   },
   methods: {
-    handleCurrentChange() {}
+    queryPage(page) {
+      this.$axios
+        .$post("/api/article/getArticle", {
+          page: page,
+          size: 1
+        })
+        .then(res => {
+          this.articles = res.list;
+          this.pagination = res.pagination;
+        });
+    },
+    queryArticle(type, query, queryType) {
+      if (type === "article") {
+        this.$axios
+          .$post("/api/article/getArticle", {
+            page: 1,
+            size: 1
+          })
+          .then(res => {
+            this.articles = res.list;
+            this.pagination = res.pagination;
+            this.showPag = true;
+          });
+      } else {
+        this.$axios
+          .$get(`/api/${type}/queryArticle?${queryType}=${query}`)
+          .then(res => {
+            this.articles = res;
+            this.showPag = false;
+          });
+      }
+    }
   }
 };
 </script>
