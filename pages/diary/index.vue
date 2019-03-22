@@ -10,8 +10,7 @@
 
 <script>
 import BreadNav from "~/components/breadNav";
-import NavTip from '~/components/navTip';
-import $http from "~/plugins/axios";
+import NavTip from "~/components/navTip";
 import $ from "~/utils";
 
 export default {
@@ -20,6 +19,24 @@ export default {
       title: "随笔杂谈",
       meta: [{ hid: "随笔杂谈", name: "随笔杂谈", content: "随笔杂谈" }]
     };
+  },
+  async asyncData({ $axios }) {
+    let res = await $axios.$get("/api/article/classifyQuery");
+    let classifyObj = Object.assign({}, res);
+    if (process.env.NODE_ENV === "development") {
+      for (var i = 0; i < 5; i++) {
+        classifyObj[2019 - i] = classifyObj["2019"];
+      }
+    }
+
+    let timeNav = Object.keys(classifyObj).sort($.Descending);
+    let selectIndex = timeNav[0];
+
+    return {
+      classifyObj: classifyObj,
+      timeNav: timeNav,
+      selectIndex: selectIndex
+    }
   },
   data() {
     return {
@@ -54,21 +71,7 @@ export default {
       ]
     };
   },
-  methods: {
-    handleClassifyQuery() {
-      $http.get("/article/classifyQuery").then(res => {
-        this.classifyObj = Object.assign({}, res.data);
-        if (process.env.NODE_ENV === "development") {
-          for (var i = 0; i < 5; i++) {
-            this.classifyObj[2019 - i] = this.classifyObj["2019"];
-          }
-        }
-
-        this.timeNav = Object.keys(this.classifyObj).sort($.Descending);
-        this.selectIndex = this.timeNav[0];
-      });
-    }
-  },
+  methods: {},
   created() {
     // this.handleClassifyQuery();
   },

@@ -4,13 +4,13 @@
       <bread-nav :navArr="navArr"></bread-nav>
       <el-col :span="15" class="content-left">
         <!-- <message-box></message-box> -->
-        <comments-list></comments-list>
+        <comments-list :comments="comments"></comments-list>
       </el-col>
       <el-col :span="9" class="content-right">
-        <profile-tip></profile-tip>
-        <article-label></article-label>
-        <hot-article></hot-article>
-        <news-comments></news-comments>
+        <profile-tip :countMes="countMes"></profile-tip>
+        <article-label :labelArr="labelArr"></article-label>
+        <hot-article :hotArticle="articles"></hot-article>
+        <!-- <news-comments :comments="comments"></news-comments> -->
       </el-col>
     </el-row>
   </section>
@@ -19,19 +19,46 @@
 <script>
 import profileTip from "~/components/profile";
 import BreadNav from "~/components/breadNav";
-import MessageBox from '~/components/messageBox';
-import $http from "~/plugins/axios";
+import MessageBox from "~/components/messageBox";
 import $ from "~/utils";
 
 export default {
-  async asyncData ({ store }) {
-    let res = await $http.post('/article/hot');
-    let list = res.data.list && res.data.list.length ? res.data.list : [];
-    list.forEach((article, index) => {
-      list[index].create_time = $.timeFormat(article.create_time - 0);
-      list[index].edit_time = $.timeFormat(article.edit_time - 0);
-    });
-    store.dispatch('HOT_ARTICLE', res.data.list)
+  async asyncData({ $axios, store }) {
+    // $axios.$post(`/api/comment/queryCommentList`, {
+    //   page: 1,
+    //   size: 10,
+    //   article_id: route.params.detail
+    // });
+    let [count, articleList, tags, commentList] = await Promise.all([
+      $axios.$get("/api/count/statistical"),
+      $axios.$post("/api/article/hot", {
+        page: 1,
+        size: 10
+      }),
+      $axios.$get("/api/tag/query"),
+      $axios.$post("/api/leave/queryCommentList", {
+        page: 1,
+        size: 10
+      })
+    ]);
+
+    return {
+      countMes: count,
+      articles: articleList.list,
+      pagination: {
+        page: 0,
+        size: 0,
+        total: 0
+      },
+      labelArr: tags,
+      comments: commentList.list
+    };
+    // let list = res.data.list && res.data.list.length ? res.data.list : [];
+    // list.forEach((article, index) => {
+    //   list[index].create_time = $.timeFormat(article.create_time - 0);
+    //   list[index].edit_time = $.timeFormat(article.edit_time - 0);
+    // });
+    // store.dispatch('HOT_ARTICLE', res.data.list)
   },
   head() {
     return {
@@ -43,11 +70,11 @@ export default {
     return {
       navArr: [
         {
-          title: '留言板',
-          route: '/board'
+          title: "留言板",
+          route: "/board"
         }
       ]
-    }
+    };
   },
   components: {
     profileTip,

@@ -131,7 +131,6 @@
 
 <script>
 import EmojiComponent from "~/components/emoji";
-import $http from "~/plugins/axios";
 export default {
   props: {
     showComments: {
@@ -192,9 +191,9 @@ export default {
     }
   },
   created() {
-    if (this.$route.path === "/board") {
-      this.type = "leave";
-    }
+    // if (this.$route.path === "/board") {
+    //   this.type = "leave";
+    // }
     this.queryReplyCommentsList(this.singleComment._id);
     this.commentId = this.singleComment._id;
   },
@@ -218,10 +217,10 @@ export default {
         config.comment_id = comment.comment_id;
       }
 
-      $http.post(`/${this.type}/${type}`, config).then(res => {
+      this.$axios.$post(`/api/${this.type}/${type}`, config).then(res => {
         if (res.data === "SUCCESS") {
           if (type === "deleteFather") {
-            this.$message.success(res.msg);
+            // this.$message.success(res.msg);
             this.close();
           } else {
             this.$message.success(res.msg);
@@ -252,8 +251,8 @@ export default {
       const formdata = new FormData();
       formdata.append("file", req.file);
       // formdata.append("key", keyname);
-      $http.post("/upload/artiUploadImg", formdata, config).then(res => {
-        this.imageUrl = res.data.key;
+      this.$axios.$post("/api/upload/artiUploadImg", formdata, config).then(res => {
+        this.imageUrl = res.key;
       });
     },
     beforeAvatarUpload(file) {
@@ -270,8 +269,8 @@ export default {
     },
     closeImg() {
       const imgKey = this.imageUrl.split("/")[3];
-      $http
-        .post("/upload/deleteArticleImg", {
+      this.$axios
+        .$post("/upload/deleteArticleImg", {
           key: imgKey
         })
         .then(res => {
@@ -315,7 +314,7 @@ export default {
         article_id: this.singleComment.article_id
       };
 
-      $http.post(`/${this.type}/replySave`, config).then(res => {
+      this.$axios.$post(`/api/${this.type}/replySave`, config).then(res => {
         if (res.data === "SUCCESS") {
           this.$refs["input"].blur();
           this.content = "";
@@ -358,8 +357,8 @@ export default {
         config.article_id = this.singleComment.article_id;
       }
 
-      $http.post(`/${this.type}/confirmLikes`, config).then(res => {
-        this.$store.dispatch("SINGLE_COMMENT", res.data);
+      this.$axios.$post(`/api/${this.type}/confirmLikes`, config).then(res => {
+        this.$store.dispatch("SINGLE_COMMENT", res);
       });
     },
     handleReplyLikes(reply) {
@@ -391,16 +390,16 @@ export default {
         }
       };
 
-      $http.post(`/${this.type}/ReplyLikes`, config).then(res => {
+      this.$axios.$post(`/api/${this.type}/ReplyLikes`, config).then(res => {
         this.queryReplyCommentsList(config.comment_id);
       });
     },
     queryReplyCommentsList(id) {
       this.queryReplyComment.comment_id = id;
-      $http
-        .post(`/${this.type}/queryReleyCommentsList`, this.queryReplyComment)
+      this.$axios
+        .$post(`/api/${this.type}/queryReleyCommentsList`, this.queryReplyComment)
         .then(res => {
-          this.replyComments = res.data.list;
+          this.replyComments = res.list;
           this.$emit("reply_count", {
             id: this.singleComment._id,
             length: this.replyComments.length

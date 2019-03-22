@@ -112,12 +112,12 @@ export default function ({
       }
     }
     if (config.method === 'post') config.data = qs.stringify(config.data)
-    console.log('Making request to ' + config.url)
+    // console.log('Making request to ' + config.url)
     return config
   })
 
   $axios.onResponse(config => {
-    console.log(config.data, 'config')
+    // console.log(config.data, 'config')
     return config.data;
   })
 

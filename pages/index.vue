@@ -27,7 +27,6 @@
 <script>
 import profileTip from "~/components/profile";
 import NavTip from "~/components/navTip";
-import $http from "~/plugins/axios";
 export default {
   async asyncData({ app }) {
     console.dir(app.$axios, '$axios')

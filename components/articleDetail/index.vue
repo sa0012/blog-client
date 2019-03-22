@@ -1,5 +1,5 @@
 <template>
-  <div class="article-detail">
+  <div class="article-detail" v-if="article">
     <h2 class="article-title">{{ article.title }}</h2>
     <div class="item-userinfo">
       <div class="avatar-wrap">
@@ -24,59 +24,39 @@
 </template>
 
 <script>
-import $http from "~/plugins/axios";
 import { mavonEditor } from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
 export default {
   props: {
-    articleId: {
-      type: String,
-      default: ""
+    article: {
+      type: Object,
+      default: () => {
+        return {}
+      }
     }
   },
   data() {
     return {
       toolbarsFlag: false,
       subfield: false,
-      article: {
-        _id: "",
-        image: '',
-        title: "",
-        user: {
-          user_avatar: '',
-          user_name: "",
-          address: null
-        },
-        create_time: "",
-        category: "",
-        browse: "",
-        commentCount: "",
-        desc: ""
-      }
+      // article: {
+      //   _id: "",
+      //   image: '',
+      //   title: "",
+      //   user: {
+      //     user_avatar: '',
+      //     user_name: "",
+      //     address: null
+      //   },
+      //   create_time: "",
+      //   category: "",
+      //   browse: "",
+      //   commentCount: "",
+      //   desc: ""
+      // }
     };
   },
-  computed: {
-    currentHeight() {
-      return (
-        (document.body.clientHeight ||
-          document.documentElement.clientHeight ||
-          0) -
-        100 +
-        "px"
-      );
-    }
-  },
-  created() {
-    this.articleDetail();
-  },
   methods: {
-    articleDetail() {
-      $http
-        .post("/article/findOneArticle", { _id: this.$route.params.detail })
-        .then(res => {
-          this.article = Object.assign({}, res.data);
-        });
-    }
   },
   components: {
     mavonEditor

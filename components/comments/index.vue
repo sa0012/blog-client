@@ -25,7 +25,6 @@
 
 <script>
 import Colors from "~/plugins/color.js";
-import $http from "~/plugins/axios";
 export default {
   props: {
     comments: {
@@ -44,13 +43,6 @@ export default {
     };
   },
   methods: {
-    queryCommentList() {
-      $http
-        .post("/comment/queryNewsCommentList", this.queryFatherComment)
-        .then(res => {
-          this.comments = res.data.list;
-        });
-    },
     // 将匹配结果替换表情图片
     emotion(res) {
       let word = res.replace(/\#|\;/gi, "");
@@ -166,7 +158,6 @@ export default {
     }
   },
   created() {
-    // this.queryCommentList();
   }
 };
 </script>

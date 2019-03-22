@@ -55,7 +55,6 @@
 
 <script>
 import BreadNav from "~/components/breadNav";
-import $http from "~/plugins/axios";
 export default {
   head() {
     return {

@@ -47,7 +47,6 @@
 
 <script>
 import EmojiComponent from "~/components/emoji";
-import $http from "~/plugins/axios";
 export default {
   props: {
     publish: {
@@ -102,7 +101,7 @@ export default {
       const formdata = new FormData();
       formdata.append("file", req.file);
       // formdata.append("key", keyname);
-      $http.post("/upload/artiUploadImg", formdata, config).then(res => {
+      this.$axios.$post("/upload/artiUploadImg", formdata, config).then(res => {
         this.imageUrl = res.data.key;
       });
     },
@@ -120,8 +119,8 @@ export default {
     },
     closeImg() {
       const imgKey = this.imageUrl.split("/")[3];
-      $http
-        .post("/upload/deleteArticleImg", {
+      this.$axios
+        .$post("/upload/deleteArticleImg", {
           key: imgKey
         })
         .then(res => {

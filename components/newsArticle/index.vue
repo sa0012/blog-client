@@ -35,7 +35,7 @@
                 <i class="iconfont icon-custom-comment count-icon"></i>
                 <span>{{ news.comments_count }}条评论</span>
               </div>
-              <nuxt-link :to="'/article/' + news._id" @click.native="toPage(index)">
+              <nuxt-link :to="'/article/' + news._id">
                 <el-button type="primary" size="mini" class="read-btn">阅读全文</el-button>
               </nuxt-link>
             </div>
@@ -57,7 +57,6 @@
 </template>
 
 <script>
-import axios from "axios";
 // import $ from "~/utils";
 // import { setLocal } from "~/common/mutils";
 export default {
@@ -99,6 +98,9 @@ export default {
     };
   },
   methods: {
+    toPage() {
+
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },

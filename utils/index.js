@@ -162,41 +162,16 @@ let utils = {
     let date = sysDate || (new Date())
     return parseInt((date.getTime() - parmDate.getTime()) / (1000 * 60 * 60 * 24))
   },
-  // requestAnimationFrame兼容处理
-  // requestAnimationFrame: () => {
-  //   var lastTime = 0;
-  //   var vendors = ['webkit', 'moz'];
-  //   for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-  //     window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-  //     window.cancelAnimationFrame =
-  //       window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
-  //   }
-
-  //   if (!window.requestAnimationFrame)
-  //     window.requestAnimationFrame = function (callback) {
-  //       var currTime = new Date().getTime();
-  //       var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-  //       var id = window.setTimeout(function () {
-  //           callback(currTime + timeToCall);
-  //         },
-  //         timeToCall);
-  //       lastTime = currTime + timeToCall;
-  //       return id;
-  //     };
-
-  //   if (!window.cancelAnimationFrame)
-  //     window.cancelAnimationFrame = function (id) {
-  //       clearTimeout(id);
-  //     };
-  // },
   //获取非行间样式(style标签里的样式或者link css文件里的样式)，obj是元素，attr是样式名
   getStyle(obj, attr) {
     //针对IE
-    if (obj.currentStyle) {
-      return obj.currentStyle[attr]; //由于函数传过来的attr是字符串，所以得用[]来取值
-    } else {
-      //针对非IE
-      return window.getComputedStyle(obj, false)[attr];
+    if (process.browser) {
+      if (obj.currentStyle) {
+        return obj.currentStyle[attr]; //由于函数传过来的attr是字符串，所以得用[]来取值
+      } else {
+        //针对非IE
+        return window.getComputedStyle(obj, false)[attr];
+      }
     }
   },
   /*

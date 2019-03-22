@@ -2,8 +2,8 @@
   <section class="container">
     <el-row class="content">
       <bread-nav :navArr="navArr"></bread-nav>
-      <article-detail :articleId="articleId"></article-detail>
-      <el-row>
+      <article-detail :article="article"></article-detail>
+      <!-- <el-row>
         <el-col class="history" :span="12" style="text-align: left;">
           <nuxt-link
             :to="'/article/' + bsHistory.prev.id"
@@ -16,10 +16,10 @@
             v-show="bsHistory.next.id"
           >下一篇: {{ bsHistory.next.title }}</nuxt-link>
         </el-col>
-      </el-row>
+      </el-row> -->
       <h3 class="comments-title first-title">发表评论</h3>
       <el-col :span="24" style="text-align: left;">
-        <comments-list></comments-list>
+        <comments-list :comments="comments"></comments-list>
       </el-col>
     </el-row>
     <nav-tip></nav-tip>
@@ -29,7 +29,7 @@
 <script>
 import BreadNav from "~/components/breadNav";
 import NavTip from "~/components/navTip";
-import { getLocal } from "~/common/mutils";
+// import { getLocal } from "~/common/mutils";
 
 export default {
   head() {
@@ -37,6 +37,21 @@ export default {
       title: "文章详情",
       meta: [{ hid: "文章详情", name: "文章详情", content: "文章详情" }]
     };
+  },
+  async asyncData({ $axios, route }) {
+    let [articleDetail, comments] = await Promise.all([
+      $axios.$post("/api/article/findOneArticle", { _id: route.params.detail }),
+      $axios.$post(`/api/comment/queryCommentList`, {
+        page: 1,
+        size: 10,
+        article_id: route.params.detail
+      })
+    ]);
+
+    return {
+        article: articleDetail,
+        comments: comments.list
+      }
   },
   data() {
     return {
@@ -50,12 +65,12 @@ export default {
           route: this.$route.path
         }
       ],
-      articleId: this.$route.params.detail
+      article: {}
     };
   },
   computed: {
     bsHistory() {
-      return JSON.parse(getLocal("browser_history"));
+      // return JSON.parse(getLocal("browser_history"));
     }
   },
   created() {},

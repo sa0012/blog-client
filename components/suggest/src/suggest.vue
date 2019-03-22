@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import $http from "~/plugins/axios";
 export default {
   props: {
     showSuggest: {
@@ -95,7 +94,7 @@ export default {
         this.$toast("反馈内容不要超过150个字符");
         return;
       }
-      $http.get("/feedback/send", this.feedback).then(res => {
+      this.$axios.$get("/feedback/send", this.feedback).then(res => {
         if (res.data == "SUCCESS") {
           this.$message({
             showClose: true,

@@ -14,7 +14,6 @@
 
 <script>
 import Colors from "~/plugins/color.js";
-import $http from "~/plugins/axios";
 export default {
   props: {
     labelArr: {
@@ -29,17 +28,11 @@ export default {
     };
   },
   methods: {
-    queryLabel() {
-      $http.get("/tag/query").then(res => {
-        this.labelArr = res.data || [];
-      });
-    },
     queryArticle(name) {
       this.$router.push("/article?tag_name=" + name);
     }
   },
   created() {
-    // this.queryLabel();
   }
 };
 </script>

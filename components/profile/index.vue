@@ -89,7 +89,6 @@
 </template>
 
 <script>
-import $http from "~/plugins/axios";
 export default {
   props: {
     countMes: {
@@ -111,7 +110,6 @@ export default {
     };
   },
   created() {
-    // this.queryCount();
   },
   methods: {
     handleSuggest() {
@@ -121,11 +119,6 @@ export default {
         }
       });
     },
-    queryCount() {
-      $http.get("/count/statistical").then(res => {
-        this.countMes = Object.assign({}, res.data);
-      });
-    }
   }
 };
 </script>

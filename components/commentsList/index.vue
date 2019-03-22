@@ -66,8 +66,15 @@
 import Colors from "~/plugins/color.js";
 import LookComments from "~/components/lookAtComments";
 import MessageBox from "~/components/messageBox";
-import $http from "~/plugins/axios";
 export default {
+  props: {
+    comments: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    }
+  },
   data() {
     return {
       colorsArr: Colors.colorName,
@@ -105,7 +112,7 @@ export default {
         size: 10,
         article_id: ""
       },
-      comments: [],
+      // comments: [],
       cIndex: 0,
       isLike: false,
       isWho: "ME",
@@ -140,9 +147,9 @@ export default {
       if (this.$route.path !== "/board") {
         config.article_id = comment.article_id;
       }
-      $http.post(`/${this.type}/deleteFather`, config).then(res => {
+      this.$axios.$post(`/api/${this.type}/deleteFather`, config).then(res => {
         if (res.data === "SUCCESS") {
-          this.$message.success(res.msg);
+          // this.$message.success(res.msg);
           this.queryCommentList();
         }
       });
@@ -164,8 +171,8 @@ export default {
         config.article_id = this.$route.params.detail;
       }
 
-      $http.post(`/${this.type}/saveComment`, config).then(res => {
-        if (res.data === "SUCCESS") {
+      this.$axios.$post(`/api/${this.type}/saveComment`, config).then(res => {
+        if (res === "SUCCESS") {
           this.queryCommentList();
         }
       });
@@ -175,10 +182,9 @@ export default {
         this.queryFatherComment.article_id = this.$route.params.detail;
       }
 
-      $http
-        .post(`/${this.type}/queryCommentList`, this.queryFatherComment)
+      this.$axios.$post(`/api/${this.type}/queryCommentList`, this.queryFatherComment)
         .then(res => {
-          this.comments = res.data.list;
+          this.comments = res.list;
           this.$emit("throwComments", this.comments);
           // this.$store.dispatch("FATHER_COMMENTS", this.comments);
         });
@@ -215,7 +221,7 @@ export default {
         this.queryFatherComment.article_id = this.comments[index].article_id;
       }
 
-      $http.post(`/${this.type}/confirmLikes`, config).then(res => {
+      this.$axios.$post(`/api/${this.type}/confirmLikes`, config).then(res => {
         this.queryCommentList();
       });
     },
@@ -340,10 +346,10 @@ export default {
     }
   },
   created() {
-    if (this.$route.path === "/board") {
-      this.type = "leave";
-    }
-    this.queryCommentList();
+    // if (this.$route.path === "/board") {
+    //   this.type = "leave";
+    // }
+    // this.queryCommentList();
   },
   components: {
     LookComments,
