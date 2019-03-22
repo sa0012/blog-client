@@ -10,7 +10,7 @@
       <div class="item-created-time" style="padding-left: 15px;">浏览次数： {{ article.browser_count }}次</div>
       <div class="item-category">分类： {{ article.category }}</div>
     </div>
-    <!-- <p class="article-content" v-html="article.article"></p> -->
+    <!-- <p class="article-content" v-html="article.render"></p> -->
     <mavon-editor
       class="compile-md"
       v-model="article.article"
@@ -18,7 +18,7 @@
       :toolbarsFlag="toolbarsFlag"
       :subfield="subfield"
       defaultOpen="preview"
-      style="    background: #e7e7e7;"
+      style="background: #e7e7e7;"
     ></mavon-editor>
   </div>
 </template>

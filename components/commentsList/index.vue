@@ -13,7 +13,10 @@
           <div class="comments-content">
             <div class="user-name">
               <p class="username">{{ comment.user.user_name }}</p>
-              <p class="location" v-if="comment.user.address">{{ (comment.user.address.city || null) | location }}</p>
+              <p
+                class="location"
+                v-if="comment.user.address"
+              >{{ (comment.user.address.city || null) | location }}</p>
               <div class="dianzan">
                 <i
                   class="iconfont icon-dianzan"
@@ -71,7 +74,7 @@ export default {
     comments: {
       type: Array,
       default: () => {
-        return []
+        return [];
       }
     }
   },
@@ -182,7 +185,8 @@ export default {
         this.queryFatherComment.article_id = this.$route.params.detail;
       }
 
-      this.$axios.$post(`/api/${this.type}/queryCommentList`, this.queryFatherComment)
+      this.$axios
+        .$post(`/api/${this.type}/queryCommentList`, this.queryFatherComment)
         .then(res => {
           this.comments = res.list;
           this.$emit("throwComments", this.comments);
@@ -346,9 +350,9 @@ export default {
     }
   },
   created() {
-    // if (this.$route.path === "/board") {
-    //   this.type = "leave";
-    // }
+    if (this.$route.path === "/board") {
+      this.type = "leave";
+    }
     // this.queryCommentList();
   },
   components: {

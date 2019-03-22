@@ -191,15 +191,15 @@ export default {
     }
   },
   created() {
-    // if (this.$route.path === "/board") {
-    //   this.type = "leave";
-    // }
+    if (this.$route.path === "/board") {
+      this.type = "leave";
+    }
     this.queryReplyCommentsList(this.singleComment._id);
     this.commentId = this.singleComment._id;
   },
   methods: {
     handleAvatarSuccess(res, file) {
-      this.imageUrl = res.data.key;
+      this.imageUrl = res.key;
       this.showImg = true;
       this.content += `<section><img src="${
         this.imageUrl
@@ -315,7 +315,7 @@ export default {
       };
 
       this.$axios.$post(`/api/${this.type}/replySave`, config).then(res => {
-        if (res.data === "SUCCESS") {
+        if (res === "SUCCESS") {
           this.$refs["input"].blur();
           this.content = "";
           this.commentType = "author";

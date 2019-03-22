@@ -4,7 +4,6 @@ import {
 } from '~/common/mutils';
 import SqTabs from "~/components/tabs/src";
 import SqTabpane from "~/components/tabpane/src";
-import $http from '~/plugins/axios';
 export default {
   async asyncData() {},
   computed: {
@@ -88,9 +87,9 @@ export default {
       removeSession('user');
     },
     githubLogin() {
-      $http.get('/github/client').then(res => {
+      this.$axios.$get('/api/github/client').then(res => {
         this.$store.dispatch('CURRENT_ROUTE', this.$route.path)
-        window.location.href = res.data;
+        window.location.href = res;
         window.localStorage.setItem('GITHUB_LOGIN_REDIRECT_URL', `${this.$route.path}?comment=new`);
       })
       // window.location.href = 'https://github.com/login/oauth/authorize?client_id=1f08860dca3e7b4499a5&redirect_uri=http://192.168.31.230:8080/login&scope=User';
@@ -104,16 +103,16 @@ export default {
       } else if (!this.loginForm.code) {
         return false;
       }
-      $http.post('/user/login', this.loginForm).then(res => {
-        if (res.code == 200) {
-          res.data.isLogin = true;
-          this.$store.dispatch('USER_MSG', res.data);
+      this.$axios.$post('/api/user/login', this.loginForm).then(res => {
+        // if (res.code == 200) {
+          res.isLogin = true;
+          this.$store.dispatch('USER_MSG', res);
           this.$message.success('登陆成功')
           this.loginMsg.showLogin = false;
           this.$store.dispatch('LOGIN_MSG', this.loginMsg)
-        } else {
-          this.get_check_code()
-        }
+        // } else {
+        //   this.get_check_code()
+        // }
       })
     },
     async register() {
@@ -131,10 +130,10 @@ export default {
         return;
       }
 
-      $http.post('/user/register', this.registerForm).then(res => {
+      this.$axios.$post('/api/user/register', this.registerForm).then(res => {
         if (res.code == 200) {
-          res.data.isLogin = true;
-          this.$store.dispatch('USER_MSG', res.data);
+          res.isLogin = true;
+          this.$store.dispatch('USER_MSG', res);
           this.$message.success('注册成功')
           // this.$emit("update:showLogin", false);
           this.loginMsg.showLogin = false;
@@ -145,10 +144,10 @@ export default {
       })
     },
     async get_check_code() {
-      $http.get('/other/checkcode').then(res => {
-        this.img_base64 = res.data.img
-        this.loginForm.code_token = res.data.token
-        this.registerForm.code_token = res.data.token
+      this.$axios.$get('/api/other/checkcode').then(res => {
+        this.img_base64 = res.img
+        this.loginForm.code_token = res.token
+        this.registerForm.code_token = res.token
       })
     }
   },

@@ -3,7 +3,7 @@
     <h3 class="label-title">文章标签</h3>
     <ul class="label-list" v-if="labelArr.length > 0">
       <li class="label-item" v-for="(label, index) in labelArr" :key="index">
-        <el-tag @click="queryArticle(label.tag_name)" size="medium" :hit="true">
+        <el-tag @click.native="queryArticle(label.tag_name)" size="medium" :hit="true">
           <span>{{ label.tag_name }}</span>
           <span>{{ `(${ label.tag_count })` }}</span>
         </el-tag>

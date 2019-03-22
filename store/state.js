@@ -1,7 +1,7 @@
-// import {
-//   getSession,
-//   getLocal
-// } from '~/common/mutils';
+import {
+  getSession,
+  getLocal
+} from '~/common/mutils';
 let user = {
   user_id: '',
   avatar: '',
@@ -66,13 +66,16 @@ let bsHistory = {
   }
 };
 
-// try {
-//   user = JSON.parse(getSession('user')) || user;
-//   fatherComments = JSON.parse(getSession('fatherComments')) || fatherComments
-//   route = getSession('currentRoute') || route
-//   hotArticle = JSON.parse(getSession('hotArticle')) || hotArticle
-//   bsHistory = JSON.parse(getLocal('browser_history')) || bsHistory
-// } catch (e) {}
+if (process.browser) {
+  try {
+    user = JSON.parse(getSession('user')) || user;
+    fatherComments = JSON.parse(getSession('fatherComments')) || fatherComments
+    route = getSession('currentRoute') || route
+    hotArticle = JSON.parse(getSession('hotArticle')) || hotArticle
+    bsHistory = JSON.parse(getLocal('browser_history')) || bsHistory
+  } catch (e) {}
+}
+
 
 
 const login = {
