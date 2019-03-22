@@ -90,7 +90,7 @@ module.exports = {
   proxy: {
     //开启代理
     "/api": {
-      target: "http://localhost:7778",
+      target: "http://127.0.0.1:7778",
       changeOrigin: true,
       pathRewrite: {
         "^/api": "/api"
