@@ -11,15 +11,17 @@
       <div class="item-category">分类： {{ article.category }}</div>
     </div>
     <!-- <p class="article-content" v-html="article.render"></p> -->
-    <mavon-editor
-      class="compile-md"
-      v-model="article.article"
-      codeStyle="vs2015"
-      :toolbarsFlag="toolbarsFlag"
-      :subfield="subfield"
-      defaultOpen="preview"
-      style="background: #e7e7e7;"
-    ></mavon-editor>
+    <no-ssr>
+      <mavon-editor
+        class="compile-md"
+        v-model="article.article"
+        codeStyle="vs2015"
+        :toolbarsFlag="toolbarsFlag"
+        :subfield="subfield"
+        defaultOpen="preview"
+        style="background: #e7e7e7;"
+      ></mavon-editor>
+    </no-ssr>
   </div>
 </template>
 
@@ -31,14 +33,14 @@ export default {
     article: {
       type: Object,
       default: () => {
-        return {}
+        return {};
       }
     }
   },
   data() {
     return {
       toolbarsFlag: false,
-      subfield: false,
+      subfield: false
       // article: {
       //   _id: "",
       //   image: '',
@@ -56,8 +58,7 @@ export default {
       // }
     };
   },
-  methods: {
-  },
+  methods: {},
   components: {
     mavonEditor
   }
@@ -106,12 +107,13 @@ export default {
 </style>
 
 <style>
-.v-note-wrapper .v-note-panel .v-note-show .v-show-content, .v-note-wrapper .v-note-panel .v-note-show .v-show-content-html {
+.v-note-wrapper .v-note-panel .v-note-show .v-show-content,
+.v-note-wrapper .v-note-panel .v-note-show .v-show-content-html {
   background: #e7e7e7 !important;
 }
 
 .v-note-wrapper .v-note-panel.shadow {
-    box-shadow: none !important;
+  box-shadow: none !important;
 }
 </style>
 

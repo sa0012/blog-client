@@ -64,20 +64,41 @@ export default {
   },
   // watchQuery: ["name", "category_name", "tag_name"],
   async asyncData({ app, route }) {
+    let queryAllArticle = app.$axios.$post("/api/article/getArticle", {
+      page: 1,
+      size: 1
+    });
+    let tagQuery = () => {};
+    if (route.query.tag_name) {
+     tagQuery = app.$axios.$get(
+        `/api/tag/queryArticle?tag_name=${route.query.tag_name}`
+      );
+    }
     let [tags, categorys, articleList] = await Promise.all([
       app.$axios.$get("/api/tag/query"),
       app.$axios.$get("/api/category/query"),
-      app.$axios.$post("/api/article/getArticle", {
-        page: 1,
-        size: 1
-      })
+      route.query.tag_name ? tagQuery : queryAllArticle
     ]);
 
     return {
       tagsArr: tags,
       categorysArr: categorys,
-      articles: articleList.list,
-      pagination: articleList.pagination
+      articles: !route.query.tag_name ? articleList.list : articleList,
+      pagination: !route.query.tag_name ? articleList.pagination : {
+        page: 0,
+        size: 0,
+        total: 0
+      },
+      navArr: [
+        {
+          title: "文章",
+          route: "/article"
+        },
+        {
+          title: route.query ? route.query[Object.keys(route.query)[0]] : "",
+          route: ""
+        }
+      ]
     };
   },
   data() {
@@ -113,6 +134,12 @@ export default {
         });
     },
     queryArticle(type, query, queryType) {
+      this.navArr.pop();
+      this.navArr.push({
+        title: query,
+        route: ""
+      });
+      console.log(this.navArr, "navArr");
       if (type === "article") {
         this.$axios
           .$post("/api/article/getArticle", {
