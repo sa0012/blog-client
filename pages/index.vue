@@ -28,16 +28,16 @@
 import profileTip from "~/components/profile";
 import NavTip from "~/components/navTip";
 export default {
-  async asyncData({ app }) {
-    console.dir(app.$axios, '$axios')
+  async asyncData({ $axios }) {
+    console.dir(app.$axios, "$axios");
     let [count, articleList, tags, commentList] = await Promise.all([
-      app.$axios.$get("/api/count/statistical"),
-      app.$axios.$post("/api/article/hot", {
+      $axios.$get("/api/count/statistical"),
+      $axios.$post("/api/article/hot", {
         page: 1,
         size: 10
       }),
-      app.$axios.$get("/api/tag/query"),
-      app.$axios.$post("/api/leave/queryAll", {
+      $axios.$get("/api/tag/query"),
+      $axios.$post("/api/leave/queryAll", {
         page: 1,
         size: 10
       })
