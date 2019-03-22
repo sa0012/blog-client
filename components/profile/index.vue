@@ -114,6 +114,7 @@ export default {
   methods: {
     handleSuggest() {
       this.$suggest.alert({
+        context: this.$axios,
         handleConfirm: () => {
           this.$suggest.hide();
         }

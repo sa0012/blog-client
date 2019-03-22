@@ -85,6 +85,7 @@ export default {
     },
     handleSuggest() {
       this.$suggest.alert({
+        context: this.$axios,
         handleConfirm: () => {
           this.$suggest.hide()
         }

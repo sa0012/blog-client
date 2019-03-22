@@ -51,6 +51,10 @@ export default {
     handleConfirm: {
       type: Function,
       default: () => {}
+    },
+    context: {
+      type: Function,
+      default: () => {}
     }
   },
   data() {
@@ -94,8 +98,9 @@ export default {
         this.$toast("反馈内容不要超过150个字符");
         return;
       }
-      this.$axios.$get("/feedback/send", this.feedback).then(res => {
-        if (res.data == "SUCCESS") {
+      console.log(this, 'this')
+      this.context.$post("/api/feedback/send", this.feedback).then(res => {
+        if (res == "SUCCESS") {
           this.$message({
             showClose: true,
             message: "感谢您的反馈/建议, 我们会抓紧处理的",
