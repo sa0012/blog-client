@@ -62,7 +62,7 @@ export default {
       meta: [{ hid: "文章", name: "文章", content: "文章" }]
     };
   },
-  // watchQuery: ["name", "category_name", "tag_name"],
+  watchQuery: ["tag_name"],
   async asyncData({ app, route }) {
     let queryAllArticle = app.$axios.$post("/api/article/getArticle", {
       page: 1,
