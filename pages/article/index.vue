@@ -63,11 +63,11 @@ export default {
     };
   },
   // watchQuery: ["name", "category_name", "tag_name"],
-  async asyncData({ $axios, route }) {
+  async asyncData({ app, route }) {
     let [tags, categorys, articleList] = await Promise.all([
-      $axios.$get("/api/tag/query"),
-      $axios.$get("/api/category/query"),
-      $axios.$post("/api/article/getArticle", {
+      app.$axios.$get("/api/tag/query"),
+      app.$axios.$get("/api/category/query"),
+      app.$axios.$post("/api/article/getArticle", {
         page: 1,
         size: 1
       })
