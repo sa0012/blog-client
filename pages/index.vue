@@ -17,7 +17,7 @@
         <profile-tip :countMes="countMes"></profile-tip>
         <article-label :labelArr="labelArr"></article-label>
         <hot-article :hotArticle="articles"></hot-article>
-        <news-comments :comments="comments"></news-comments>
+        <!-- <news-comments :comments="comments"></news-comments> -->
       </el-col>
     </el-row>
     <nav-tip></nav-tip>
@@ -37,10 +37,10 @@ export default {
         size: 10
       }),
       app.$axios.$get("/api/tag/query"),
-      app.$axios.$post("/api/leave/queryAll", {
-        page: 1,
-        size: 10
-      })
+      // app.$axios.$post("/api/leave/queryAll", {
+      //   page: 1,
+      //   size: 10
+      // })
     ]).catch(err => {
       Promise.reject(err);
     })
@@ -53,7 +53,7 @@ export default {
         total: 0
       },
       labelArr: tags,
-      comments: commentList.list
+      // comments: commentList.list
     };
   },
   head() {
