@@ -136,17 +136,20 @@ export default function ({
             test: 'user'
           }))
         }
+        console.log('你该不会是跑到这里来坑我的吧')
         return Promise.reject(error.response);
       }
     } else {
-      new Vue().$message.error('网络中断，请稍后重试！')
+      if (process.browser) {
+        new Vue().$message.error('网络中断，请稍后重试！')
+      }
     }
   })
 
   $axios.onError(error => {
-    const code = parseInt(error.response && error.response.status)
-    if (code === 400) {
-      redirect('/400')
-    }
+    // const code = parseInt(error.response && error.response.status)
+    // if (code === 400) {
+    //   redirect('/400')
+    // }
   })
 }
