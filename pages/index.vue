@@ -41,7 +41,9 @@ export default {
         page: 1,
         size: 10
       })
-    ]);
+    ]).catch(err => {
+      Promise.reject(err);
+    })
     return {
       countMes: count,
       articles: articleList.list,
