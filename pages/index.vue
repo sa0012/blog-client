@@ -37,10 +37,10 @@ export default {
         size: 10
       }),
       app.$axios.$get("/api/tag/query"),
-      // app.$axios.$post("/api/leave/queryAll", {
-      //   page: 1,
-      //   size: 10
-      // })
+      app.$axios.$post("/api/leave/queryAll", {
+        page: 1,
+        size: 10
+      })
     ]).catch(err => {
       Promise.reject(err);
     })

@@ -114,22 +114,18 @@ export default function ({
       }
     }
     if (config.method === 'post') config.data = qs.stringify(config.data)
-    console.log('Making request to ' + config.url)
     return config
   })
 
   $axios.onRequestError(error => {
-    console.log('onRequestError 是这里报错了吗')
     return Promise.reject(error);
   })
 
   $axios.onResponse(config => {
-    console.log(config.data, 'onResponse')
     return config.data;
   })
 
   $axios.onResponseError(error => {
-    console.log(error, error.response, 'onResponseError 是这里报错了吗')
     let {
       response
     } = error;
@@ -144,7 +140,6 @@ export default function ({
             test: 'user'
           }))
         }
-        console.log('你该不会是跑到这里来坑我的吧')
         return Promise.reject(error.response);
       }
     } else {
@@ -156,7 +151,6 @@ export default function ({
   })
 
   $axios.onError(error => {
-    console.log(error.response, error.response.status, 'onError 是这里报错了吗')
     const code = parseInt(error.response && error.response.status)
     if (code === 400) {
       redirect('/400')
