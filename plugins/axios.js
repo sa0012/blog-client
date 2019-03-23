@@ -129,7 +129,7 @@ export default function ({
   })
 
   $axios.onResponseError(error => {
-    console.log('onResponseError 是这里报错了吗')
+    console.log(error, error.response, 'onResponseError 是这里报错了吗')
     let {
       response
     } = error;
@@ -152,10 +152,11 @@ export default function ({
         new Vue().$message.error('网络中断，请稍后重试！')
       }
     }
+    return Promise.reject(error);
   })
 
   $axios.onError(error => {
-    console.log('onError 是这里报错了吗')
+    console.log(error.response, error.response.status, 'onError 是这里报错了吗')
     const code = parseInt(error.response && error.response.status)
     if (code === 400) {
       redirect('/400')
