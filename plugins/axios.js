@@ -106,7 +106,9 @@ export default function ({
       let token = '';
       try {
         token = JSON.parse(getSession('user')).token;
-      } catch (e) {}
+      } catch (e) {
+
+      }
       if (token) {
         config.headers.Authorization = token;
       }
@@ -116,12 +118,18 @@ export default function ({
     return config
   })
 
+  $axios.onRequestError(error => {
+    console.log('onRequestError 是这里报错了吗')
+    return Promise.reject(error);
+  })
+
   $axios.onResponse(config => {
     console.log(config.data, 'onResponse')
     return config.data;
   })
 
   $axios.onResponseError(error => {
+    console.log('onResponseError 是这里报错了吗')
     let {
       response
     } = error;
@@ -147,9 +155,10 @@ export default function ({
   })
 
   $axios.onError(error => {
-    // const code = parseInt(error.response && error.response.status)
-    // if (code === 400) {
-    //   redirect('/400')
-    // }
+    console.log('onError 是这里报错了吗')
+    const code = parseInt(error.response && error.response.status)
+    if (code === 400) {
+      redirect('/400')
+    }
   })
 }
