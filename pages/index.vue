@@ -17,7 +17,7 @@
         <profile-tip :countMes="countMes"></profile-tip>
         <article-label :labelArr="labelArr"></article-label>
         <hot-article :hotArticle="articles"></hot-article>
-        <!-- <news-comments :comments="comments"></news-comments> -->
+        <news-comments :comments="comments"></news-comments>
       </el-col>
     </el-row>
     <nav-tip></nav-tip>
