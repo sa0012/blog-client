@@ -35,6 +35,10 @@
 
 <script>
 import LoginComponent from "~/components/login";
+import {
+  getSession,
+  getLocal
+} from '~/common/mutils';
 export default {
   data() {
     return {
@@ -62,6 +66,16 @@ export default {
       this.loginMsg.showLogin = true;
       this.loginMsg.loginType = type;
       this.$store.dispatch('LOGIN_MSG', this.loginMsg)
+    }
+  },
+  mounted() {
+    if (getSession('user') && getSession('login')) {
+      this.$store.dispatch('USER_MSG', JSON.parse(getSession('user'))).then(res => {
+        this.userMsg = this.$store.state.user
+      })
+      this.$store.dispatch('LOGIN_MSG', JSON.parse(getSession('login'))).then(res => {
+        this.loginMsg = this.$store.state.login
+      })
     }
   },
   components: {
