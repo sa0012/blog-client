@@ -53,7 +53,7 @@ export default {
         total: 0
       },
       labelArr: tags,
-      // comments: commentList.list
+      comments: commentList.list
     };
   },
   head() {
