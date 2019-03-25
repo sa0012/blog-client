@@ -70,10 +70,10 @@ module.exports = {
       ssr: false
     },
     '@/plugins/axios',
-    // {
-    //   src: '@/plugins/directive',
-    //   ssr: false
-    // }
+    {
+      src: '@/plugins/directive',
+      ssr: false
+    }
   ],
 
   /*
