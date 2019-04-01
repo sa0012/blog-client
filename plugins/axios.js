@@ -93,7 +93,8 @@ import Vue from 'vue';
 
 export default function ({
   $axios,
-  redirect
+  redirect,
+  store
 }) {
   // onRequest(config)
   // onResponse(response)
@@ -107,9 +108,12 @@ export default function ({
       try {
         token = JSON.parse(getSession('user')).token;
       } catch (e) {
-
+        
       }
       if (token) {
+        store.dispatch('USER_MSG', JSON.parse(getSession('user'))).then(res => {
+          console.log(store.state.user, 'store.state.user')
+        })
         config.headers.Authorization = token;
       }
     }
