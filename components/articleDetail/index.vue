@@ -10,8 +10,8 @@
       <div class="item-created-time" style="padding-left: 15px;">浏览次数： {{ article.browser_count }}次</div>
       <div class="item-category">分类： {{ article.category }}</div>
     </div>
-    <!-- <p class="article-content" v-html="article.render"></p> -->
-    <no-ssr>
+    <p class="article-content" v-html="article.render"></p>
+    <!-- <no-ssr>
       <mavon-editor
         class="compile-md"
         v-model="article.article"
@@ -21,13 +21,14 @@
         defaultOpen="preview"
         style="background: #e7e7e7;"
       ></mavon-editor>
-    </no-ssr>
+    </no-ssr> -->
   </div>
 </template>
 
 <script>
-import { mavonEditor } from "mavon-editor";
-import "mavon-editor/dist/css/index.css";
+    // "mavon-editor": "^2.6.17",
+// import { mavonEditor } from "mavon-editor";
+// import "mavon-editor/dmavonEditorist/css/index.css";
 export default {
   props: {
     article: {
@@ -60,7 +61,7 @@ export default {
   },
   methods: {},
   components: {
-    mavonEditor
+    // mavonEditor
   }
 };
 </script>

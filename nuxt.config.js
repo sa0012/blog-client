@@ -116,7 +116,7 @@ module.exports = {
     // npm run build --analyze
     // analyze: true,
     // maxChunkSize: 300000,
-    transpile: [/^element-ui/],
+    // transpile: [/^element-ui/],
     /*
      ** You can extend webpack config here
      */
