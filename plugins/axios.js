@@ -111,9 +111,7 @@ export default function ({
         
       }
       if (token) {
-        store.dispatch('USER_MSG', JSON.parse(getSession('user'))).then(res => {
-          console.log(store.state.user, 'store.state.user')
-        })
+        store.dispatch('USER_MSG', JSON.parse(getSession('user')))
         config.headers.Authorization = token;
       }
     }

@@ -139,7 +139,6 @@ export default {
         title: query,
         route: ""
       });
-      console.log(this.navArr, "navArr");
       if (type === "article") {
         this.$axios
           .$post("/api/article/getArticle", {
