@@ -118,7 +118,6 @@ export default {
       }
     },
     handleTime(index) {
-      console.log(this.timeArr, index, "timeArr");
       this.selectNav = this.timeNav[index];
       if (index === 0 && !this.timeArr[index + 1].showStatus) {
         this.timeArr.forEach((time, tIndex) => {

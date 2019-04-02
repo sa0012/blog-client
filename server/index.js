@@ -32,7 +32,7 @@ async function start() {
 
   app.listen(port, host)
   consola.ready({
-    message: `Server listening on http://${host}:${port}`,
+    message: `Server listening on NODE_ENV:${ process.env.NODE_ENV } http://${host}:${port}`,
     badge: true
   })
 }

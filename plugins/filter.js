@@ -37,7 +37,6 @@ export default () => {
   });
 
   Vue.filter('location', address => {
-    console.log(address, 'address')
     try {
       if (address) {
         return '[' + address + '网友' + ']'
