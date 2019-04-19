@@ -29,7 +29,6 @@ import profileTip from "~/components/profile";
 import NavTip from "~/components/navTip";
 export default {
   async asyncData({ app }) {
-    console.dir(app.$axios, '$axios')
     let [count, articleList, tags, commentList] = await Promise.all([
       app.$axios.$get("/api/count/statistical"),
       app.$axios.$post("/api/article/hot", {
