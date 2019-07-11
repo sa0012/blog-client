@@ -88,10 +88,6 @@
   </section>
 </template>
 
-<script>
-import Controller from "./handle";
-export default Controller;
-</script>
 
 <style lang="scss" scoped>
 .content {
