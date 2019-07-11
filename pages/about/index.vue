@@ -98,6 +98,8 @@
   padding-left: 50px;
   padding-right: 50px;
   padding-bottom: 30px;
+  margin-top: 180px;
+  margin-bottom: 80px;
 
   .title {
     font-size: 18px;
