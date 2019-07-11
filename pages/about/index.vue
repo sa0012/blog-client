@@ -6,7 +6,7 @@
         <el-row>
           <el-col :span="8">
             <div class="avatar-img">
-              <img src="../../../assets/images/avatar.jpg" style="width: 100%;" class="avatar" alt>
+              <img src="~/assets/image/avatar.jpg" style="width: 100%;" class="avatar" alt>
             </div>
           </el-col>
           <el-col :span="16">
@@ -76,11 +76,11 @@
         <section class="contact">
           <el-col :span="12">
             <h3 class="qr-title">QQ联系</h3>
-            <img src="../../../assets/images/qr_qq.jpg" alt="qq" class="qr-qq">
+            <img src="~/assets/image/qr_qq.jpg" alt="qq" class="qr-qq">
           </el-col>
           <el-col :span="12">
             <h3 class="qr-title">微信联系</h3>
-            <img src="../../../assets/images/qr_weixin.jpg" alt="wechat" class="qr-wechat">
+            <img src="~/assets/image/qr_weixin.jpg" alt="wechat" class="qr-wechat">
           </el-col>
         </section>
       </div>
