@@ -7,7 +7,7 @@
         <comments-list :comments="comments"></comments-list>
       </el-col>
       <el-col :span="9" class="content-right">
-        <profile-tip :countMes="countMes"></profile-tip>
+        <!-- <profile-tip :countMes="countMes"></profile-tip> -->
         <article-label :labelArr="labelArr"></article-label>
         <hot-article :hotArticle="articles"></hot-article>
         <!-- <news-comments :comments="comments"></news-comments> -->
