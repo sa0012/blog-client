@@ -1,46 +1,53 @@
 <template>
-  <section class="container">
+  <section class="padding is-auto">
     <el-row class="content">
-      <bread-nav :navArr="navArr"></bread-nav>
       <div class="container">
-        <h2 class="title">博客简介</h2>
-        <img src="~/assets/image/avatar.jpg" class="avatar" alt>
-        <section class="profile">
-          <h3 class="profile-title">个人资料</h3>
-          <el-row>
-            <el-col :span="2">姓名：</el-col>
-            <el-col :span="22">陈龙</el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="2">职业：</el-col>
-            <el-col :span="22">web前端开发工程师</el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="2">技能：</el-col>
-            <el-col :span="22">javascript, vue, react, webpack, git。。。</el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="2">邮箱：</el-col>
-            <el-col :span="22">
-              <span>1583479514@qq.com</span>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="2">个人博客：</el-col>
-            <el-col :span="22">
-              <a href="http://client.juckchen.cn" target="_blank">client.juckchen.cn</a>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="2">GitHub：</el-col>
-            <el-col :span="22">
-              <a
-                href="https://github.com/sa0012?tab=repositories"
-                target="_blank"
-              >https://github.com/sa0012</a>
-            </el-col>
-          </el-row>
-        </section>
+        <!-- <h2 class="title">博客简介</h2> -->
+        <el-row>
+          <el-col :span="8">
+            <div class="avatar-img">
+              <img src="../../../assets/images/avatar.jpg" style="width: 100%;" class="avatar" alt>
+            </div>
+          </el-col>
+          <el-col :span="16">
+            <section class="profile">
+              <h3 class="profile-title">个人资料</h3>
+              <el-row>
+                <el-col :span="4" class="pro-name">姓名：</el-col>
+                <el-col :span="20">陈龙</el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="4" class="pro-name">职业：</el-col>
+                <el-col :span="20">web前端开发工程师</el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="4" class="pro-name">技能：</el-col>
+                <el-col :span="20">javascript, vue, react, webpack, git。。。</el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="4" class="pro-name">邮箱：</el-col>
+                <el-col :span="20">
+                  <span>1583479514@qq.com</span>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="4" class="pro-name">个人博客：</el-col>
+                <el-col :span="20">
+                  <a href="https://www.juckchen.cn" target="_blank">client.juckchen.cn</a>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="4" class="pro-name">GitHub：</el-col>
+                <el-col :span="20">
+                  <a
+                    href="https://github.com/sa0012?tab=repositories"
+                    target="_blank"
+                  >https://github.com/sa0012</a>
+                </el-col>
+              </el-row>
+            </section>
+          </el-col>
+        </el-row>
 
         <section class="intro-wrap">
           <h3 class="profile-title">博客简介</h3>
@@ -69,11 +76,11 @@
         <section class="contact">
           <el-col :span="12">
             <h3 class="qr-title">QQ联系</h3>
-            <img src="~/assets/image/qr_qq.jpg" alt="qq" class="qr-qq">
+            <img src="../../../assets/images/qr_qq.jpg" alt="qq" class="qr-qq">
           </el-col>
           <el-col :span="12">
             <h3 class="qr-title">微信联系</h3>
-            <img src="~/assets/image/qr_weixin.jpg" alt="wechat" class="qr-wechat">
+            <img src="../../../assets/images/qr_weixin.jpg" alt="wechat" class="qr-wechat">
           </el-col>
         </section>
       </div>
@@ -82,49 +89,19 @@
 </template>
 
 <script>
-import BreadNav from "~/components/breadNav";
-export default {
-  head() {
-    return {
-      title: "关于我",
-      meta: [{ hid: "关于我", name: "关于我", content: "关于我" }]
-    };
-  },
-  data() {
-    return {
-      content: "",
-      comment: "",
-      navArr: [
-        {
-          title: "关于我",
-          route: "/about"
-        }
-      ]
-    };
-  },
-  components: {
-    BreadNav
-  },
-  methods: {}
-};
+import Controller from "./handle";
+export default Controller;
 </script>
 
 <style lang="scss" scoped>
-.container {
-  width: 100%;
-  min-height: 100%;
-  height: auto;
-  padding-left: 40px;
-  padding-right: 40px;
-}
-
 .content {
-  width: 80%;
-  padding-top: 170px;
   position: relative;
   margin: 0 auto;
   text-align: center;
-  padding-bottom: 150px;
+  width: 80%;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 30px;
 
   .title {
     font-size: 18px;
@@ -132,9 +109,15 @@ export default {
     letter-spacing: 3px;
     padding: 15px;
   }
+  
+  .pro-name {
+    min-width: 50px;
+  }
 
-  .avatar {
-    padding: 30px 0;
+  .avatar-img {
+    padding-right: 30px;
+    box-sizing: border-box;
+    min-width: 300px;
   }
 
   .intro-wrap {
@@ -158,6 +141,8 @@ export default {
 
   .profile {
     text-align: left;
+    padding-left: 30px;
+    box-sizing: border-box;
   }
 }
 
