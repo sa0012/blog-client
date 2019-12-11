@@ -59,7 +59,8 @@
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="icon-wrap" @click="handleSuggest">
+          <!-- <div class="icon-wrap" @click="handleSuggest"> -->
+          <div class="icon-wrap">
             <i class="el-icon-edit-outline share-icon"></i>
           </div>
         </el-col>
@@ -74,7 +75,7 @@
       </el-col>
       <el-col :span="8" class="count-item count-runtime">
         <span class="bignum">
-          评论
+          <!-- 评论 -->
           <a class="count-color">{{ countMes.leave_count }}</a> 次
         </span>
       </el-col>

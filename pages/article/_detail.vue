@@ -17,10 +17,10 @@
           >下一篇: {{ bsHistory.next.title }}</nuxt-link>
         </el-col>
       </el-row> -->
-      <h3 class="comments-title first-title">发表评论</h3>
+      <!-- <h3 class="comments-title first-title">发表评论</h3>
       <el-col :span="24" style="text-align: left;">
         <comments-list :comments="comments"></comments-list>
-      </el-col>
+      </el-col> -->
     </el-row>
     <nav-tip></nav-tip>
   </section>
@@ -43,7 +43,7 @@ export default {
       $axios.$post("/api/article/findOneArticle", { _id: route.params.detail }),
       $axios.$post(`/api/comment/queryCommentList`, {
         page: 1,
-        size: 10,
+        size: 5,
         article_id: route.params.detail
       })
     ]);

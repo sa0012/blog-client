@@ -3,7 +3,7 @@
     <div class="main">
       <div class="police">
         <img src="~/assets/image/beian.png">
-        <a href="http://www.beian.gov.cn/portal/index.do" target="_blank">皖ICP备19002157号-1</a>
+        <a href="http://www.beian.miit.gov.cn/" target="_blank">皖ICP备19002157号-1</a>
       </div>
       <div class="copyright">
         <span>
@@ -15,7 +15,7 @@
           <span>|</span>
         </span>
         <span>
-          <a href="http://localhost:8088/" target="_blank">&nbsp;管理员</a>
+          <a target="_blank">&nbsp;管理员</a>
         </span>
       </div>
     </div>

@@ -18,7 +18,7 @@
           </li>
         </ul>
       </nav>
-      <div class="login-wrap">
+      <!-- <div class="login-wrap">
         <div class="login-start" v-if="!userMsg.isLogin">
           <div class="login" @click="handleLogin('login')">登陆</div>
           <div class="line">/</div>
@@ -27,7 +27,7 @@
         <div class="login-end" v-else>
           <drop-login></drop-login>
         </div>
-      </div>
+      </div> -->
     </div>
     <login-component></login-component>
   </div>
@@ -49,7 +49,7 @@ export default {
         { router: { path: "/article" }, title: "文章" },
         { router: { path: "/diary" }, title: "文章归类" },
         { router: { path: "/about" }, title: "关于我" },
-        { router: { path: "/board" }, title: "留言板" }
+        // { router: { path: "/board" }, title: "留言板" }
       ]
     };
   },

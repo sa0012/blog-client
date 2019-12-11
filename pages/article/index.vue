@@ -66,7 +66,7 @@ export default {
   async asyncData({ app, route }) {
     let queryAllArticle = app.$axios.$post("/api/article/getArticle", {
       page: 1,
-      size: 1
+      size: 5
     });
     let tagQuery = () => {};
     if (route.query.tag_name) {
@@ -126,7 +126,7 @@ export default {
       this.$axios
         .$post("/api/article/getArticle", {
           page: page,
-          size: 1
+          size: 5
         })
         .then(res => {
           this.articles = res.list;
@@ -143,7 +143,7 @@ export default {
         this.$axios
           .$post("/api/article/getArticle", {
             page: 1,
-            size: 1
+            size: 5
           })
           .then(res => {
             this.articles = res.list;

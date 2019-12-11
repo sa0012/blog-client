@@ -33,7 +33,7 @@
               <el-row>
                 <el-col :span="4" class="pro-name">个人博客：</el-col>
                 <el-col :span="20">
-                  <a href="https://www.juckchen.cn" target="_blank">client.juckchen.cn</a>
+                  <a href="https://www.juckchen.cn" target="_blank">www.juckchen.cn</a>
                 </el-col>
               </el-row>
               <el-row>

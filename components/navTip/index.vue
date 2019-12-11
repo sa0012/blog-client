@@ -28,7 +28,8 @@
           <i class="iconfont icon-github icon" style="color: #0e2535;"></i>
         </a>
       </li>
-      <li class="nav-item no-top" @click="handleSuggest">
+      <!-- <li class="nav-item no-top" @click="handleSuggest"> -->
+      <li class="nav-item no-top">
         <i class="el-icon-edit-outline icon"></i>
       </li>
     </ul>

@@ -50,7 +50,7 @@
         @current-change="handleCurrentChange"
         :page-size="1"
         layout="total, prev, pager, next"
-        :total="pagination.total"
+        :total="Math.ceil(pagination.total / pagination.size)"
       ></el-pagination>
     </el-col>
   </div>
